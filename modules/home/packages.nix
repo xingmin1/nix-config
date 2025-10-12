@@ -23,10 +23,6 @@
     # On ubuntu, we need this less for `man home-configuration.nix`'s pager to
     # work.
     less
-
-    # 开发工具
-    jujutsu
-    jjui
   ];
 
   # Programs natively supported by home-manager.

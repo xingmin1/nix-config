@@ -1,5 +1,7 @@
 # Neovim configuration managed using https://github.com/nix-community/nixvim
 {
+  # Whether to enable nixvim as the default editor.
+  defaultEditor = true;
   # Theme
   colorschemes.tokyonight.enable = true;
 
@@ -76,7 +78,7 @@
     lazygit.enable = true;
   };
   keymaps = [
-    # Open lazygit within nvim. 
+    # Open lazygit within nvim.
     {
       action = "<cmd>LazyGit<CR>";
       key = "<leader>gg";
