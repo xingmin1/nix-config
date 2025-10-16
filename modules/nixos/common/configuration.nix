@@ -21,7 +21,6 @@ rec {
 
   wsl.enable = true;
   wsl.defaultUser = "xmin";
-  networking.hostName = "nixos";
   nixpkgs.hostPlatform = "x86_64-linux";
 
   # This value determines the NixOS release from which the default

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ flake, pkgs, ... }:
 {
   # Nix packages to install to $HOME
   #
@@ -12,6 +12,7 @@
     sd
     tree
     gnumake
+    file
 
     # Nix dev
     cachix
@@ -19,6 +20,9 @@
     nixd # Nix language server
     nix-info
     nixpkgs-fmt
+    nixfmt-rfc-style
+    # flake.inputs.alejandra.defaultPackage.${hostPlatform.system}
+    alejandra
 
     # On ubuntu, we need this less for `man home-configuration.nix`'s pager to
     # work.

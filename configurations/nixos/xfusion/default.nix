@@ -1,12 +1,32 @@
 # This file is just *top-level* configuration.
 { flake, ... }:
+
+let
+  inherit (flake) inputs;
+  inherit (inputs) self;
+in
 {
   imports = [
-    flake.inputs.self.nixosConfiguration.nixos
+    self.nixosModules.default
   ];
 
-  nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
+  nix.settings.substituters = [ "http://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" "http://mirror.sjtu.edu.cn/nix-channels/store" "https://mirrors.ustc.edu.cn/nix-channels/store" "https://nix-community.cachix.org"];
+  # will be appended to the system-level trusted-public-keys
+  nix.settings.extra-trusted-public-keys = [
+      # nix community's cache server public key
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+  ];
   networking.hostName = "xfusion";
+
+  security.sudo = {
+    enable = true;  # 启用 sudo，并由 NixOS 生成 /etc/sudoers
+    extraConfig = ''
+      Defaults env_keep += "http_proxy https_proxy no_proxy"
+      Defaults env_keep += "HTTP_PROXY HTTPS_PROXY NO_PROXY"
+      Defaults env_keep += "all_proxy ALL_PROXY"
+      Defaults env_keep += "NIX_SSL_CERT_FILE SSL_CERT_FILE GIT_SSL_CAINFO CURL_CA_BUNDLE"
+    '';
+  };
 
   security.pki.certificates = [
     ''
