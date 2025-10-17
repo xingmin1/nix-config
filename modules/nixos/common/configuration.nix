@@ -1,19 +1,15 @@
 # Edit this configuration file to define what should be installed on
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
 # NixOS-WSL specific options are documented on the NixOS-WSL repository:
 # https://github.com/nix-community/NixOS-WSL
-
 {
   flake,
   config,
   lib,
   pkgs,
   ...
-}:
-
-rec {
+}: rec {
   imports = [
     # include NixOS-WSL modules
     flake.inputs.nixos-wsl.nixosModules.default
@@ -37,5 +33,5 @@ rec {
   ];
 
   # 避免 sshd 服务启动失败
-  services.openssh.ports = [ 2222 ];
+  services.openssh.ports = [2222];
 }

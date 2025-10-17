@@ -1,5 +1,4 @@
-{ ... }:
-{
+{...}: {
   programs.jjui = {
     enable = true;
 
@@ -8,15 +7,15 @@
 
       custom_commands = {
         "show all commits" = {
-          key = [ "a" ];
+          key = ["a"];
           revset = "all()";
         };
         "show default view" = {
-          key = [ "d" ];
+          key = ["d"];
           revset = "";
         };
         "edit immutable" = {
-          key = [ "e" ];
+          key = ["e"];
           args = [
             "edit"
             "--ignore-immutable"
@@ -25,7 +24,7 @@
           ];
         };
         "squash immutable" = {
-          key = [ "S" ];
+          key = ["S"];
           args = [
             "squash"
             "--ignore-immutable"
@@ -34,7 +33,7 @@
           ];
         };
         "split immutable" = {
-          key = [ "s" ];
+          key = ["s"];
           args = [
             "split"
             "--ignore-immutable"
