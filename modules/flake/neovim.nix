@@ -1,20 +1,6 @@
-{inputs, ...}: {
-  perSystem = {
-    pkgs,
-    system,
-    ...
-  }: let
-    neovimWithConfig = inputs.nixvim.legacyPackages.${system}.makeNixvimWithModule {
-      inherit pkgs;
-      module = import ../home/neovim/nixvim.nix;
-    };
-  in {
-    packages.neovim = neovimWithConfig.overrideAttrs (oa: {
-      meta =
-        oa.meta
-        // {
-          description = "Neovim with NixVim configuration";
-        };
-    });
+# 提供一个简化的 Neovim 包输出：直接导出上游 pkgs.neovim
+{...}: {
+  perSystem = { pkgs, ... }: {
+    packages.neovim = pkgs.neovim;
   };
 }
