@@ -2,17 +2,22 @@
 return {
   "gbprod/yanky.nvim",
   opts = function()
-    local mapping = require "yanky.telescope.mapping"
-    local mappings = mapping.get_defaults()
-    mappings.i["<c-p>"] = nil
-    return {
-      highlight = { timer = 200 },
-      picker = {
-        telescope = {
+    -- Avoid requiring telescope in VS Code or when telescope is not installed
+    local picker = {}
+    if not vim.g.vscode then
+      local ok, mapping = pcall(require, "yanky.telescope.mapping")
+      if ok then
+        local mappings = mapping.get_defaults()
+        mappings.i["<c-p>"] = nil
+        picker.telescope = {
           use_default_mappings = false,
           mappings = mappings,
-        },
-      },
+        }
+      end
+    end
+    return {
+      highlight = { timer = 200 },
+      picker = picker,
     }
   end,
   keys = {

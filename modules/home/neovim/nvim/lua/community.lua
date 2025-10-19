@@ -52,4 +52,6 @@ return {
 
   -- Lua implementation of CamelCaseMotion, with extra consideration of punctuation.
   { import = "astrocommunity.motion.nvim-spider" },
+    
+  -- { import = "astrocommunity.recipes.vscode" },
 }
