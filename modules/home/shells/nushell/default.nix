@@ -64,6 +64,10 @@
         transformedValue
       ) config.home.shellAliases
     );
+
+    # 启用 Vim 编辑模式
+    extraConfig = ''
+      $env.config = ($env.config | upsert edit_mode 'vi')
+    '';
   };
 }
-

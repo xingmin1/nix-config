@@ -11,7 +11,9 @@
   programs.bash = {
     enable = true;
     enableCompletion = true;
-    initExtra = "";
+    # 启用 Vim 按键模式
+    initExtra = ''
+      set -o vi
+    '';
   };
 }
-

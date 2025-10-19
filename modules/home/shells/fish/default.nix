@@ -45,6 +45,8 @@ in
 
       # Disable greeting
       set fish_greeting
+      # 启用 Vim 按键模式
+      fish_vi_key_bindings
     ''
     + lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
       # Brew environment
@@ -74,4 +76,3 @@ in
     ];
   };
 }
-

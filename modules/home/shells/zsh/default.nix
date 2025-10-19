@@ -103,6 +103,10 @@ in
       autosuggestion.enable = lib.mkForce false;
 
       initContent = lib.mkMerge [
+        # 统一启用 Vim 模式键位
+        (lib.mkOrder 100 ''
+          bindkey -v
+        '')
         (lib.mkOrder 450 (
           lib.optionalString (!config.programs.atuin.enable or false)
             ''
