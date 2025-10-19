@@ -32,6 +32,7 @@ in {
   config = {
     # For home-manager to work.
     # https://github.com/nix-community/home-manager/issues/4026#issuecomment-1565487545
+    # 系统用户配置：为所有 myusers 设置基础属性，并统一设置默认登录 shell
     users.users = mapListToAttrs config.myusers (
       name:
         lib.optionalAttrs pkgs.stdenv.isDarwin
@@ -40,6 +41,9 @@ in {
         }
         // lib.optionalAttrs pkgs.stdenv.isLinux {
           isNormalUser = true;
+          # 参考上游 khanelinix：默认 shell 使用 zsh
+          # 如未来需要针对个别用户差异化，可在 configurations/home/<user>.nix 中覆盖
+          shell = pkgs.zsh;
         }
     );
 
