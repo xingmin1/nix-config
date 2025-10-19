@@ -17,6 +17,7 @@
 
   wsl.enable = true;
   wsl.defaultUser = "xmin";
+  wsl.wslConf.interop.appendWindowsPath = false;
   nixpkgs.hostPlatform = "x86_64-linux";
 
   # This value determines the NixOS release from which the default
@@ -31,6 +32,11 @@
     "nix-command"
     "flakes"
   ];
+
+  nix.settings = {
+    extra-substituters = ["https://numtide.cachix.org"];
+    extra-trusted-public-keys = ["numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="];
+  };
 
   # 避免 sshd 服务启动失败
   services.openssh.ports = [2222];

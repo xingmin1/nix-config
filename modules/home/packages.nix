@@ -6,7 +6,7 @@
   # Nix packages to install to $HOME
   #
   # Search for packages here: https://search.nixos.org/packages
-  home.packages = with pkgs; [
+  home.packages = (with pkgs; [
     omnix
 
     # Unix tools
@@ -30,7 +30,9 @@
     # On ubuntu, we need this less for `man home-configuration.nix`'s pager to
     # work.
     less
-  ];
+  ]) ++ (with flake.inputs.nix-ai-tools.packages.${pkgs.system}; [
+    codex
+  ]);
 
   # Programs natively supported by home-manager.
   # They can be configured in `programs.*` instead of using home.packages.

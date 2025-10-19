@@ -19,6 +19,7 @@
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.inputs.flake-parts.follows = "flake-parts";
     vertex.url = "github:juspay/vertex";
+    nix-ai-tools.url = "github:numtide/nix-ai-tools";
   };
 
   # Wired using https://nixos-unified.org/autowiring.html
