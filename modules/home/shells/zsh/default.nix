@@ -96,7 +96,9 @@ in
         KEYTIMEOUT = 0;
       };
 
-      syntaxHighlighting.enable = false; # 使用 fast-syntax-highlighting 插件
+      # 与上游一致：不用 HM 自带 syntaxHighlighting，而用 fast-syntax-highlighting 插件
+      # 由于 modules/home/shell.nix 也设置过 enable=true，这里使用 mkForce 关闭以消除冲突
+      syntaxHighlighting.enable = lib.mkForce false;
 
       initContent = lib.mkMerge [
         (lib.mkOrder 450 (
@@ -185,4 +187,3 @@ in
     };
   };
 }
-
