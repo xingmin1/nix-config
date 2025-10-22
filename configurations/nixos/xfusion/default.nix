@@ -20,6 +20,13 @@ in {
   ];
   networking.hostName = "xfusion";
 
+  systemd.services.nix-daemon.environment = {
+    http_proxy = "http://proxy.xfusion.com:8080";
+    https_proxy = "http://proxy.xfusion.com:8080";
+    all_proxy = "http://proxy.xfusion.com:8080";
+    no_proxy = "70.*,trailblazer.me,localhost,192.168.*,172.32.*,172.31.*,172.30.*,172.29.*,172.28.*,172.27.*,172.26.*,172.25.*,172.24.*,172.23.*,172.22.*,172.21.*,172.20.*,172.19.*,172.18.*,172.17.*,172.16.*,127.*,10.*,*.xfusion.com,*.welink.huaweicloud.com,*.visualforce.com,*.trailhead.com,*.site.com,*.sfdcopens.com,*.salesforceliveagent.com,*.salesforce.com,*.salesforce-sites.com,*.salesforce-scrt.com,*.salesforce-hub.com,*.salesforce-experience.com,*.salesforce-communities.com,*.qinwei.com,*.lightning.com,*.kunlunit.com,*.hieds.net,*.heds.xfusion.com,*.heds.huawei.com,*.forceusercontent.com,*.force.com,*.force-user-content.com,*.documentforce.com,*.bmeeting.huaweicloud.com,<local>";
+  };
+
   security.sudo = {
     enable = true; # 启用 sudo，并由 NixOS 生成 /etc/sudoers
     extraConfig = ''

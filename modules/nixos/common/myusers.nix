@@ -49,7 +49,11 @@ in {
 
     # Enable home-manager for our user
     home-manager.users = mapListToAttrs config.myusers (name: {
-      imports = [(self + /configurations/home/${name}.nix)];
+      imports =
+        [
+          (self + /configurations/home/${name}.nix)
+        ]
+        ++ (lib.optionals (config.networking.hostName == "xfusion") [(self + /configurations/home/hostname/xfusion.nix)]);
     });
 
     # All users can add Nix caches.
@@ -58,7 +62,6 @@ in {
         "root"
       ]
       ++ config.myusers;
-
 
     # 冲突文件自动备份，避免 clobber（例如 ~/.config/nvim 目录）
     home-manager.backupFileExtension = "backup";
