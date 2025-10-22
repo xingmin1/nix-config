@@ -6,6 +6,10 @@
   # https://nixos.asia/en/direnv
   programs.direnv = {
     enable = true;
+    enableBashIntegration = true;
+    # it's already defined??
+    # enableFishIntegration = true;
+    enableZshIntegration = true;
     nix-direnv = {
       enable = true;
     };
