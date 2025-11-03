@@ -48,6 +48,10 @@ in {
       neovim-joined
     ];
 
+  home.sessionVariables = {
+    EDITOR = "nvim";
+  };
+
   # 常用别名（兼容 nushell 与 bash/zsh）
   home.shellAliases =
     shellAliases
