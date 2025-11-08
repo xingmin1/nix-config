@@ -8,15 +8,15 @@
   programs = {
     git = {
       enable = true;
-      userName = config.me.fullname;
-      userEmail = config.me.email;
-      ignores = ["*~" "*.swp"];
-      aliases = {
-        ci = "commit";
-      };
-      extraConfig = {
+      settings = {
+        user.name = config.me.fullname;
+        user.email = config.me.email;
+
+        alias.ci = "commit";
+
+        # 示例：如需自定义默认分支或拉取策略，可取消注释
         # init.defaultBranch = "master";
-        # pull.rebase = "false";
+        # pull.rebase = false;
       };
     };
     lazygit.enable = true;

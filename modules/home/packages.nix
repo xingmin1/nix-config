@@ -25,7 +25,7 @@
       nix-info
       nixpkgs-fmt
       nixfmt-rfc-style
-      # flake.inputs.alejandra.defaultPackage.${hostPlatform.system}
+      # flake.inputs.alejandra.defaultPackage.${pkgs.stdenv.hostPlatform.system}
       alejandra
 
       # config language
@@ -49,7 +49,7 @@
           ]
       ))
     ])
-    ++ (with flake.inputs.nix-ai-tools.packages.${pkgs.system}; [
+    ++ (with flake.inputs.nix-ai-tools.packages.${pkgs.stdenv.hostPlatform.system}; [
       codex
     ]);
 
