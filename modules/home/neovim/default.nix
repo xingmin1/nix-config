@@ -50,6 +50,8 @@ in {
 
   home.sessionVariables = {
     EDITOR = "nvim";
+    # 一些程序优先读取 VISUAL，其次才是 EDITOR
+    VISUAL = "nvim";
   };
 
   # 常用别名（兼容 nushell 与 bash/zsh）
