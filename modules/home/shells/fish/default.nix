@@ -71,7 +71,7 @@ in
       { name = "forgit"; inherit (pkgs.fishPlugins.forgit) src; }
       { name = "tide"; inherit (pkgs.fishPlugins.tide) src; }
       { name = "sponge"; inherit (pkgs.fishPlugins.sponge) src; }
-      { name = "wakatime"; inherit (pkgs.fishPlugins.wakatime-fish) src; }
+      # { name = "wakatime"; inherit (pkgs.fishPlugins.wakatime-fish) src; }
       { name = "z"; inherit (pkgs.fishPlugins.z) src; }
     ];
   };
