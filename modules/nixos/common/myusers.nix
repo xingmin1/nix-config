@@ -43,7 +43,7 @@ in {
           isNormalUser = true;
           # 参考上游 khanelinix：默认 shell 使用 zsh
           # 如未来需要针对个别用户差异化，可在 configurations/home/<user>.nix 中覆盖
-          shell = pkgs.zsh;
+          shell = pkgs.fish;
         }
     );
 
