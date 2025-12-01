@@ -48,6 +48,10 @@
             uv # python project package manager
           ]
       ))
+      
+      # c
+      clang-tools
+      cmake
     ])
     ++ (with flake.inputs.nix-ai-tools.packages.${pkgs.stdenv.hostPlatform.system}; [
       codex

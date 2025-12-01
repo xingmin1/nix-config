@@ -43,5 +43,5 @@
 
   # 当系统用户默认 shell = pkgs.zsh 时，按 NixOS 要求必须启用系统级 zsh，以确保 PATH 与 /etc/shells 设置正确。
   # 参见错误提示：users.users.<name>.shell = zsh 但 programs.zsh.enable 未开启将导致登录可能失败。
-  programs.zsh.enable = true;
+  # programs.fish.enable = true;
 }
