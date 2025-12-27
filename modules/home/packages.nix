@@ -2,16 +2,18 @@
   flake,
   pkgs,
   ...
-}: {
+}:
+{
   # Nix packages to install to $HOME
   #
   # Search for packages here: https://search.nixos.org/packages
   home.packages =
     (with pkgs; [
-      omnix
+      # omnix
 
       # Unix tools
       ripgrep # Better `grep`
+      ast-grep # 按文本内容找
       fd
       sd
       tree
@@ -35,26 +37,30 @@
       # work.
       less
 
+      nodejs
+      bun
+
       # python
       (python313.withPackages (
-        ps:
-          with ps; [
-            # python language server
-            pyright
-            ruff
+        ps: with ps; [
+          # python language server
+          pyright
+          ruff
 
-            pipx # Install and Run Python Applications in Isolated Environments
-            black # python formatter
-            uv # python project package manager
-          ]
+          pipx # Install and Run Python Applications in Isolated Environments
+          black # python formatter
+          uv # python project package manager
+        ]
       ))
-      
+
       # c
       clang-tools
       cmake
+
     ])
     ++ (with flake.inputs.nix-ai-tools.packages.${pkgs.stdenv.hostPlatform.system}; [
       codex
+      opencode
     ]);
 
   # Programs natively supported by home-manager.
