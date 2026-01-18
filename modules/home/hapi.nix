@@ -1,21 +1,47 @@
 {
-  config,
   pkgs,
+  lib,
+  osConfig ? { },
   ...
 }:
-{
-  hapi = pkgs.stdenv.mkDerivation {
+let
+  hostName = lib.attrByPath [ "networking" "hostName" ] null osConfig;
+  enableOnThisHost = hostName == "nixos";
+
+  hapi = pkgs.stdenvNoCC.mkDerivation rec {
     pname = "hapi";
+    version = "0.9.2";
 
     src = pkgs.fetchurl {
-      url = "https://github.com/tiann/hapi/releases/download/v0.9.2/hapi-linux-x64.tar.gz";
-      hash = "sha256:9c023b6ccc8f8e1fa71798088229a08be70c85e9be52fdec80c6e277c329095f";
+      url = "https://github.com/tiann/hapi/releases/download/v${version}/hapi-linux-x64.tar.gz";
+      hash = "sha256-nAI7bMyPjh+nF5gIgimgi+cMhem+Uv3sgMbid8MpCV8=";
     };
+    sourceRoot = ".";
 
-    dontUnpack = true;
+    nativeBuildInputs = [ pkgs.patchelf ];
+
+    dontConfigure = true;
+    dontBuild = true;
 
     installPhase = ''
-      install -Dm755 $src $out/bin/hapi
+      runHook preInstall
+      install -Dm755 hapi $out/bin/hapi
+      runHook postInstall
     '';
+
+    postFixup = ''
+      patchelf --set-interpreter "${pkgs.stdenv.cc.bintools.dynamicLinker}" $out/bin/hapi
+    '';
+
+    meta = {
+      description = "hapi：tiann/hapi 的命令行工具（预编译二进制）";
+      homepage = "https://github.com/tiann/hapi";
+      license = lib.licenses.agpl3Only;
+      platforms = [ "x86_64-linux" ];
+      mainProgram = "hapi";
+    };
   };
+in
+{
+  home.packages = lib.optionals enableOnThisHost [ hapi ];
 }
