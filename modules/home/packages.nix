@@ -57,10 +57,15 @@
       clang-tools
       cmake
 
+      typst
+
+      maple-mono.NF-CN-unhinted
+      source-han-serif
     ])
     ++ (with flake.inputs.nix-ai-tools.packages.${pkgs.stdenv.hostPlatform.system}; [
       codex
       opencode
+      claude-code
     ]);
 
   # Programs natively supported by home-manager.
