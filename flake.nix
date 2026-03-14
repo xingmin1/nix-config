@@ -16,7 +16,7 @@
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     vertex.url = "github:juspay/vertex";
-    nix-ai-tools.url = "github:numtide/nix-ai-tools";
+    llm-agents.url = "github:numtide/llm-agents.nix";
     # https://github.com/catppuccin/nix
     catppuccin = {
       url = "github:catppuccin/nix";
@@ -25,9 +25,9 @@
   };
 
   # Wired using https://nixos-unified.org/autowiring.html
-  outputs = inputs:
-    inputs.nixos-unified.lib.mkFlake
-    {
+  outputs =
+    inputs:
+    inputs.nixos-unified.lib.mkFlake {
       inherit inputs;
       root = ./.;
     };

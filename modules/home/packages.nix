@@ -20,6 +20,7 @@
       gnumake
       file
       just
+      tokei
 
       # Nix dev
       cachix
@@ -63,8 +64,10 @@
       maple-mono.NF-CN-unhinted
       source-han-serif
     ])
-    ++ (with flake.inputs.nix-ai-tools.packages.${pkgs.stdenv.hostPlatform.system}; [
+    ++ (with flake.inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
       codex
+      codex-acp
+      openclaw
       opencode
       claude-code
     ]);
