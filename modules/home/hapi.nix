@@ -43,5 +43,5 @@ let
   };
 in
 {
-  home.packages = lib.optionals enableOnThisHost [ hapi ];
+  # home.packages = lib.optionals enableOnThisHost [ hapi ];
 }

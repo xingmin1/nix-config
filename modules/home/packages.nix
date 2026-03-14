@@ -19,6 +19,7 @@
       tree
       gnumake
       file
+      just
 
       # Nix dev
       cachix
