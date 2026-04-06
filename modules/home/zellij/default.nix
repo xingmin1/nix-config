@@ -9,10 +9,9 @@ in {
     enableBashIntegration = false;
     enableZshIntegration = false;
     enableFishIntegration = false;
+    extraConfig = builtins.readFile ./config.kdl;
   };
-  xdg.configFile."zellij/config.kdl".source = ./config.kdl;
-  # 为避免与非 Nix 的本地配置冲突，这里不启用 catppuccin。
-  # catppuccin.zellij.enable = false;
+  catppuccin.zellij.enable = true;
 
   # home.shellAliases 在 nushell 不生效，因此这里额外同步一份别名。
   home.shellAliases = shellAliases;
