@@ -35,9 +35,11 @@ in
           lib.concatMapStringsSep " " dquote (makeBinPathList (osConfig.environment.profiles or [ ]))
         }
         set fish_user_paths $fish_user_paths
-      '';
+    '';
 
     interactiveShellInit = ''
+      set -gx GPG_TTY (tty)
+
       # 1password plugin
       if [ -f ~/.config/op/plugins.sh ]
           source ~/.config/op/plugins.sh

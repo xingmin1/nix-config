@@ -13,6 +13,7 @@
     enableCompletion = true;
     # 启用 Vim 按键模式
     initExtra = ''
+      export GPG_TTY="$(tty)"
       set -o vi
     '';
   };

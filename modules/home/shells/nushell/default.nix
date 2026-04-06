@@ -67,6 +67,7 @@
 
     # 启用 Vim 编辑模式
     extraConfig = ''
+      $env.GPG_TTY = (tty | str trim)
       $env.config = ($env.config | upsert edit_mode 'vi')
     '';
   };

@@ -105,6 +105,7 @@ in
       initContent = lib.mkMerge [
         # 统一启用 Vim 模式键位
         (lib.mkOrder 100 ''
+          export GPG_TTY="$(tty)"
           bindkey -v
         '')
         (lib.mkOrder 450 (

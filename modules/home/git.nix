@@ -1,4 +1,10 @@
-{config, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
+  home.packages = [pkgs.git-credential-manager];
+
   home.shellAliases = {
     g = "git";
     lg = "lazygit";
@@ -12,6 +18,12 @@
         user.name = config.me.fullname;
         user.email = config.me.email;
         core.editor = "hx";
+        credential = {
+          helper = "${pkgs.git-credential-manager}/bin/git-credential-manager";
+          credentialStore = "gpg";
+          gitLabAuthModes = "pat";
+          guiPrompt = false;
+        };
 
         alias.ci = "commit";
 

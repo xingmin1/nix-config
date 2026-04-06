@@ -70,7 +70,10 @@
       openclaw
       opencode
       claude-code
-    ]);
+    ])
+    ++ [
+      flake.inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.cc-connect
+    ];
 
   # Programs natively supported by home-manager.
   # They can be configured in `programs.*` instead of using home.packages.
