@@ -11,6 +11,7 @@
           name = config.me.fullname;
           email = config.me.email;
         };
+        ui.editor = "hx";
       };
     };
   };

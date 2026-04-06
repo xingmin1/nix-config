@@ -11,6 +11,7 @@
       settings = {
         user.name = config.me.fullname;
         user.email = config.me.email;
+        core.editor = "hx";
 
         alias.ci = "commit";
 
