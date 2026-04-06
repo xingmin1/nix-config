@@ -17,6 +17,13 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     vertex.url = "github:juspay/vertex";
     llm-agents.url = "github:numtide/llm-agents.nix";
+    # 通过 npm beta dist-tag 固定当前可用的 cc-connect beta 元数据。
+    # 以后只需要 `nix flake update`，flake.lock 就会推进这里的版本信息。
+    ccConnectBeta = {
+      type = "file";
+      url = "https://registry.npmjs.org/cc-connect/beta";
+      flake = false;
+    };
     # https://github.com/catppuccin/nix
     catppuccin = {
       url = "github:catppuccin/nix";
@@ -25,8 +32,7 @@
   };
 
   # Wired using https://nixos-unified.org/autowiring.html
-  outputs =
-    inputs:
+  outputs = inputs:
     inputs.nixos-unified.lib.mkFlake {
       inherit inputs;
       root = ./.;

@@ -36,8 +36,20 @@ rec {
 
   # 可选：你还可以装一些常用工具
   environment.systemPackages = with pkgs; [
+    # 给 Codex WSL 兼容层补固定 shell 路径和 sandbox 依赖
+    bashInteractive
+    bubblewrap
     podman-compose
   ];
+
+  # 给 Codex WSL 兼容层补固定路径，避免它在 WSL agent 模式下找不到 /usr/bin/bash
+  system.activationScripts.codexWslCompat = {
+    deps = [ "usrbinenv" ];
+    text = ''
+      mkdir -p /usr/bin
+      ln -sfn ${pkgs.bashInteractive}/bin/bash /usr/bin/bash
+    '';
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
