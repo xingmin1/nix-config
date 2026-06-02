@@ -2,8 +2,7 @@
   flake,
   pkgs,
   ...
-}:
-{
+}: {
   # Nix packages to install to $HOME
   #
   # Search for packages here: https://search.nixos.org/packages
@@ -42,17 +41,17 @@
       nodejs
       bun
 
-      # python
+      # Python 工具
+      uv # Python 项目与 CLI 工具管理器
       (python313.withPackages (
-        ps: with ps; [
-          # python language server
-          pyright
-          ruff
+        ps:
+          with ps; [
+            # Python 语言服务与格式化
+            pyright
+            ruff
 
-          pipx # Install and Run Python Applications in Isolated Environments
-          black # python formatter
-          uv # python project package manager
-        ]
+            black
+          ]
       ))
 
       # c
