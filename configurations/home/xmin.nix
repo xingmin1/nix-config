@@ -14,5 +14,29 @@ in {
     email = "zjwenx@qq.com";
   };
 
+  services.sub2api = {
+    enable = false;
+    port = 8081;
+    runMode = "simple";
+  };
+  services.cliProxyApi = {
+    enable = false;
+    port = 8399;
+    networkName = "cpa-net";
+    usageStatisticsEnabled = true;
+    redisUsageQueueRetentionSeconds = 3600;
+  };
+  services.cpaUsageKeeper = {
+    enable = false;
+    port = 8400;
+    networkName = "cpa-net";
+    quotaAutoRefreshEnabled = true;
+  };
+  services.codex2api = {
+    enable = true;
+    port = 8080;
+  };
+  services.ccConnect.enable = true;
+
   home.stateVersion = "24.11";
 }
