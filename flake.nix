@@ -17,6 +17,10 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     vertex.url = "github:juspay/vertex";
     llm-agents.url = "github:numtide/llm-agents.nix";
+    codex-src = {
+      url = "git+ssh://git@github.com/xingmin1/codex.git?ref=main";
+      flake = false;
+    };
     # 通过 npm beta dist-tag 固定当前可用的 cc-connect beta 元数据。
     # 以后只需要 `nix flake update`，flake.lock 就会推进这里的版本信息。
     ccConnectBeta = {

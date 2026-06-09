@@ -64,15 +64,15 @@
       source-han-serif
     ])
     ++ (with flake.inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
-      codex
       codex-acp
       openclaw
       opencode
       claude-code
     ])
-    ++ [
-      flake.inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.cc-connect
-    ];
+    ++ (with flake.inputs.self.packages.${pkgs.stdenv.hostPlatform.system}; [
+      cc-connect
+      codex
+    ]);
 
   # Programs natively supported by home-manager.
   # They can be configured in `programs.*` instead of using home.packages.
