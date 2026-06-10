@@ -90,21 +90,28 @@
         "url": "https://registry.npmjs.org/cc-connect/beta"
       }
     },
-    "codex-src": {
+    "codex2apiLatestRelease": {
       "flake": false,
       "locked": {
-        "lastModified": 1781093237,
-        "narHash": "sha256-htOwuKEaa53de4ljdp48iCHC6DY4qMOxoaUyPQgFsaQ=",
-        "ref": "main",
-        "rev": "c164a24eb0c24444453c6b8a00b93444ca2f9c0c",
-        "revCount": 7284,
-        "type": "git",
-        "url": "ssh://git@github.com/xingmin1/codex.git"
+        "narHash": "sha256-o8WxlpUosCAmYYeN26ak30uyYT11GrWDsCyqw63QIMc=",
+        "type": "file",
+        "url": "https://api.github.com/repos/xingmin1/codex2api/releases/latest"
       },
       "original": {
-        "ref": "main",
-        "type": "git",
-        "url": "ssh://git@github.com/xingmin1/codex.git"
+        "type": "file",
+        "url": "https://api.github.com/repos/xingmin1/codex2api/releases/latest"
+      }
+    },
+    "codexLatestRelease": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-LJMzWscK4GiJVOJ7uUTPnf5rH4ekNbGIpLF6cZw4gco=",
+        "type": "file",
+        "url": "https://api.github.com/repos/xingmin1/codex/releases/latest"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://api.github.com/repos/xingmin1/codex/releases/latest"
       }
     },
     "flake-compat": {
@@ -396,7 +403,8 @@
       "inputs": {
         "catppuccin": "catppuccin",
         "ccConnectBeta": "ccConnectBeta",
-        "codex-src": "codex-src",
+        "codex2apiLatestRelease": "codex2apiLatestRelease",
+        "codexLatestRelease": "codexLatestRelease",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "llm-agents": "llm-agents",

@@ -9,8 +9,7 @@
   lib,
   pkgs,
   ...
-}:
-rec {
+}: rec {
   imports = [
     # include NixOS-WSL modules
     flake.inputs.nixos-wsl.nixosModules.default
@@ -44,7 +43,7 @@ rec {
 
   # 给 Codex WSL 兼容层补固定路径，避免它在 WSL agent 模式下找不到 /usr/bin/bash
   system.activationScripts.codexWslCompat = {
-    deps = [ "usrbinenv" ];
+    deps = ["usrbinenv"];
     text = ''
       mkdir -p /usr/bin
       ln -sfn ${pkgs.bashInteractive}/bin/bash /usr/bin/bash
@@ -65,12 +64,12 @@ rec {
   ];
 
   nix.settings = {
-    extra-substituters = [ "https://numtide.cachix.org" ];
-    extra-trusted-public-keys = [ "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE=" ];
+    extra-substituters = ["https://numtide.cachix.org"];
+    extra-trusted-public-keys = ["numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="];
   };
 
-  # 避免 sshd 服务启动失败
-  services.openssh.ports = [ 2222 ];
+  # WSL 里 Windows 会动态保留一批端口；使用当前未被 excludedportrange 覆盖的高位端口。
+  services.openssh.ports = [24022];
 
   # 当系统用户默认 shell = pkgs.zsh 时，按 NixOS 要求必须启用系统级 zsh，以确保 PATH 与 /etc/shells 设置正确。
   # 参见错误提示：users.users.<name>.shell = zsh 但 programs.zsh.enable 未开启将导致登录可能失败。

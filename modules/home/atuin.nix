@@ -2,7 +2,7 @@
 #  - 迁移自 khanelinix 的 atuin 配置（精简并适配 Linux/NixOS 环境）。
 #  - 提供统一的历史搜索（Ctrl-r）与守护进程，默认启用全部常见 shell 集成（bash/zsh/fish/nushell）。
 #  - 若需禁用某 shell 的集成，请在上层模块覆盖对应的 enable*Integration 选项。
-{ pkgs, ... }: {
+{pkgs, ...}: {
   programs.atuin = {
     enable = true;
 

@@ -7,74 +7,92 @@
   config,
   lib,
   pkgs,
-  osConfig ? { },
-
+  osConfig ? {},
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
-in
-{
+in {
   # 同步 functions 目录（别名、git、cd 等）
   xdg.configFile."fish/functions" = {
-    source = lib.cleanSourceWith { src = lib.cleanSource ./functions/.; };
+    source = lib.cleanSourceWith {src = lib.cleanSource ./functions/.;};
     recursive = true;
   };
 
   programs.fish = {
     enable = true;
 
-    loginShellInit =
-      let
-        dquote = str: "\"" + str + "\"";
-        makeBinPathList = map (path: path + "/bin");
-      in
+    loginShellInit = let
+      dquote = str: "\"" + str + "\"";
+      makeBinPathList = map (path: path + "/bin");
+    in
       lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
         export NIX_PATH="darwin-config=$HOME/.nixpkgs/darwin-configuration.nix:$HOME/.nix-defexpr/channels:$NIX_PATH"
         fish_add_path --move --prepend --path ${
-          lib.concatMapStringsSep " " dquote (makeBinPathList (osConfig.environment.profiles or [ ]))
+          lib.concatMapStringsSep " " dquote (makeBinPathList (osConfig.environment.profiles or []))
         }
         set fish_user_paths $fish_user_paths
-    '';
+      '';
 
-    interactiveShellInit = ''
-      set -gx GPG_TTY (tty)
+    interactiveShellInit =
+      ''
+        set -gx GPG_TTY (tty)
 
-      # 1password plugin
-      if [ -f ~/.config/op/plugins.sh ]
-          source ~/.config/op/plugins.sh
-      end
+        # 1password plugin
+        if [ -f ~/.config/op/plugins.sh ]
+            source ~/.config/op/plugins.sh
+        end
 
-      # Disable greeting
-      set fish_greeting
-      # 启用 Vim 按键模式
-      fish_vi_key_bindings
-    ''
-    + lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
-      # Brew environment
-      if [ -f /opt/homebrew/bin/brew ]
-      	eval "$("/opt/homebrew/bin/brew" shellenv)"
-      end
+        # Disable greeting
+        set fish_greeting
+        # 启用 Vim 按键模式
+        fish_vi_key_bindings
+      ''
+      + lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
+        # Brew environment
+        if [ -f /opt/homebrew/bin/brew ]
+        	eval "$("/opt/homebrew/bin/brew" shellenv)"
+        end
 
-      # Nix
-      if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish' ]
-       source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish'
-      end
-      if [ -f '/nix/var/nix/profiles/default/etc/profile.d/nix.fish' ]
-       source '/nix/var/nix/profiles/default/etc/profile.d/nix.fish'
-      end
-      # End Nix
-    '';
+        # Nix
+        if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish' ]
+         source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish'
+        end
+        if [ -f '/nix/var/nix/profiles/default/etc/profile.d/nix.fish' ]
+         source '/nix/var/nix/profiles/default/etc/profile.d/nix.fish'
+        end
+        # End Nix
+      '';
 
     plugins = [
-      { name = "autopair"; inherit (pkgs.fishPlugins.autopair) src; }
-      { name = "done"; inherit (pkgs.fishPlugins.done) src; }
-      { name = "fzf-fish"; inherit (pkgs.fishPlugins.fzf-fish) src; }
-      { name = "forgit"; inherit (pkgs.fishPlugins.forgit) src; }
-      { name = "tide"; inherit (pkgs.fishPlugins.tide) src; }
-      { name = "sponge"; inherit (pkgs.fishPlugins.sponge) src; }
+      {
+        name = "autopair";
+        inherit (pkgs.fishPlugins.autopair) src;
+      }
+      {
+        name = "done";
+        inherit (pkgs.fishPlugins.done) src;
+      }
+      {
+        name = "fzf-fish";
+        inherit (pkgs.fishPlugins.fzf-fish) src;
+      }
+      {
+        name = "forgit";
+        inherit (pkgs.fishPlugins.forgit) src;
+      }
+      {
+        name = "tide";
+        inherit (pkgs.fishPlugins.tide) src;
+      }
+      {
+        name = "sponge";
+        inherit (pkgs.fishPlugins.sponge) src;
+      }
       # { name = "wakatime"; inherit (pkgs.fishPlugins.wakatime-fish) src; }
-      { name = "z"; inherit (pkgs.fishPlugins.z) src; }
+      {
+        name = "z";
+        inherit (pkgs.fishPlugins.z) src;
+      }
     ];
   };
 }

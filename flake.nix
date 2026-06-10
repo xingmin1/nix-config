@@ -17,8 +17,18 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     vertex.url = "github:juspay/vertex";
     llm-agents.url = "github:numtide/llm-agents.nix";
-    codex-src = {
-      url = "git+ssh://git@github.com/xingmin1/codex.git?ref=main";
+    # 通过 GitHub latest release 固定自定义 Codex 的版本元数据。
+    # 构建时会从锁定的 release JSON 中选择当前平台的预编译压缩包。
+    codexLatestRelease = {
+      type = "file";
+      url = "https://api.github.com/repos/xingmin1/codex/releases/latest";
+      flake = false;
+    };
+    # 通过 GitHub latest release 固定 codex2api 的版本元数据。
+    # 构建时会从锁定的 release JSON 中选择当前平台的预编译压缩包。
+    codex2apiLatestRelease = {
+      type = "file";
+      url = "https://api.github.com/repos/xingmin1/codex2api/releases/latest";
       flake = false;
     };
     # 通过 npm beta dist-tag 固定当前可用的 cc-connect beta 元数据。

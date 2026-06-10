@@ -1,11 +1,10 @@
 {
   pkgs,
   lib,
-  osConfig ? { },
+  osConfig ? {},
   ...
-}:
-let
-  hostName = lib.attrByPath [ "networking" "hostName" ] null osConfig;
+}: let
+  hostName = lib.attrByPath ["networking" "hostName"] null osConfig;
   enableOnThisHost = hostName == "nixos";
 
   hapi = pkgs.stdenvNoCC.mkDerivation rec {
@@ -18,7 +17,7 @@ let
     };
     sourceRoot = ".";
 
-    nativeBuildInputs = [ pkgs.patchelf ];
+    nativeBuildInputs = [pkgs.patchelf];
 
     dontConfigure = true;
     dontBuild = true;
@@ -37,11 +36,10 @@ let
       description = "hapi：tiann/hapi 的命令行工具（预编译二进制）";
       homepage = "https://github.com/tiann/hapi";
       license = lib.licenses.agpl3Only;
-      platforms = [ "x86_64-linux" ];
+      platforms = ["x86_64-linux"];
       mainProgram = "hapi";
     };
   };
-in
-{
+in {
   # home.packages = lib.optionals enableOnThisHost [ hapi ];
 }

@@ -8,14 +8,11 @@
   config,
   lib,
   pkgs,
-
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
   inherit (lib.strings) fileContents;
-in
-{
+in {
   programs = {
     zsh = {
       enable = true;
@@ -23,52 +20,52 @@ in
 
       autocd = true;
 
-      setOptions = [
-        # Enable options
-        "AUTO_LIST"
-        "AUTO_PARAM_SLASH"
-        "AUTO_PUSHD"
-        "ALWAYS_TO_END"
-        "CORRECT"
-        "INTERACTIVE_COMMENTS"
+      setOptions =
+        [
+          # Enable options
+          "AUTO_LIST"
+          "AUTO_PARAM_SLASH"
+          "AUTO_PUSHD"
+          "ALWAYS_TO_END"
+          "CORRECT"
+          "INTERACTIVE_COMMENTS"
 
-        "PUSHD_IGNORE_DUPS"
-        "PUSHD_TO_HOME"
-        "PUSHD_SILENT"
-        "NOTIFY"
-        "PROMPT_SUBST"
-        "MULTIOS"
-        "NOFLOWCONTROL"
+          "PUSHD_IGNORE_DUPS"
+          "PUSHD_TO_HOME"
+          "PUSHD_SILENT"
+          "NOTIFY"
+          "PROMPT_SUBST"
+          "MULTIOS"
+          "NOFLOWCONTROL"
 
-        # Disable options (prefix with NO_)
-        "NO_CORRECT_ALL"
-        "NO_NOMATCH"
-      ]
-      # 当未启用 Atuin 时使用 Zsh 原生历史优化
-      ++ lib.optionals (!config.programs.atuin.enable or false) [
-        "HIST_VERIFY"
-        "NO_HIST_BEEP"
-      ];
+          # Disable options (prefix with NO_)
+          "NO_CORRECT_ALL"
+          "NO_NOMATCH"
+        ]
+        # 当未启用 Atuin 时使用 Zsh 原生历史优化
+        ++ lib.optionals (!config.programs.atuin.enable or false) [
+          "HIST_VERIFY"
+          "NO_HIST_BEEP"
+        ];
 
-      completionInit =
-        ''
-          # 加载 compinit 并优化编译缓存
-          autoload -U compinit
-          zmodload zsh/complist
+      completionInit = ''
+        # 加载 compinit 并优化编译缓存
+        autoload -U compinit
+        zmodload zsh/complist
 
-          _comp_options+=(globdots)
-          zcompdump="$XDG_DATA_HOME"/zsh/.zcompdump-"$ZSH_VERSION"-"$(date --iso-8601=date)"
-          compinit -d "$zcompdump"
+        _comp_options+=(globdots)
+        zcompdump="$XDG_DATA_HOME"/zsh/.zcompdump-"$ZSH_VERSION"-"$(date --iso-8601=date)"
+        compinit -d "$zcompdump"
 
-          if [[ -s "$zcompdump" && (! -s "$zcompdump".zwc || "$zcompdump" -nt "$zcompdump".zwc) ]]; then
-            zcompile "$zcompdump"
-          fi
+        if [[ -s "$zcompdump" && (! -s "$zcompdump".zwc || "$zcompdump" -nt "$zcompdump".zwc) ]]; then
+          zcompile "$zcompdump"
+        fi
 
-          # 兼容 bash 补全（供部分命令复用 bash completion 脚本）
-          autoload -U +X bashcompinit && bashcompinit
+        # 兼容 bash 补全（供部分命令复用 bash completion 脚本）
+        autoload -U +X bashcompinit && bashcompinit
 
-          ${fileContents ./rc/comp.zsh}
-        '';
+        ${fileContents ./rc/comp.zsh}
+      '';
 
       dotDir = "${config.xdg.configHome}/zsh";
       enableCompletion = true;
@@ -110,24 +107,24 @@ in
         '')
         (lib.mkOrder 450 (
           lib.optionalString (!config.programs.atuin.enable or false)
-            ''
-              # 将上一条成功的命令写入历史（搭配 autosuggestion 使用）
-              function zshaddhistory() {
-                LASTHIST=''${1//\\$'\n'/}
-                return 2
-              }
+          ''
+            # 将上一条成功的命令写入历史（搭配 autosuggestion 使用）
+            function zshaddhistory() {
+              LASTHIST=''${1//\\$'\n'/}
+              return 2
+            }
 
-              function precmd() {
-                if [[ $? == 0 && -n ''${LASTHIST//[[:space:]\n]/} && -n $HISTFILE ]] ; then
-                  print -sr -- ''${=''${LASTHIST%%'\n'}}
-                fi
-              }
-
-              if autoload history-search-end; then
-                zle -N history-beginning-search-backward-end history-search-end
-                zle -N history-beginning-search-forward-end  history-search-end
+            function precmd() {
+              if [[ $? == 0 && -n ''${LASTHIST//[[:space:]\n]/} && -n $HISTFILE ]] ; then
+                print -sr -- ''${=''${LASTHIST%%'\n'}}
               fi
-            ''
+            }
+
+            if autoload history-search-end; then
+              zle -N history-beginning-search-backward-end history-search-end
+              zle -N history-beginning-search-forward-end  history-search-end
+            fi
+          ''
         ))
 
         (lib.mkOrder 500 ''

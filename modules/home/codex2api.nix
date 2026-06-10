@@ -1,5 +1,6 @@
 {
   config,
+  flake,
   lib,
   pkgs,
   ...
@@ -8,17 +9,13 @@
 
   inherit (lib) mkEnableOption mkIf mkOption types;
 
-  podman = lib.getExe pkgs.podman;
-
+  codex2apiPackage = flake.inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.codex2api;
   name = "codex2api";
   configDir = "${config.xdg.configHome}/${name}";
   dataDir = "${config.xdg.dataHome}/${name}";
   stateDir = "${config.xdg.stateHome}/${name}";
   envFile = "${configDir}/env";
   credentialsFile = "${configDir}/credentials.env";
-  containerPort = 8080;
-
-  mkPortMapping = host: hostPort: containerPort: "${host}:${toString hostPort}:${toString containerPort}";
 
   init = pkgs.writeShellApplication {
     name = "codex2api-init";
@@ -27,7 +24,6 @@
       pkgs.gawk
       pkgs.gnugrep
       pkgs.openssl
-      pkgs.podman
     ];
     text = ''
             set -euo pipefail
@@ -35,6 +31,9 @@
             install -d -m 700 \
               ${lib.escapeShellArg configDir} \
               ${lib.escapeShellArg dataDir} \
+              ${lib.escapeShellArg "${dataDir}/images"} \
+              ${lib.escapeShellArg "${dataDir}/backgrounds"} \
+              ${lib.escapeShellArg "${stateDir}/logs/security"} \
               ${lib.escapeShellArg "${stateDir}/logs"}
 
             if [ ! -f ${lib.escapeShellArg credentialsFile} ]; then
@@ -60,15 +59,15 @@
 
             umask 077
             cat > ${lib.escapeShellArg envFile} <<EOF
-      CODEX_PORT=${toString containerPort}
-      CODEX_BIND=0.0.0.0
+      CODEX_PORT=${toString cfg.port}
+      CODEX_BIND=${cfg.host}
       CODEX_MAX_REQUEST_BODY_SIZE_MB=${toString cfg.maxRequestBodySizeMB}
       ADMIN_SECRET=$ADMIN_SECRET
       CODEX_API_KEYS=$CODEX_API_KEY
       CODEX_ALLOW_ANONYMOUS=${lib.boolToString cfg.allowAnonymous}
 
       DATABASE_DRIVER=sqlite
-      DATABASE_PATH=/data/codex2api.db
+      DATABASE_PATH=${dataDir}/codex2api.db
       CACHE_DRIVER=memory
 
       CODEX_UPSTREAM_TRANSPORT=${cfg.upstreamTransport}
@@ -78,11 +77,11 @@
       CODEX_FINGERPRINT_DEBUG=${lib.boolToString cfg.fingerprintDebug}
       FAST_SCHEDULER_ENABLED=${lib.boolToString cfg.fastSchedulerEnabled}
 
-      IMAGE_ASSET_DIR=/data/images
-      BACKGROUND_ASSET_DIR=/data/backgrounds
-      LOG_DIR=/app/logs
+      IMAGE_ASSET_DIR=${dataDir}/images
+      BACKGROUND_ASSET_DIR=${dataDir}/backgrounds
+      LOG_DIR=${stateDir}/logs
       LOG_DISABLED=${lib.boolToString cfg.logDisabled}
-      SECURITY_LOG_DIR=/app/logs/security
+      SECURITY_LOG_DIR=${stateDir}/logs/security
 
       GIN_MODE=release
       TZ=${cfg.timeZone}
@@ -90,31 +89,14 @@
             chmod 600 ${lib.escapeShellArg envFile}
     '';
   };
-
-  start = pkgs.writeShellApplication {
-    name = "codex2api-start";
-    runtimeInputs = [pkgs.podman];
-    text = ''
-      exec ${podman} run \
-        --name codex2api \
-        --replace \
-        --rm \
-        --pull=newer \
-        --env-file ${lib.escapeShellArg envFile} \
-        -p ${lib.escapeShellArg (mkPortMapping cfg.host cfg.port containerPort)} \
-        -v ${lib.escapeShellArg "${dataDir}:/data"} \
-        -v ${lib.escapeShellArg "${stateDir}/logs:/app/logs"} \
-        ${lib.escapeShellArg cfg.image}
-    '';
-  };
 in {
   options.services.codex2api = {
-    enable = mkEnableOption "Codex2API 用户级容器服务";
+    enable = mkEnableOption "Codex2API 用户级服务";
 
-    image = mkOption {
-      type = types.str;
-      default = "ghcr.io/james-6-23/codex2api:latest";
-      description = "Codex2API 容器镜像。";
+    package = mkOption {
+      type = types.package;
+      default = codex2apiPackage;
+      description = "用于运行 Codex2API 的包，默认使用本仓库 flake 输出的 release 构建。";
     };
 
     host = mkOption {
@@ -201,13 +183,13 @@ in {
     assertions = [
       {
         assertion = pkgs.stdenv.isLinux;
-        message = "services.codex2api 依赖 systemd user services 和 Podman，只能在 Linux 上启用。";
+        message = "services.codex2api 依赖 systemd user services，只能在 Linux 上启用。";
       }
     ];
 
     xdg.enable = true;
 
-    home.packages = [pkgs.podman];
+    home.packages = [cfg.package];
 
     systemd.user.startServices = "sd-switch";
 
@@ -237,8 +219,9 @@ in {
 
         Service = {
           Type = "simple";
-          ExecStart = "${start}/bin/codex2api-start";
-          ExecStop = "${podman} stop --ignore --time 20 codex2api";
+          EnvironmentFile = envFile;
+          WorkingDirectory = dataDir;
+          ExecStart = lib.getExe cfg.package;
           Restart = "always";
           RestartSec = 3;
         };
