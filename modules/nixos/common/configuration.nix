@@ -17,7 +17,14 @@
 
   wsl.enable = true;
   wsl.defaultUser = "xmin";
-  wsl.wslConf.interop.appendWindowsPath = false;
+  wsl.interop = {
+    register = true;
+    includePath = false;
+  };
+  wsl.wslConf.interop = {
+    enabled = true;
+    appendWindowsPath = false;
+  };
   nixpkgs.hostPlatform = "x86_64-linux";
 
   # 生成/启用 /etc/containers 下的通用容器配置文件支持

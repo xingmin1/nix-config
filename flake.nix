@@ -17,6 +17,10 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     vertex.url = "github:juspay/vertex";
     llm-agents.url = "github:numtide/llm-agents.nix";
+    ast-bro = {
+      url = "github:aeroxy/ast-bro";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # 通过 GitHub latest release 固定自定义 Codex 的版本元数据。
     # 构建时会从锁定的 release JSON 中选择当前平台的预编译压缩包。
     codexLatestRelease = {
