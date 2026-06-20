@@ -15,6 +15,8 @@
       "--no-autoupdate"
       "--loglevel"
       cfg.logLevel
+      "--protocol"
+      cfg.protocol
     ]
     ++ lib.optionals (cfg.metrics != null) [
       "--metrics"
@@ -51,6 +53,16 @@ in {
       ];
       default = "info";
       description = "cloudflared 运行日志级别。";
+    };
+
+    protocol = mkOption {
+      type = types.enum [
+        "auto"
+        "http2"
+        "quic"
+      ];
+      default = "http2";
+      description = "cloudflared 连接 Cloudflare edge 时使用的协议。当前网络路径下 QUIC 不稳定，默认固定为 http2。";
     };
 
     metrics = mkOption {
