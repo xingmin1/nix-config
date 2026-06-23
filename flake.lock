@@ -127,7 +127,7 @@
     "codexLatestRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-8Ak/boUCDsbrMPsjt2NLQm4qg3SKn82smgG808Yxwmc=",
+        "narHash": "sha256-VrlYoAZfW/aNoxMCw/jrkIfoRF3c+eVfc6P7XK44oQc=",
         "type": "file",
         "url": "https://api.github.com/repos/xingmin1/codex/releases/latest"
       },
