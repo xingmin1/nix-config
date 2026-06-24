@@ -115,7 +115,7 @@
     "codex2apiLatestRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-l1oi3ZyD1jdRLTZOj8v1Vw7VaX51hiJT7x8H0XWnnnc=",
+        "narHash": "sha256-B+tSqgrtRFMZQSh5cmxHiRsYrPGU057w2qSm61zQSiI=",
         "type": "file",
         "url": "https://api.github.com/repos/xingmin1/codex2api/releases/latest"
       },
@@ -127,7 +127,7 @@
     "codexLatestRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-VrlYoAZfW/aNoxMCw/jrkIfoRF3c+eVfc6P7XK44oQc=",
+        "narHash": "sha256-L7sh6YBsVvv6gMMoA7CH6bb8bdNx6Y/ObOs4nGEG3L0=",
         "type": "file",
         "url": "https://api.github.com/repos/xingmin1/codex/releases/latest"
       },
