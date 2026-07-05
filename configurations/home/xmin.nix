@@ -36,7 +36,10 @@ in {
     enable = true;
     port = 8080;
   };
-  services.cloudflaredTunnel.enable = true;
+  services.cloudflaredTunnel = {
+    enable = true;
+    edgeBindAddress = "auto";
+  };
   services.ccConnect.enable = true;
 
   home.stateVersion = "24.11";

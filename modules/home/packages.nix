@@ -1,8 +1,14 @@
 {
+  config,
   flake,
+  lib,
   pkgs,
   ...
-}: {
+}: let
+  naviPackage = pkgs.navi;
+  naviCheatsConfig = "${config.xdg.configHome}/navi/cheats";
+  naviCheatsData = "${config.xdg.dataHome}/navi/cheats";
+in {
   # Nix packages to install to $HOME
   #
   # Search for packages here: https://search.nixos.org/packages
@@ -60,6 +66,8 @@
 
       typst
 
+      tlrc
+
       maple-mono.NF-CN-unhinted
       source-han-serif
     ])
@@ -72,6 +80,7 @@
     ++ (with flake.inputs.self.packages.${pkgs.stdenv.hostPlatform.system}; [
       cc-connect
       codex
+      just-lsp
     ]);
 
   # Programs natively supported by home-manager.
@@ -79,6 +88,13 @@
   programs = {
     # Better `cat`
     bat.enable = true;
+    eza = {
+      enable = true;
+      colors = "auto";
+      git = true;
+      icons = "auto";
+      enableNushellIntegration = true;
+    };
     # Type `<ctrl> + r` to fuzzy search your shell history
     fzf.enable = true;
     jq.enable = true;
@@ -89,5 +105,100 @@
       enable = true;
       #host = ""; #In case you wish to use a server other than tmate.io
     };
+
+    navi = {
+      enable = true;
+      package = naviPackage;
+
+      enableBashIntegration = false;
+      enableFishIntegration = false;
+      enableZshIntegration = false;
+
+      settings = {
+        cheats.paths = [
+          naviCheatsConfig
+          naviCheatsData
+        ];
+
+        finder = {
+          command = "fzf";
+          overrides = "--height=80% --layout=reverse --border --cycle --ansi --prompt='navi> '";
+          overrides_var = "--height=40% --layout=reverse --border --cycle --ansi --prompt='value> '";
+          delimiter_var = "\\s\\s+";
+        };
+
+        shell = {
+          command = "bash";
+          finder_command = "bash";
+        };
+
+        style = {
+          tag = {
+            width_percentage = 18;
+            min_width = 12;
+          };
+          comment = {
+            width_percentage = 42;
+            min_width = 30;
+          };
+          snippet = {
+            width_percentage = 40;
+            min_width = 30;
+          };
+        };
+      };
+    };
   };
+
+  xdg.configFile."tlrc/config.toml".text = ''
+    [cache]
+    auto_update = true
+    defer_auto_update = true
+    max_age = 168
+    languages = ["zh"]
+
+    [output]
+    show_title = true
+    platform_title = true
+    show_hyphens = true
+    edit_link = false
+    example_prefix = "- "
+    line_length = 0
+    compact = true
+    option_style = "long"
+    raw_markdown = false
+
+    [indent]
+    title = 0
+    description = 0
+    bullet = 0
+    example = 2
+  '';
+
+  xdg.configFile."navi/cheats/.keep".text = "";
+
+  home.shellAliases = {
+    tl = "tldr";
+    nt = "navi --tldr";
+    nsh = "navi --cheatsh";
+  };
+
+  programs.bash.initExtra = lib.mkAfter ''
+    if [[ :$SHELLOPTS: =~ :(vi|emacs): ]]; then
+      eval "$(${lib.getExe naviPackage} widget bash | sed 's/\\C-g/\\C-n/g')"
+    fi
+  '';
+
+  programs.fish.interactiveShellInit = lib.mkAfter ''
+    ${lib.getExe naviPackage} widget fish | string replace --all '\cg' '\cn' | source
+  '';
+
+  programs.zsh.initContent = lib.mkAfter ''
+    if [[ $options[zle] = on ]]; then
+      eval "$(${lib.getExe naviPackage} widget zsh | sed "s/bindkey '\^g'/bindkey '\^N'/")"
+
+      bindkey -M emacs '^N' _navi_widget 2>/dev/null || true
+      bindkey -M viins '^N' _navi_widget 2>/dev/null || true
+    fi
+  '';
 }

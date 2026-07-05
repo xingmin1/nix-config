@@ -3,43 +3,16 @@
   lib,
   ...
 }: let
-  windowsPowerShell = "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe";
-  windowsClip = "/mnt/c/Windows/System32/clip.exe";
-  windowsClipboardRead = "[Console]::OutputEncoding=[System.Text.Encoding]::UTF8; Get-Clipboard -Raw";
-  windowsClipboardSet = pkgs.writeShellApplication {
-    name = "hx-clipboard-set";
-    runtimeInputs = [
-      pkgs.glibc.bin
-    ];
-    text = ''
-      set -euo pipefail
-
-      iconv -f UTF-8 -t UTF-16LE | ${lib.escapeShellArg windowsClip}
-    '';
+  clipboardReadCommand = {
+    command = lib.getExe' pkgs.wl-clipboard "wl-paste";
+    args = ["--no-newline"];
   };
-  windowsClipboardGet = pkgs.writeShellApplication {
-    name = "hx-clipboard-get";
-    runtimeInputs = [
-      pkgs.gnused
-    ];
-    text = ''
-      set -euo pipefail
-
-      ${lib.escapeShellArg windowsPowerShell} \
-        -NoProfile \
-        -NonInteractive \
-        -Command ${lib.escapeShellArg windowsClipboardRead} \
-        | sed 's/\r$//'
-    '';
-  };
-  windowsClipboardReadCommand = {
-    command = "${windowsClipboardGet}/bin/hx-clipboard-get";
+  clipboardWriteCommand = {
+    command = lib.getExe' pkgs.wl-clipboard "wl-copy";
     args = [];
   };
-  windowsClipboardWriteCommand = {
-    command = "${windowsClipboardSet}/bin/hx-clipboard-set";
-    args = [];
-  };
+  primaryClipboardReadCommand = clipboardReadCommand // {args = ["--primary" "--no-newline"];};
+  primaryClipboardWriteCommand = clipboardWriteCommand // {args = ["--primary"];};
 in {
   programs.helix = {
     enable = true;
@@ -67,12 +40,12 @@ in {
         cursorline = true;
         color-modes = true;
         lsp.display-messages = true;
-        # Helix 自定义 provider 中，yank 命令向 Helix 输出内容，paste 命令接收 Helix 的 stdin。
+        # WSLg 会把 Wayland 剪贴板与 Windows 剪贴板同步，避免依赖易失效的 Windows 进程互操作。
         clipboard-provider.custom = {
-          yank = windowsClipboardReadCommand;
-          paste = windowsClipboardWriteCommand;
-          primary-yank = windowsClipboardReadCommand;
-          primary-paste = windowsClipboardWriteCommand;
+          yank = clipboardReadCommand;
+          paste = clipboardWriteCommand;
+          primary-yank = primaryClipboardReadCommand;
+          primary-paste = primaryClipboardWriteCommand;
         };
         cursor-shape = {
           insert = "bar";

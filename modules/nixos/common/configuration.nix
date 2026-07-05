@@ -25,6 +25,7 @@
     enabled = true;
     appendWindowsPath = false;
   };
+  wsl.wslConf.network.generateHosts = false;
   nixpkgs.hostPlatform = "x86_64-linux";
 
   # 生成/启用 /etc/containers 下的通用容器配置文件支持
@@ -57,6 +58,8 @@
     '';
   };
 
+  services.cloudflareTunnelDirectRoutes.enable = true;
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It's perfectly fine and recommended to leave
@@ -80,5 +83,6 @@
 
   # 当系统用户默认 shell = pkgs.zsh 时，按 NixOS 要求必须启用系统级 zsh，以确保 PATH 与 /etc/shells 设置正确。
   # 参见错误提示：users.users.<name>.shell = zsh 但 programs.zsh.enable 未开启将导致登录可能失败。
-  # programs.fish.enable = true;
+  programs.fish.enable = true;
+  programs.zsh.enable = true;
 }

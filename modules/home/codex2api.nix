@@ -62,6 +62,7 @@
       CODEX_PORT=${toString cfg.port}
       CODEX_BIND=${cfg.host}
       CODEX_MAX_REQUEST_BODY_SIZE_MB=${toString cfg.maxRequestBodySizeMB}
+      CODEX_GRACEFUL_SHUTDOWN_TIMEOUT_SECONDS=${toString cfg.gracefulShutdownTimeoutSeconds}
       ADMIN_SECRET=$ADMIN_SECRET
       CODEX_API_KEYS=$CODEX_API_KEY
       CODEX_ALLOW_ANONYMOUS=${lib.boolToString cfg.allowAnonymous}
@@ -127,6 +128,12 @@ in {
       type = types.ints.positive;
       default = 48;
       description = "Codex2API HTTP 请求体上限，单位 MB。";
+    };
+
+    gracefulShutdownTimeoutSeconds = mkOption {
+      type = types.ints.positive;
+      default = 360;
+      description = "Codex2API 收到停止信号后等待在途请求完成的最长时间，单位秒。";
     };
 
     upstreamTransport = mkOption {
@@ -224,6 +231,8 @@ in {
           ExecStart = lib.getExe cfg.package;
           Restart = "always";
           RestartSec = 3;
+          # systemd 必须比应用自身的优雅关闭期限多留少量清理时间，否则会提前强制终止进程。
+          TimeoutStopSec = "${toString (cfg.gracefulShutdownTimeoutSeconds + 10)}s";
         };
 
         Install.WantedBy = ["default.target"];

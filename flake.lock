@@ -103,7 +103,7 @@
     "ccConnectBeta": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-KCs7YcuO4WZwjCvhZF4WeoUFb1OEHjZBXd0FuPxSoKE=",
+        "narHash": "sha256-7K4oWqeQhsYwEm0FJiRawE/t5ecD9Yj9HotPXqljHN8=",
         "type": "file",
         "url": "https://registry.npmjs.org/cc-connect/beta"
       },
@@ -115,7 +115,7 @@
     "codex2apiLatestRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-e7WqnNSqn33DIvU4pg1V5njK1t6VJsxXiHxx4KLti78=",
+        "narHash": "sha256-DT/ZnKtHCJzs4WrBHRaL1toqWwexOjRDTD08QFxK378=",
         "type": "file",
         "url": "https://api.github.com/repos/xingmin1/codex2api/releases/latest"
       },
@@ -127,7 +127,7 @@
     "codexLatestRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-L7sh6YBsVvv6gMMoA7CH6bb8bdNx6Y/ObOs4nGEG3L0=",
+        "narHash": "sha256-3773VLOfKrl4i5ofzzfi+To3vOzShsJZV1WGPdJ1pnM=",
         "type": "file",
         "url": "https://api.github.com/repos/xingmin1/codex/releases/latest"
       },
