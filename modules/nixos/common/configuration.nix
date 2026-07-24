@@ -74,8 +74,14 @@
   ];
 
   nix.settings = {
-    extra-substituters = ["https://numtide.cachix.org"];
-    extra-trusted-public-keys = ["numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="];
+    extra-substituters = [
+      "https://numtide.cachix.org"
+      "https://cache.numtide.com"
+    ];
+    extra-trusted-public-keys = [
+      "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+    ];
   };
 
   # WSL 里 Windows 会动态保留一批端口；使用当前未被 excludedportrange 覆盖的高位端口。

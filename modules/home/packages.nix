@@ -73,6 +73,7 @@ in {
     ])
     ++ (with flake.inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
       codex-acp
+      grok
       openclaw
       opencode
       claude-code
@@ -80,6 +81,7 @@ in {
     ++ (with flake.inputs.self.packages.${pkgs.stdenv.hostPlatform.system}; [
       cc-connect
       codex
+      jcode
       just-lsp
     ]);
 
