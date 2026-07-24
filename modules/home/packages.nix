@@ -5,6 +5,17 @@
   pkgs,
   ...
 }: let
+  configuredGrok = pkgs.symlinkJoin {
+    name = "grok-configured";
+    paths = [flake.inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.grok];
+    nativeBuildInputs = [pkgs.makeWrapper];
+    postBuild = ''
+      for program in grok agent; do
+        wrapProgram "$out/bin/$program" \
+          --set GROK_CODEX2API_KEY local-compat-proxy
+      done
+    '';
+  };
   configuredJcode = pkgs.symlinkJoin {
     name = "jcode-configured";
     paths = [flake.inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.jcode];
@@ -85,7 +96,6 @@ in {
     ])
     ++ (with flake.inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
       codex-acp
-      grok
       openclaw
       opencode
       claude-code
@@ -95,7 +105,10 @@ in {
       codex
       just-lsp
     ])
-    ++ [configuredJcode];
+    ++ [
+      configuredGrok
+      configuredJcode
+    ];
 
   # Programs natively supported by home-manager.
   # They can be configured in `programs.*` instead of using home.packages.
