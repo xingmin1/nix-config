@@ -36,6 +36,7 @@ in {
     enable = true;
     port = 8080;
   };
+  services.grokOpenAICompat.enable = true;
   services.cloudflaredTunnel = {
     enable = true;
     edgeBindAddress = "auto";

@@ -5,6 +5,18 @@
   pkgs,
   ...
 }: let
+  configuredJcode = pkgs.symlinkJoin {
+    name = "jcode-configured";
+    paths = [flake.inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.jcode];
+    nativeBuildInputs = [pkgs.makeWrapper];
+    postBuild = ''
+      wrapProgram "$out/bin/jcode" \
+        --set JCODE_OPENAI_API_BASE http://127.0.0.1:8080/v1 \
+        --set JCODE_OPENAI_TRANSPORT https \
+        --set JCODE_RUNTIME_PROVIDER openai-api \
+        --run 'if [ -r "$HOME/.config/ai-gateways/jcode.key" ]; then export OPENAI_API_KEY="$(${pkgs.coreutils}/bin/tr -d "\n" < "$HOME/.config/ai-gateways/jcode.key")"; fi'
+    '';
+  };
   naviPackage = pkgs.navi;
   naviCheatsConfig = "${config.xdg.configHome}/navi/cheats";
   naviCheatsData = "${config.xdg.dataHome}/navi/cheats";
@@ -81,9 +93,9 @@ in {
     ++ (with flake.inputs.self.packages.${pkgs.stdenv.hostPlatform.system}; [
       cc-connect
       codex
-      jcode
       just-lsp
-    ]);
+    ])
+    ++ [configuredJcode];
 
   # Programs natively supported by home-manager.
   # They can be configured in `programs.*` instead of using home.packages.
