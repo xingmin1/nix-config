@@ -15,11 +15,11 @@
     packages = lib.optionalAttrs (jcodeTarget != null) {
       jcode = pkgs.stdenvNoCC.mkDerivation rec {
         pname = "jcode";
-        version = "0.56.0";
+        version = "0.58.0";
 
         src = pkgs.fetchurl {
           url = "https://github.com/1jehuang/jcode/releases/download/v${version}/jcode-${jcodeTarget}.tar.gz";
-          hash = "sha256-2RGQZnFivnl6IvEmxZ/e8z17CRY4Qk927r9kC7cmHGs=";
+          hash = "sha256-qHVy5mK3vRhGwtLC/wL+A4ZNkDmTwBI3Z5aKn8yQ8pQ=";
         };
 
         nativeBuildInputs = [
