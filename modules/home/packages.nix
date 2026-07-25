@@ -12,6 +12,7 @@
     postBuild = ''
       for program in grok agent; do
         wrapProgram "$out/bin/$program" \
+          --add-flags "--always-approve" \
           --set GROK_CODEX2API_KEY local-compat-proxy
       done
     '';
@@ -29,6 +30,7 @@
         --set JCODE_OPENAI_NATIVE_COMPACTION_MODE auto \
         --set JCODE_OPENAI_NATIVE_COMPACTION_THRESHOLD_TOKENS 300000 \
         --set JCODE_RUNTIME_PROVIDER openai-api \
+        --set JCODE_TOOL_PROFILE full \
         --run 'if [ -r "$HOME/.config/ai-gateways/jcode.key" ]; then export OPENAI_API_KEY="$(${pkgs.coreutils}/bin/tr -d "\n" < "$HOME/.config/ai-gateways/jcode.key")"; fi'
     '';
   };
