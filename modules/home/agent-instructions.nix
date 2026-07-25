@@ -11,6 +11,7 @@ in {
       - 不要调用 Grok Build 内置的 `WebSearch` 或 `web_search` 工具及其专用模型；如果 Tavily MCP 不可用或调用失败，应明确报告错误，不得回退到 WebSearch。
       - `WebFetch` 和 `web_fetch` 不受此规则限制；已有明确 URL 且需要读取页面内容时，可以按需使用。
     '';
+    ".codex/instructions/subagents.md".source = ../../assets/agent-instructions/codex-subagents.md;
     "AGENTS.md".source = sharedAgentsFile;
   };
 }

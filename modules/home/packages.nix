@@ -5,6 +5,16 @@
   pkgs,
   ...
 }: let
+  codexSubagentInstructions = "${config.home.homeDirectory}/.codex/instructions/subagents.md";
+  configuredCodex = pkgs.symlinkJoin {
+    name = "codex-configured";
+    paths = [flake.inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.codex];
+    nativeBuildInputs = [pkgs.makeWrapper];
+    postBuild = ''
+      wrapProgram "$out/bin/codex" \
+        --run 'if [ -r "${codexSubagentInstructions}" ]; then set -- -c "developer_instructions=$(${pkgs.coreutils}/bin/cat "${codexSubagentInstructions}")" "$@"; fi'
+    '';
+  };
   configuredGrok = pkgs.symlinkJoin {
     name = "grok-configured";
     paths = [flake.inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.grok];
@@ -108,10 +118,10 @@ in {
     ])
     ++ (with flake.inputs.self.packages.${pkgs.stdenv.hostPlatform.system}; [
       cc-connect
-      codex
       just-lsp
     ])
     ++ [
+      configuredCodex
       configuredGrok
       configuredJcode
     ];
