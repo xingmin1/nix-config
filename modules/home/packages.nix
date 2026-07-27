@@ -5,6 +5,7 @@
   pkgs,
   ...
 }: let
+  llmAgentPackages = flake.inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
   codexSubagentInstructions = "${config.home.homeDirectory}/.codex/instructions/subagents.md";
   configuredCodex = pkgs.symlinkJoin {
     name = "codex-configured";
@@ -110,11 +111,14 @@ in {
       maple-mono.NF-CN-unhinted
       source-han-serif
     ])
-    ++ (with flake.inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
+    ++ (with llmAgentPackages; [
       codex-acp
       openclaw
       opencode
       claude-code
+      gitnexus
+      codegraph
+      trellis
     ])
     ++ (with flake.inputs.self.packages.${pkgs.stdenv.hostPlatform.system}; [
       cc-connect
