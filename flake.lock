@@ -443,6 +443,26 @@
         "type": "github"
       }
     },
+    "open-grok": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1785164318,
+        "narHash": "sha256-90zC37mGdRYQHIfu8mDcMtqXOpqMOf/KtgybEAnNhKo=",
+        "owner": "xingmin1",
+        "repo": "open-grok",
+        "rev": "dd625559d280a65551f215a74201b95a02e8615f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "xingmin1",
+        "repo": "open-grok",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "ast-bro": "ast-bro",
@@ -458,6 +478,7 @@
         "nixos-unified": "nixos-unified",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_3",
+        "open-grok": "open-grok",
         "vertex": "vertex"
       }
     },

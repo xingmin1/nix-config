@@ -22,6 +22,10 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     vertex.url = "github:juspay/vertex";
     llm-agents.url = "github:numtide/llm-agents.nix";
+    open-grok = {
+      url = "github:xingmin1/open-grok";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     ast-bro = {
       url = "github:aeroxy/ast-bro";
       inputs.nixpkgs.follows = "nixpkgs";

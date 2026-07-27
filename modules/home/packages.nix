@@ -6,6 +6,7 @@
   ...
 }: let
   llmAgentPackages = flake.inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
+  openGrokPackage = flake.inputs.open-grok.packages.${pkgs.stdenv.hostPlatform.system}.open-grok;
   codexSubagentInstructions = "${config.home.homeDirectory}/.codex/instructions/subagents.md";
   configuredCodex = pkgs.symlinkJoin {
     name = "codex-configured";
@@ -128,6 +129,7 @@ in {
       configuredCodex
       configuredGrok
       configuredJcode
+      openGrokPackage
     ];
 
   # Programs natively supported by home-manager.
