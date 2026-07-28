@@ -1,26 +1,43 @@
-{...}: {
+{inputs, ...}: {
   perSystem = {pkgs, ...}: let
     inherit (pkgs) lib stdenv;
 
     system = stdenv.hostPlatform.system;
+    hashFromGitHubAsset = asset:
+      builtins.convertHash {
+        hash = lib.removePrefix "sha256:" asset.digest;
+        hashAlgo = "sha256";
+        toHashFormat = "sri";
+      };
+
+    jcodeRelease = builtins.fromJSON (builtins.readFile inputs.jcodeLatestRelease);
+    jcodeVersion = lib.removePrefix "v" jcodeRelease.tag_name;
     jcodeTarget =
       {
         x86_64-linux = "linux-x86_64";
+        aarch64-linux = "linux-aarch64";
       }
       .${
         system
       }
       or null;
+    jcodeAssetName = "jcode-${jcodeTarget}.tar.gz";
+    jcodeAsset =
+      lib.findFirst
+      (asset: asset.name == jcodeAssetName)
+      (throw "Jcode release ${jcodeRelease.tag_name} 中未找到资产 ${jcodeAssetName}")
+      jcodeRelease.assets;
+    jcodeArchive = pkgs.fetchurl {
+      url = jcodeAsset.browser_download_url;
+      hash = hashFromGitHubAsset jcodeAsset;
+    };
   in {
     packages = lib.optionalAttrs (jcodeTarget != null) {
       jcode = pkgs.stdenvNoCC.mkDerivation rec {
         pname = "jcode";
-        version = "0.58.0";
+        version = jcodeVersion;
 
-        src = pkgs.fetchurl {
-          url = "https://github.com/1jehuang/jcode/releases/download/v${version}/jcode-${jcodeTarget}.tar.gz";
-          hash = "sha256-qHVy5mK3vRhGwtLC/wL+A4ZNkDmTwBI3Z5aKn8yQ8pQ=";
-        };
+        src = jcodeArchive;
 
         nativeBuildInputs = [
           pkgs.autoPatchelfHook
@@ -56,7 +73,10 @@
           homepage = "https://github.com/1jehuang/jcode";
           license = lib.licenses.mit;
           mainProgram = "jcode";
-          platforms = ["x86_64-linux"];
+          platforms = [
+            "x86_64-linux"
+            "aarch64-linux"
+          ];
           sourceProvenance = [lib.sourceTypes.binaryNativeCode];
         };
       };

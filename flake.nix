@@ -30,6 +30,13 @@
       url = "github:aeroxy/ast-bro";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # 通过 GitHub latest release 固定 Jcode 的版本元数据。
+    # 构建时会从锁定的 release JSON 中选择当前平台的预编译压缩包。
+    jcodeLatestRelease = {
+      type = "file";
+      url = "https://api.github.com/repos/1jehuang/jcode/releases/latest";
+      flake = false;
+    };
     # 通过 GitHub latest release 固定自定义 Codex 的版本元数据。
     # 构建时会从锁定的 release JSON 中选择当前平台的预编译压缩包。
     codexLatestRelease = {

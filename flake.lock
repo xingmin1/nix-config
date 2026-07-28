@@ -90,7 +90,7 @@
     "codex2apiLatestRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-2Yieae/Jsb9mqQk43Yp4xAGVJ7mFYltXPraGr+yPyPc=",
+        "narHash": "sha256-U8jyEyIsmG73kNm6AbfNMF0dS9LhXoYYSFy3Ayf0uxs=",
         "type": "file",
         "url": "https://api.github.com/repos/xingmin1/codex2api/releases/latest"
       },
@@ -102,7 +102,7 @@
     "codexLatestRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-coa/CrxC2Eyx3O1sUYKOsbDsfn/xi9LD8h/q0KUOu6M=",
+        "narHash": "sha256-MhhpfOXXuXcx7SGAXgbL5MP8EeafwKccxVOSEINJ2Y0=",
         "type": "file",
         "url": "https://api.github.com/repos/xingmin1/codex/releases/latest"
       },
@@ -237,6 +237,18 @@
         "type": "github"
       }
     },
+    "jcodeLatestRelease": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-KBUj3jxSSldBgeHK9XEEJKL68+xHsvPVRZNCOPEVh0A=",
+        "type": "file",
+        "url": "https://api.github.com/repos/1jehuang/jcode/releases/latest"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://api.github.com/repos/1jehuang/jcode/releases/latest"
+      }
+    },
     "llm-agents": {
       "inputs": {
         "bun2nix": "bun2nix",
@@ -246,11 +258,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1785206787,
-        "narHash": "sha256-QXnVNc4GXjpQl88yo87Mr/nJ0eQGn8GLySCQqudrTEQ=",
+        "lastModified": 1785221976,
+        "narHash": "sha256-n1PgEKstIBdMxilWJpqagnWNF3roP/Fucvdms1DpEFQ=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "f22857db0b1147caae1250c439d1a21a815b4d6f",
+        "rev": "d4a6e87fd4b9d7f551b0d2aba1514213617502a5",
         "type": "github"
       },
       "original": {
@@ -472,6 +484,7 @@
         "codexLatestRelease": "codexLatestRelease",
         "flake-parts": "flake-parts_2",
         "home-manager": "home-manager",
+        "jcodeLatestRelease": "jcodeLatestRelease",
         "llm-agents": "llm-agents",
         "nix-darwin": "nix-darwin",
         "nix-index-database": "nix-index-database",
