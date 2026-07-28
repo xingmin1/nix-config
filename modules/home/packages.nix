@@ -6,7 +6,6 @@
   ...
 }: let
   llmAgentPackages = flake.inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
-  openGrokPackage = flake.inputs.open-grok.packages.${pkgs.stdenv.hostPlatform.system}.open-grok;
   codexSubagentInstructions = "${config.home.homeDirectory}/.codex/instructions/subagents.md";
   configuredCodex = pkgs.symlinkJoin {
     name = "codex-configured";
@@ -97,7 +96,6 @@ in {
     ])
     ++ (with llmAgentPackages; [
       codex-acp
-      openclaw
       claude-code
       gitnexus
       codegraph
@@ -105,13 +103,11 @@ in {
     ])
     ++ (with flake.inputs.self.packages.${pkgs.stdenv.hostPlatform.system}; [
       cc-connect
-      jcode
       just-lsp
     ])
     ++ [
       configuredCodex
       configuredGrok
-      openGrokPackage
     ];
 
   # Programs natively supported by home-manager.
@@ -131,11 +127,15 @@ in {
     jq.enable = true;
     # Install btop https://github.com/aristocratos/btop
     btop.enable = true;
+    bottom.enable = true;
+
     # Tmate terminal sharing.
     tmate = {
       enable = true;
       #host = ""; #In case you wish to use a server other than tmate.io
     };
+    # GitHub CLI
+    gh.enable = true;
 
     navi = {
       enable = true;
@@ -212,6 +212,7 @@ in {
     tl = "tldr";
     nt = "navi --tldr";
     nsh = "navi --cheatsh";
+    top = "btop";
   };
 
   programs.bash.initExtra = lib.mkAfter ''
