@@ -98,7 +98,6 @@ in {
     ++ (with llmAgentPackages; [
       codex-acp
       openclaw
-      opencode
       claude-code
       gitnexus
       codegraph
