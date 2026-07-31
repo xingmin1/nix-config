@@ -77,6 +77,20 @@
     '';
   };
 
+  # Codex 工具 shell 不加载交互式 alias，因此隔离必须落实到同名可执行入口。
+  mkBuildWrapper = name: binary:
+    pkgs.writeShellApplication {
+      inherit name;
+      runtimeInputs = [scopedWorkload];
+      text = ''
+        exec ${scopedWorkload}/bin/scoped-workload build ${lib.escapeShellArg binary} "$@"
+      '';
+    };
+
+  astBroPackage = flake.inputs.ast-bro.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  astBroWrapper = mkBuildWrapper "ast-bro" "${astBroPackage}/bin/ast-bro";
+  sbWrapper = mkBuildWrapper "sb" "${astBroPackage}/bin/sb";
+
   scopedJcode = pkgs.writeShellApplication {
     name = "jcode";
     runtimeInputs = [scopedWorkload];
@@ -89,6 +103,8 @@ in {
     home.packages = [
       scopedWorkload
       scopedJcode
+      astBroWrapper
+      sbWrapper
     ];
 
     # 限制单次 Cargo 的内部并发，避免一个构建再次同时启动数十个重型链接器。
@@ -98,13 +114,11 @@ in {
     '';
 
     home.shellAliases = {
-      ast-bro = "scoped-workload build ast-bro";
       cargo = "scoped-workload build cargo";
       codex = "scoped-workload protected codex";
       nh = "scoped-workload build nh";
       nix = "scoped-workload build nix";
       nixos-rebuild = "scoped-workload build nixos-rebuild";
-      sb = "scoped-workload build sb";
     };
 
     systemd.user.slices = {

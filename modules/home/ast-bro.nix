@@ -14,11 +14,8 @@
     ${astBroBinary} install --target ${target} --global --skills --force
   '';
 in {
-  home.packages = [
-    astBroPackage
-  ];
-
-  # Codex 当前仍兼容 $CODEX_HOME/skills；上游 installer 只写 ~/.agents/skills。
+  # ast-bro 与 sb 由 resource-control 模块提供受 cgroup 隔离的入口。
+  # 这里保留原始包路径供安装器读取 skill，不直接放入用户 PATH。
   home.file.".codex/skills/ast-bro/SKILL.md".source = astBroSkill;
 
   home.activation.astBroAgentSetup = lib.hm.dag.entryAfter ["writeBoundary"] ''
