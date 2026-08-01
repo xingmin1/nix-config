@@ -28,6 +28,16 @@
       done
     '';
   };
+  legacyAgentPackages = lib.optionals (!pkgs.stdenv.isLinux) (
+    (with llmAgentPackages; [
+      codex-acp
+      claude-code
+    ])
+    ++ [
+      configuredCodex
+      configuredGrok
+    ]
+  );
   naviPackage = pkgs.navi;
   naviCheatsConfig = "${config.xdg.configHome}/navi/cheats";
   naviCheatsData = "${config.xdg.dataHome}/navi/cheats";
@@ -95,8 +105,6 @@ in {
       source-han-serif
     ])
     ++ (with llmAgentPackages; [
-      codex-acp
-      claude-code
       gitnexus
       codegraph
       trellis
@@ -105,11 +113,7 @@ in {
       cc-connect
       just-lsp
     ])
-    ++ [
-      configuredCodex
-      configuredGrok
-    ];
-
+    ++ legacyAgentPackages;
   # Programs natively supported by home-manager.
   # They can be configured in `programs.*` instead of using home.packages.
   programs = {
