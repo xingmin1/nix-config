@@ -25,7 +25,7 @@
       set -euo pipefail
 
       if [[ $# -lt 2 ]]; then
-        echo "用法: scoped-workload <build|jcode|protected> <命令> [参数...]" >&2
+        echo "用法: scoped-workload <analysis|build|jcode|protected> <命令> [参数...]" >&2
         exit 2
       fi
 
@@ -33,6 +33,11 @@
       shift
 
       case "$workloadClass" in
+        analysis)
+          slice="analysis.slice"
+          preference="none"
+          command=(choom -n 500 -- "$@")
+          ;;
         build)
           slice="build.slice"
           preference="none"
@@ -77,19 +82,18 @@
     '';
   };
 
-  # Codex 工具 shell 不加载交互式 alias，因此隔离必须落实到同名可执行入口。
-  mkBuildWrapper = name: binary:
+  mkWorkloadWrapper = workloadClass: name: binary:
     pkgs.writeShellApplication {
       inherit name;
       runtimeInputs = [scopedWorkload];
       text = ''
-        exec ${scopedWorkload}/bin/scoped-workload build ${lib.escapeShellArg binary} "$@"
+        exec ${scopedWorkload}/bin/scoped-workload ${workloadClass} ${lib.escapeShellArg binary} "$@"
       '';
     };
 
   astBroPackage = flake.inputs.ast-bro.packages.${pkgs.stdenv.hostPlatform.system}.default;
-  astBroWrapper = mkBuildWrapper "ast-bro" "${astBroPackage}/bin/ast-bro";
-  sbWrapper = mkBuildWrapper "sb" "${astBroPackage}/bin/sb";
+  astBroWrapper = mkWorkloadWrapper "analysis" "ast-bro" "${astBroPackage}/bin/ast-bro";
+  sbWrapper = mkWorkloadWrapper "analysis" "sb" "${astBroPackage}/bin/sb";
 
   scopedJcode = pkgs.writeShellApplication {
     name = "jcode";
@@ -134,6 +138,18 @@ in {
         Unit.Description = "Memory-limited Jcode workloads";
         Slice = {
           MemoryMax = "80%";
+        };
+      };
+
+      analysis = {
+        Unit.Description = "Disposable AST analysis workloads";
+        Slice = {
+          ManagedOOMMemoryPressure = "kill";
+          ManagedOOMMemoryPressureDurationSec = "15s";
+          ManagedOOMMemoryPressureLimit = "70%";
+          ManagedOOMSwap = "kill";
+          MemoryMax = "60%";
+          MemorySwapMax = "8G";
         };
       };
 
