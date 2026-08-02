@@ -23,7 +23,7 @@
     vertex.url = "github:juspay/vertex";
     llm-agents.url = "github:numtide/llm-agents.nix";
     open-grok = {
-      url = "github:xingmin1/open-grok";
+      url = "git+file:./vendor/open-grok?ref=codex-api-key-startup";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     ast-bro = {

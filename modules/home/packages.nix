@@ -116,6 +116,7 @@ in {
       cc-connect
       just-lsp
     ])
+    ++ [flake.inputs.open-grok.packages.${pkgs.stdenv.hostPlatform.system}.open-grok]
     ++ legacyAgentPackages;
   # Programs natively supported by home-manager.
   # They can be configured in `programs.*` instead of using home.packages.

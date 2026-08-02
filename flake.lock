@@ -462,17 +462,18 @@
         ]
       },
       "locked": {
-        "lastModified": 1785210542,
-        "narHash": "sha256-oO3BaOoFit7UJtiajtM5nFQHM+doGXvXEdk0fQPKt0Y=",
-        "owner": "xingmin1",
-        "repo": "open-grok",
-        "rev": "f157f6acb2919bb4f6036818cccae24085c0bbfa",
-        "type": "github"
+        "lastModified": 1785579902,
+        "narHash": "sha256-uFyb9s4H/ExjnK4LDqTAAY3iT2aNzLgqVRCWbqjA+Yc=",
+        "ref": "codex-api-key-startup",
+        "rev": "be5d715549c82350414b60d663af45e7e5a0a3bd",
+        "revCount": 251,
+        "type": "git",
+        "url": "file:./vendor/open-grok"
       },
       "original": {
-        "owner": "xingmin1",
-        "repo": "open-grok",
-        "type": "github"
+        "ref": "codex-api-key-startup",
+        "type": "git",
+        "url": "file:./vendor/open-grok"
       }
     },
     "root": {
