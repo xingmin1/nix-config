@@ -61,6 +61,7 @@ in {
       tokei
       procs
       below
+      lsof
 
       # Nix dev
       cachix
