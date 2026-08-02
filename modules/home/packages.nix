@@ -59,6 +59,8 @@ in {
       file
       just
       tokei
+      procs
+      below
 
       # Nix dev
       cachix
@@ -132,6 +134,7 @@ in {
     # Install btop https://github.com/aristocratos/btop
     btop.enable = true;
     bottom.enable = true;
+    htop.enable = true;
 
     # Tmate terminal sharing.
     tmate = {
@@ -217,6 +220,7 @@ in {
     nt = "navi --tldr";
     nsh = "navi --cheatsh";
     top = "btop";
+    ps = "procs";
   };
 
   programs.bash.initExtra = lib.mkAfter ''
