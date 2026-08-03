@@ -100,6 +100,16 @@ in {
       clang-tools
       cmake
 
+      # 嵌入式与硬件开发
+      usbutils
+      tio
+      picocom
+      serial-studio
+      pulseview
+      sigrok-cli
+      openocd
+      probe-rs-tools
+
       typst
 
       tlrc
@@ -108,15 +118,12 @@ in {
       source-han-serif
     ])
     ++ (with llmAgentPackages; [
-      gitnexus
-      codegraph
       trellis
     ])
     ++ (with flake.inputs.self.packages.${pkgs.stdenv.hostPlatform.system}; [
       cc-connect
       just-lsp
     ])
-    ++ [flake.inputs.open-grok.packages.${pkgs.stdenv.hostPlatform.system}.open-grok]
     ++ legacyAgentPackages;
   # Programs natively supported by home-manager.
   # They can be configured in `programs.*` instead of using home.packages.

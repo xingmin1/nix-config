@@ -47,6 +47,10 @@
     bashInteractive
     bubblewrap
     podman-compose
+
+    # 需要 root 权限的系统与块设备工具
+    kmod
+    bmaptool
   ];
 
   # 给 Codex WSL 兼容层补固定路径，避免它在 WSL agent 模式下找不到 /usr/bin/bash

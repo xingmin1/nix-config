@@ -22,10 +22,6 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     vertex.url = "github:juspay/vertex";
     llm-agents.url = "github:numtide/llm-agents.nix";
-    open-grok = {
-      url = "git+file:./vendor/open-grok?ref=codex-api-key-startup";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     ast-bro = {
       url = "github:aeroxy/ast-bro";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -49,6 +45,12 @@
     codex2apiLatestRelease = {
       type = "file";
       url = "https://api.github.com/repos/xingmin1/codex2api/releases/latest";
+      flake = false;
+    };
+    # 锁定更新时解析最新 Release，常规系统构建仍使用 flake.lock 中固定的二进制。
+    tftpNowBinary = {
+      type = "file";
+      url = "https://github.com/puhitaku/tftp-now/releases/latest/download/tftp-now-linux-amd64";
       flake = false;
     };
     # 通过 npm beta dist-tag 固定当前可用的 cc-connect beta 元数据。

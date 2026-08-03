@@ -10,12 +10,26 @@
   agentWrapperDirectory = "${homeDirectory}/.local/share/nix-config/agent-bin";
   vscodeMachineSettings = "${homeDirectory}/.vscode-server/data/Machine/settings.json";
   codexSubagentInstructions = "${config.home.homeDirectory}/.codex/instructions/subagents.md";
+  llmAgentPackages = flake.inputs.llm-agents.packages.${system};
 
   protectedServiceConfig = {
     ManagedOOMPreference = "avoid";
     OOMPolicy = "kill";
     OOMScoreAdjust = -200;
     Slice = "ai.slice";
+  };
+
+  # 统一的宽松硬上限只兜底失控负载；常态回收由 systemd-oomd 的压力策略负责。
+  workloadMemoryMax = "80%";
+  workloadSwapMax = "8G";
+  workloadSliceConfig = {
+    ManagedOOMMemoryPressure = "kill";
+    ManagedOOMMemoryPressureDurationSec = "15s";
+    ManagedOOMMemoryPressureLimit = "70%";
+    ManagedOOMPreference = "none";
+    ManagedOOMSwap = "kill";
+    MemoryMax = workloadMemoryMax;
+    MemorySwapMax = workloadSwapMax;
   };
 
   scopedWorkload = pkgs.writeShellApplication {
@@ -29,7 +43,7 @@
       set -euo pipefail
 
       if [[ $# -lt 2 ]]; then
-        echo "用法: scoped-workload <analysis|build|claude|codex|grok|jcode|protected> <命令> [参数...]" >&2
+        echo "用法: scoped-workload <analysis|build|claude|codex|grok|jcode|gitnexus|codegraph|protected> <命令> [参数...]" >&2
         exit 2
       fi
 
@@ -37,8 +51,8 @@
       shift
       slice=""
       preference="none"
-      memoryMax=""
-      memorySwapMax=""
+      memoryMax=${lib.escapeShellArg workloadMemoryMax}
+      memorySwapMax=${lib.escapeShellArg workloadSwapMax}
       command=()
 
       case "$workloadClass" in
@@ -52,26 +66,26 @@
           ;;
         claude)
           slice="ai-claude.slice"
-          memoryMax="45%"
-          memorySwapMax="4G"
           command=("$@")
           ;;
         codex)
           slice="ai-codex.slice"
-          memoryMax="45%"
-          memorySwapMax="4G"
+          command=("$@")
+          ;;
+        gitnexus)
+          slice="ai-gitnexus.slice"
+          command=("$@")
+          ;;
+        codegraph)
+          slice="ai-codegraph.slice"
           command=("$@")
           ;;
         grok)
           slice="ai-grok.slice"
-          memoryMax="45%"
-          memorySwapMax="4G"
           command=("$@")
           ;;
         jcode)
           slice="ai-jcode.slice"
-          memoryMax="60%"
-          memorySwapMax="8G"
           command=("$@")
           ;;
         protected)
@@ -99,16 +113,14 @@
         --property=OOMPolicy=kill
         --property=ManagedOOMPreference="$preference"
       )
-      if [[ -n "$memoryMax" ]]; then
-        systemdRunProperties+=(
-          --property=ManagedOOMMemoryPressure=kill
-          --property=ManagedOOMMemoryPressureDurationSec=15s
-          --property=ManagedOOMMemoryPressureLimit=70%
-          --property=ManagedOOMSwap=kill
-          --property=MemoryMax="$memoryMax"
-          --property=MemorySwapMax="$memorySwapMax"
-        )
-      fi
+      systemdRunProperties+=(
+        --property=ManagedOOMMemoryPressure=kill
+        --property=ManagedOOMMemoryPressureDurationSec=15s
+        --property=ManagedOOMMemoryPressureLimit=70%
+        --property=ManagedOOMSwap=kill
+        --property=MemoryMax="$memoryMax"
+        --property=MemorySwapMax="$memorySwapMax"
+      )
 
       exec systemd-run \
         --user \
@@ -167,6 +179,9 @@
     '';
   };
 
+  gitnexusWrapper = mkScopedWrapper "gitnexus" "gitnexus" "${llmAgentPackages.gitnexus}/bin/gitnexus";
+  codegraphWrapper = mkScopedWrapper "codegraph" "codegraph" "${llmAgentPackages.codegraph}/bin/codegraph";
+
   claudeWrapper = mkScopedWrapper "claude" "claude" "${flake.inputs.llm-agents.packages.${system}.claude-code}/bin/claude";
 
   grokPackage = flake.inputs.llm-agents.packages.${system}.grok;
@@ -204,6 +219,8 @@ in {
       sbWrapper
       codexAgentPackage
       codexAcpWrapper
+      gitnexusWrapper
+      codegraphWrapper
       claudeWrapper
       grokAgentPackage
       scopedJcode
@@ -216,6 +233,8 @@ in {
       "${agentWrapperDirectory}/claude".source = "${claudeWrapper}/bin/claude";
       "${agentWrapperDirectory}/grok".source = "${grokAgentPackage}/bin/grok";
       "${agentWrapperDirectory}/agent".source = "${grokAgentPackage}/bin/agent";
+      "${agentWrapperDirectory}/gitnexus".source = "${gitnexusWrapper}/bin/gitnexus";
+      "${agentWrapperDirectory}/codegraph".source = "${codegraphWrapper}/bin/codegraph";
       "${agentWrapperDirectory}/jcode".source = "${scopedJcode}/bin/jcode";
     };
     home.sessionPath = [agentWrapperDirectory];
@@ -227,12 +246,6 @@ in {
           ${lib.escapeShellArg vscodeMachineSettings} > ${lib.escapeShellArg "${vscodeMachineSettings}.tmp"}
         ${pkgs.coreutils}/bin/mv ${lib.escapeShellArg "${vscodeMachineSettings}.tmp"} ${lib.escapeShellArg vscodeMachineSettings}
       fi
-    '';
-
-    # 限制单次 Cargo 的内部并发，避免一个构建再次同时启动数十个重型链接器。
-    home.file.".cargo/config.toml".text = ''
-      [build]
-      jobs = 6
     '';
 
     home.shellAliases = {
@@ -254,48 +267,37 @@ in {
 
       "ai-codex" = {
         Unit.Description = "Isolated Codex agent workloads";
+        Slice = workloadSliceConfig;
       };
       "ai-grok" = {
         Unit.Description = "Isolated Grok agent workloads";
+        Slice = workloadSliceConfig;
       };
       "ai-claude" = {
         Unit.Description = "Isolated Claude agent workloads";
+        Slice = workloadSliceConfig;
       };
       "ai-jcode" = {
         Unit.Description = "Isolated Jcode agent workloads";
-        Slice = {
-          ManagedOOMMemoryPressure = "kill";
-          ManagedOOMMemoryPressureDurationSec = "15s";
-          ManagedOOMMemoryPressureLimit = "70%";
-          ManagedOOMPreference = "none";
-          ManagedOOMSwap = "kill";
-          MemoryMax = "60%";
-          MemorySwapMax = "8G";
-        };
+        Slice = workloadSliceConfig;
+      };
+      "ai-gitnexus" = {
+        Unit.Description = "Isolated GitNexus workloads";
+        Slice = workloadSliceConfig;
+      };
+      "ai-codegraph" = {
+        Unit.Description = "Isolated CodeGraph workloads";
+        Slice = workloadSliceConfig;
       };
 
       analysis = {
         Unit.Description = "Disposable AST analysis workloads";
-        Slice = {
-          ManagedOOMMemoryPressure = "kill";
-          ManagedOOMMemoryPressureDurationSec = "15s";
-          ManagedOOMMemoryPressureLimit = "70%";
-          ManagedOOMSwap = "kill";
-          MemoryMax = "60%";
-          MemorySwapMax = "8G";
-        };
+        Slice = workloadSliceConfig;
       };
 
       build = {
         Unit.Description = "Disposable development and build workloads";
-        Slice = {
-          ManagedOOMMemoryPressure = "kill";
-          ManagedOOMMemoryPressureDurationSec = "15s";
-          ManagedOOMMemoryPressureLimit = "70%";
-          ManagedOOMSwap = "kill";
-          MemoryMax = "80%";
-          MemorySwapMax = "8G";
-        };
+        Slice = workloadSliceConfig;
       };
     };
 
