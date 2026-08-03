@@ -462,11 +462,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785579902,
-        "narHash": "sha256-uFyb9s4H/ExjnK4LDqTAAY3iT2aNzLgqVRCWbqjA+Yc=",
+        "lastModified": 1785762196,
+        "narHash": "sha256-ZYu1q7VhL8JyCcv53bmQyr7r2p/lp2anRygOzVOKjEI=",
         "ref": "codex-api-key-startup",
-        "rev": "be5d715549c82350414b60d663af45e7e5a0a3bd",
-        "revCount": 251,
+        "rev": "2e173b4e962f0ecd071a5978bc27cabccbfe0563",
+        "revCount": 252,
         "type": "git",
         "url": "file:./vendor/open-grok"
       },
