@@ -90,7 +90,7 @@
     "codex2apiLatestRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-U8jyEyIsmG73kNm6AbfNMF0dS9LhXoYYSFy3Ayf0uxs=",
+        "narHash": "sha256-N9ekN85zE6BvgQzEWBt+njJwlKBYnpf/Z0WL+1m9yjY=",
         "type": "file",
         "url": "https://api.github.com/repos/xingmin1/codex2api/releases/latest"
       },
