@@ -78,6 +78,7 @@
     "flakes"
   ];
 
+  nix.gc.automatic = false;
   nix.settings = {
     extra-substituters = [
       "https://numtide.cachix.org"

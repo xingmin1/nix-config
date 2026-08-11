@@ -32,12 +32,35 @@
     (with llmAgentPackages; [
       codex-acp
       claude-code
+      omp
     ])
     ++ [
       configuredCodex
       configuredGrok
     ]
   );
+  manPagesZh = pkgs.stdenv.mkDerivation {
+    pname = "man-pages-zh";
+    version = "1.6.4.1-unstable-2026-07-31";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "man-pages-zh";
+      repo = "manpages-zh";
+      rev = "b536c007574c5354e12b883893a5ec89b704dbe0";
+      hash = "sha256-dGV//enA1WzGsM1zmvXOqBe4nL+cBrXIf5WieOjzISk=";
+    };
+
+    nativeBuildInputs = with pkgs; [
+      cmake
+      opencc
+    ];
+
+    cmakeFlags = [
+      "-DENABLE_APPEND_COLOPHON=OFF"
+      "-DENABLE_ZHCN=ON"
+      "-DENABLE_ZHTW=OFF"
+    ];
+  };
   naviPackage = pkgs.navi;
   naviCheatsConfig = "${config.xdg.configHome}/navi/cheats";
   naviCheatsData = "${config.xdg.dataHome}/navi/cheats";
@@ -111,6 +134,21 @@ in {
       probe-rs-tools
 
       typst
+      touying
+      ouch
+
+      # 磁盘、文件系统与虚拟化工具
+      util-linux
+      e2fsprogs
+      qemu
+      parted
+      gptfdisk
+      libguestfs
+
+      # 中英文系统手册页
+      man
+      man-pages
+      manPagesZh
 
       tlrc
 
@@ -199,7 +237,7 @@ in {
 
   xdg.configFile."tlrc/config.toml".text = ''
     [cache]
-    auto_update = true
+    auto_update = false
     defer_auto_update = true
     max_age = 168
     languages = ["zh"]
@@ -225,7 +263,7 @@ in {
   xdg.configFile."navi/cheats/.keep".text = "";
 
   home.shellAliases = {
-    tl = "tldr";
+    tl = "tldr -o -L zh -L en";
     nt = "navi --tldr";
     nsh = "navi --cheatsh";
     top = "btop";
