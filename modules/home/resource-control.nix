@@ -147,7 +147,7 @@
   astBroWrapper = mkScopedWrapper "analysis" "ast-bro" "${astBroPackage}/bin/ast-bro";
   sbWrapper = mkScopedWrapper "analysis" "sb" "${astBroPackage}/bin/sb";
 
-  codexPackage = flake.inputs.self.packages.${system}.codex;
+  codexPackage = llmAgentPackages.codex;
   configuredCodex = pkgs.symlinkJoin {
     name = "codex-configured";
     paths = [codexPackage];

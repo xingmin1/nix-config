@@ -9,7 +9,7 @@
   codexSubagentInstructions = "${config.home.homeDirectory}/.codex/instructions/subagents.md";
   configuredCodex = pkgs.symlinkJoin {
     name = "codex-configured";
-    paths = [flake.inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.codex];
+    paths = [llmAgentPackages.codex];
     nativeBuildInputs = [pkgs.makeWrapper];
     postBuild = ''
       wrapProgram "$out/bin/codex" \

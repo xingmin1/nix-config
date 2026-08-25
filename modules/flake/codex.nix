@@ -10,27 +10,6 @@
         toHashFormat = "sri";
       };
 
-    codexRelease = builtins.fromJSON (builtins.readFile inputs.codexLatestRelease);
-    codexVersion = lib.removePrefix "v" codexRelease.tag_name;
-    codexTarget =
-      {
-        x86_64-linux = "x86_64-unknown-linux-musl";
-      }
-      .${
-        system
-      }
-      or null;
-    codexAssetName = "codex-package-${codexTarget}.tar.gz";
-    codexAsset =
-      lib.findFirst
-      (asset: asset.name == codexAssetName)
-      (throw "codex release ${codexRelease.tag_name} 中未找到资产 ${codexAssetName}")
-      codexRelease.assets;
-    codexArchive = pkgs.fetchurl {
-      url = codexAsset.browser_download_url;
-      hash = hashFromGitHubAsset codexAsset;
-    };
-
     codex2apiRelease = builtins.fromJSON (builtins.readFile inputs.codex2apiLatestRelease);
     codex2apiVersion = lib.removePrefix "v" codex2apiRelease.tag_name;
     codex2apiPlatformSuffix =
@@ -54,40 +33,8 @@
     };
   in {
     packages =
-      lib.optionalAttrs (codexTarget != null) {
-        codex = pkgs.stdenvNoCC.mkDerivation {
-          pname = "codex";
-          version = codexVersion;
-
-          src = codexArchive;
-
-          dontConfigure = true;
-          dontBuild = true;
-
-          unpackPhase = ''
-            runHook preUnpack
-            tar -xzf "$src"
-            runHook postUnpack
-          '';
-
-          installPhase = ''
-            runHook preInstall
-            mkdir -p "$out"
-            cp -R bin codex-package.json codex-path codex-resources "$out"/
-            runHook postInstall
-          '';
-
-          passthru.category = "AI Coding Agents";
-
-          meta = {
-            description = "OpenAI Codex CLI，来自 xingmin1/codex fork 的 GitHub release";
-            homepage = "https://github.com/xingmin1/codex";
-            license = lib.licenses.asl20;
-            mainProgram = "codex";
-            platforms = ["x86_64-linux"];
-            sourceProvenance = [lib.sourceTypes.binaryNativeCode];
-          };
-        };
+      {
+        codex = inputs.llm-agents.packages.${system}.codex;
       }
       // lib.optionalAttrs (codex2apiPlatformSuffix != null) {
         codex2api = pkgs.stdenvNoCC.mkDerivation {
