@@ -64,6 +64,7 @@
   naviPackage = pkgs.navi;
   naviCheatsConfig = "${config.xdg.configHome}/navi/cheats";
   naviCheatsData = "${config.xdg.dataHome}/navi/cheats";
+  selfPackages = flake.inputs.self.packages.${pkgs.stdenv.hostPlatform.system};
 in {
   # Nix packages to install to $HOME
   #
@@ -158,10 +159,11 @@ in {
     ++ (with llmAgentPackages; [
       trellis
     ])
-    ++ (with flake.inputs.self.packages.${pkgs.stdenv.hostPlatform.system}; [
+    ++ (with selfPackages; [
       cc-connect
       just-lsp
     ])
+    ++ lib.optional (builtins.hasAttr "open-grok" selfPackages) selfPackages.open-grok
     ++ legacyAgentPackages;
   # Programs natively supported by home-manager.
   # They can be configured in `programs.*` instead of using home.packages.

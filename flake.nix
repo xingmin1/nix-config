@@ -40,6 +40,13 @@
       url = "https://api.github.com/repos/xingmin1/codex/releases/latest";
       flake = false;
     };
+    # 通过 GitHub latest release 固定 Open Grok 的版本元数据。
+    # 构建时会从锁定的 release JSON 中选择当前平台的预编译二进制。
+    openGrokLatestRelease = {
+      type = "file";
+      url = "https://api.github.com/repos/mweinbach/open-grok/releases/latest";
+      flake = false;
+    };
     # 通过 GitHub latest release 固定 codex2api 的版本元数据。
     # 构建时会从锁定的 release JSON 中选择当前平台的预编译压缩包。
     codex2apiLatestRelease = {
