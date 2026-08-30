@@ -63,7 +63,7 @@ in {
       ]
       ++ config.myusers;
 
-    # 冲突文件自动备份，避免 clobber（例如 ~/.config/nvim 目录）
+    # 冲突文件自动备份，避免覆盖用户已有配置。
     home-manager.backupFileExtension = "backup";
     environment.systemPackages = [
       pkgs.wget

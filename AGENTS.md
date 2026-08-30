@@ -2,8 +2,8 @@
 
 ## 项目结构与模块组织
 - `flake.nix`：入口 Flake；通过 `nixos-unified` 自动装配模块
-- `modules/flake/*`：开发环境与打包（如 `formatter`、`neovim` 包）
-- `modules/home/*`：home-manager 模块（git、direnv、nh、neovim、jjui 等）
+- `modules/flake/*`：开发环境与打包（如 `formatter`）
+- `modules/home/*`：home-manager 模块（git、direnv、nh、jjui 等）
 - `modules/nixos/*`：NixOS 通用与 GUI 模块
 - `configurations/home/xmin.nix`：用户与版本信息
 - `configurations/nixos/<host>/default.nix`：主机级配置（示例：`nixos/`、`xfusion/`）
@@ -15,7 +15,6 @@
 - 健康检查：`just check` 或 `nix flake check`
 - 开发环境：`just dev` 或 `nix develop`
 - 激活配置：`just run` 或 `nix run`（nixos-unified 提供 `activate`）
-- 例：构建定制 Neovim：`nix build .#neovim`
 
 ## 代码风格与命名约定
 - Nix 文件使用 2 空格缩进；提交前统一运行 `nix fmt`
@@ -25,7 +24,7 @@
 
 ## 测试指南
 - 以 `nix flake check` 作为回归门槛；本地修改需保持通过
-- 对新增包/模块做最小构建验证（如 `nix build .#neovim`）
+- 对新增包/模块做最小构建验证
 - 新主机放于 `configurations/nixos/<host>/default.nix` 并验证能评估
 
 ## 提交与 Pull Request 规范
