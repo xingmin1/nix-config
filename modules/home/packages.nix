@@ -158,6 +158,9 @@ in {
     ])
     ++ (with llmAgentPackages; [
       trellis
+      antigravity-cli
+      omp
+      pi
     ])
     ++ (with selfPackages; [
       cc-connect
