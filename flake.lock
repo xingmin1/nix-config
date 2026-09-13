@@ -63,11 +63,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788792980,
-        "narHash": "sha256-TX/Z3PQZQVHgy4g9OZpflVpuazwturkGolsRDkFVHiU=",
+        "lastModified": 1789553013,
+        "narHash": "sha256-W5dvgFOuVs24X3G5tUb8C2IHU7ICXNvyGPiWWFjfbuo=",
         "owner": "catppuccin",
         "repo": "nix",
-        "rev": "3142fdbeea0b181ad6600587dfe484ccb644dcc6",
+        "rev": "89b3eacf59d6b5eefbc2d69c3a4eb5aaf66d63bc",
         "type": "github"
       },
       "original": {
@@ -91,7 +91,7 @@
     "codex2apiLatestRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-aCpYYZVwDchxLDUIfhYHLddo48hgwWYsAh/XObUc6oU=",
+        "narHash": "sha256-E2JQW2SRkawcgKJTAskvgbjIBwL5HCfVva8hYFbKC7k=",
         "type": "file",
         "url": "https://api.github.com/repos/xingmin1/codex2api/releases/latest"
       },
@@ -110,6 +110,18 @@
       "original": {
         "type": "file",
         "url": "https://api.github.com/repos/xingmin1/codex/releases/latest"
+      }
+    },
+    "collieLatestRelease": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-2QLvsIhDDTJKvQKk1Ch7nehYjg8qE2zWh5ioOZG49xU=",
+        "type": "file",
+        "url": "https://api.github.com/repos/AltanS/collie/releases/latest"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://api.github.com/repos/AltanS/collie/releases/latest"
       }
     },
     "crane": {
@@ -225,11 +237,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789099078,
-        "narHash": "sha256-zzHj2wl69724lzx7DLAVziWbL75wRIk+xJ3duD0Bgrc=",
+        "lastModified": 1789765459,
+        "narHash": "sha256-voJJ5IZR4w2149u2Jm/j2zifeWROlpZQ+JzmCQwjgn8=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "f10b3f2ad4aae9259617a1ff518cc921e3394228",
+        "rev": "17903129f47656fa4d07e78ad87f6592ff4f2527",
         "type": "github"
       },
       "original": {
@@ -241,7 +253,7 @@
     "jcodeLatestRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-gL9JZr+pUjYKoELBII1PH645YEMntGTYHw9n85I6ORM=",
+        "narHash": "sha256-1FPdTwhQ0h5xd1WK+JnYzeHVhcyYpOibTmd1Vd6HeW4=",
         "type": "file",
         "url": "https://api.github.com/repos/1jehuang/jcode/releases/latest"
       },
@@ -259,11 +271,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1789098570,
-        "narHash": "sha256-0i3Gd0hjiXLeQGPrpvNx85iynzG/5/Q7523pTdt1kwA=",
+        "lastModified": 1789809463,
+        "narHash": "sha256-zUTsGy8oiUo4qaeDR5qZ1y+nSUyp+3ZBceW9slrnbPc=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "3a31e665ca59fc6e553610d96100cc08cbbc759f",
+        "rev": "bffbfec7ef13d6f4b925ad20046133d6b49ac9e0",
         "type": "github"
       },
       "original": {
@@ -299,11 +311,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788680125,
-        "narHash": "sha256-amGSoDobwmp4CFvCn841ws2iuitus+HUJdD/gKgsrJA=",
+        "lastModified": 1789286446,
+        "narHash": "sha256-xVstyCdg0DpzjyrEacm72VJAIP9DMhfWJdPDzhWxHuo=",
         "owner": "nix-community",
         "repo": "nix-index-database",
-        "rev": "116ad1c2adb642405ef8916f6a94c8626f971344",
+        "rev": "a74e173407559083a412ea89a1cc58ea389c3b65",
         "type": "github"
       },
       "original": {
@@ -333,11 +345,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1789039320,
-        "narHash": "sha256-SBHeKJ6fyQIb8PaUc0iarznGhaGdnc+SXdDb5Z96Qn0=",
+        "lastModified": 1789164534,
+        "narHash": "sha256-DoYGPM6QpnYBLWj9gGw6ZwAzIX+HrAVov1BoT+8Jixo=",
         "owner": "nix-community",
         "repo": "NixOS-WSL",
-        "rev": "8c333e5b3abb693139e4df80988810ce44788b4e",
+        "rev": "72c92b11bb8289e6651c7fef29cc0a885fd6a255",
         "type": "github"
       },
       "original": {
@@ -349,11 +361,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1788982683,
-        "narHash": "sha256-PJCTsE4I20CrJJPcye9/z6brRFysG5+aygr/dZK097k=",
+        "lastModified": 1789754019,
+        "narHash": "sha256-N8gMcziRWB1CnSykjQPuf8lQKDD69LjnURRzaNXoPb4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "5052d7ccbcfb7e4ae1586cb2ecf95a2e3707dce9",
+        "rev": "2e032a04454b525daa6c6651264aaa5d3e98cf54",
         "type": "github"
       },
       "original": {
@@ -410,11 +422,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1783776592,
-        "narHash": "sha256-UgCQzxeWI75XM8G+hPrPh+MKzEPjG3SpAj7dtqSbksA=",
+        "lastModified": 1789006805,
+        "narHash": "sha256-xB8mKMOx1IA9vTDNLmJZ6n4wCMq/cuWBBOzGCRnqxrU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e7a3ca8092b61ff85b6a45bf863ea2b2d6a661b3",
+        "rev": "8ce4ef6cb6f871616146b9fe26d2a5ae594e94fe",
         "type": "github"
       },
       "original": {
@@ -426,11 +438,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1789006805,
-        "narHash": "sha256-xB8mKMOx1IA9vTDNLmJZ6n4wCMq/cuWBBOzGCRnqxrU=",
+        "lastModified": 1789684949,
+        "narHash": "sha256-ZKhUe/2IJUq1JhKxKMu8rbkgSGmPP2ZCqlIPn40aGCM=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "8ce4ef6cb6f871616146b9fe26d2a5ae594e94fe",
+        "rev": "e554fab72f81915600f3f449b786fd9af40439a5",
         "type": "github"
       },
       "original": {
@@ -459,7 +471,7 @@
     "openGrokLatestRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-1m0y7ntthx2cqfYqVPgMt2LYYIM1BURIyA+D3t1NKO4=",
+        "narHash": "sha256-whj0O5KUvjNl22Zhp8pd2EnSHqCsKYkzNlsRD+CPnt8=",
         "type": "file",
         "url": "https://api.github.com/repos/mweinbach/open-grok/releases/latest"
       },
@@ -475,6 +487,7 @@
         "ccConnectBeta": "ccConnectBeta",
         "codex2apiLatestRelease": "codex2apiLatestRelease",
         "codexLatestRelease": "codexLatestRelease",
+        "collieLatestRelease": "collieLatestRelease",
         "flake-parts": "flake-parts_2",
         "home-manager": "home-manager",
         "jcodeLatestRelease": "jcodeLatestRelease",

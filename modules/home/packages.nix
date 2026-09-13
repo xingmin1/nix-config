@@ -86,6 +86,7 @@ in {
       procs
       below
       lsof
+      mosh
 
       # Nix dev
       cachix
@@ -161,10 +162,13 @@ in {
       antigravity-cli
       omp
       pi
+      herdr
     ])
     ++ (with selfPackages; [
       cc-connect
+      collie
       just-lsp
+      mineru
     ])
     ++ lib.optional (builtins.hasAttr "open-grok" selfPackages) selfPackages.open-grok
     ++ legacyAgentPackages;
