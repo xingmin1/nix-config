@@ -164,6 +164,9 @@ in {
         export PLAYWRIGHT_MCP_BROWSER="''${PLAYWRIGHT_MCP_BROWSER:-chromium}"
         exec ${pkgs.playwright-test}/bin/playwright cli "$@"
       '')
+
+      # AI Agent 浏览器自动化 CLI (Vercel Labs)
+      agent-browser
     ])
     ++ (with llmAgentPackages; [
       trellis
@@ -306,10 +309,11 @@ in {
     fi
   '';
 
-  # Playwright 会话环境变量与全局配置
+  # Playwright 与 agent-browser 会话环境变量与全局配置
   home.sessionVariables = {
     PLAYWRIGHT_BROWSERS_PATH = "${pkgs.playwright-driver.browsers}";
     PLAYWRIGHT_MCP_BROWSER = "chromium";
+    AGENT_BROWSER_EXECUTABLE_PATH = "${pkgs.playwright-driver.browsers}/chromium-1243/chrome-linux64/chrome-wrapper";
   };
 
   home.file.".playwright/cli.config.json".text = builtins.toJSON {
