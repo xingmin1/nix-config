@@ -156,6 +156,14 @@ in {
 
       maple-mono.NF-CN-unhinted
       source-han-serif
+
+      # Playwright 浏览器自动化与 CLI
+      playwright-test
+      (pkgs.writeShellScriptBin "playwright-cli" ''
+        export PLAYWRIGHT_BROWSERS_PATH="''${PLAYWRIGHT_BROWSERS_PATH:-${pkgs.playwright-driver.browsers}}"
+        export PLAYWRIGHT_MCP_BROWSER="''${PLAYWRIGHT_MCP_BROWSER:-chromium}"
+        exec ${pkgs.playwright-test}/bin/playwright cli "$@"
+      '')
     ])
     ++ (with llmAgentPackages; [
       trellis
@@ -297,4 +305,16 @@ in {
       bindkey -M viins '^N' _navi_widget 2>/dev/null || true
     fi
   '';
+
+  # Playwright 会话环境变量与全局配置
+  home.sessionVariables = {
+    PLAYWRIGHT_BROWSERS_PATH = "${pkgs.playwright-driver.browsers}";
+    PLAYWRIGHT_MCP_BROWSER = "chromium";
+  };
+
+  home.file.".playwright/cli.config.json".text = builtins.toJSON {
+    browser = {
+      browserName = "chromium";
+    };
+  };
 }
