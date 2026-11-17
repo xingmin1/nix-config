@@ -3,16 +3,13 @@
     inherit (pkgs) lib stdenv;
 
     system = stdenv.hostPlatform.system;
-    hashFromGitHubAsset = asset:
-      builtins.convertHash {
-        hash = lib.removePrefix "sha256:" asset.digest;
-        hashAlgo = "sha256";
-        toHashFormat = "sri";
-      };
 
-    codex2apiRelease = builtins.fromJSON (builtins.readFile inputs.codex2apiLatestRelease);
-    codex2apiVersion = lib.removePrefix "v" codex2apiRelease.tag_name;
-    codex2apiPlatformSuffix =
+    # 上游资产名内嵌版本号，因此锁定同样无版本名的 SHA256SUMS.txt：
+    # 文件名给出准确的 release 版本，行首给出资产哈希。
+    checksumLines =
+      lib.filter (line: line != "")
+      (lib.splitString "\n" (builtins.readFile inputs.codex2apiChecksums));
+    platformSuffix =
       {
         x86_64-linux = "linux_amd64";
         aarch64-linux = "linux_arm64";
@@ -21,27 +18,33 @@
         system
       }
       or null;
-    codex2apiAssetName = "codex2api_${codex2apiVersion}_${codex2apiPlatformSuffix}.tar.gz";
-    codex2apiAsset =
+    assetLine =
       lib.findFirst
-      (asset: asset.name == codex2apiAssetName)
-      (throw "codex2api release ${codex2apiRelease.tag_name} 中未找到资产 ${codex2apiAssetName}")
-      codex2apiRelease.assets;
-    codex2apiArchive = pkgs.fetchurl {
-      url = codex2apiAsset.browser_download_url;
-      hash = hashFromGitHubAsset codex2apiAsset;
+      (line: lib.hasSuffix "_${platformSuffix}.tar.gz" line)
+      (throw "codex2api 校验文件中未找到 ${platformSuffix} 资产")
+      checksumLines;
+    assetFields = lib.filter (field: field != "") (lib.splitString " " assetLine);
+    assetName = builtins.elemAt assetFields 1;
+    version = lib.removePrefix "codex2api_" (lib.removeSuffix "_${platformSuffix}.tar.gz" assetName);
+    archive = pkgs.fetchurl {
+      url = "https://github.com/xingmin1/codex2api/releases/download/v${version}/${assetName}";
+      hash = builtins.convertHash {
+        hash = builtins.elemAt assetFields 0;
+        hashAlgo = "sha256";
+        toHashFormat = "sri";
+      };
     };
   in {
     packages =
       {
         codex = inputs.llm-agents.packages.${system}.codex;
       }
-      // lib.optionalAttrs (codex2apiPlatformSuffix != null) {
+      // lib.optionalAttrs (platformSuffix != null) {
         codex2api = pkgs.stdenvNoCC.mkDerivation {
           pname = "codex2api";
-          version = codex2apiVersion;
+          inherit version;
 
-          src = codex2apiArchive;
+          src = archive;
 
           dontConfigure = true;
           dontBuild = true;

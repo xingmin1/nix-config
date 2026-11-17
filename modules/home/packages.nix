@@ -16,6 +16,15 @@
         --run 'if [ -r "${codexSubagentInstructions}" ]; then set -- -c "developer_instructions=$(${pkgs.coreutils}/bin/cat "${codexSubagentInstructions}")" "$@"; fi'
     '';
   };
+  configuredDsh = pkgs.symlinkJoin {
+    name = "dsh-configured";
+    paths = [llmAgentPackages.dsh];
+    nativeBuildInputs = [pkgs.makeWrapper];
+    postBuild = ''
+      wrapProgram "$out/bin/dsh" \
+        --prefix PATH : ${lib.makeBinPath [pkgs.pnpm]}
+    '';
+  };
   configuredGrok = pkgs.symlinkJoin {
     name = "grok-configured";
     paths = [flake.inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.grok];
@@ -83,8 +92,11 @@ in {
       file
       just
       tokei
+      repomix
       procs
-      below
+      (below.overrideAttrs (old: {
+        buildInputs = (old.buildInputs or []) ++ [zstd];
+      }))
       lsof
       mosh
 
@@ -106,6 +118,7 @@ in {
       less
 
       nodejs
+      pnpm_10
       bun
 
       # Python 工具
@@ -137,7 +150,19 @@ in {
 
       typst
       touying
+      # Nix store 中的安装布局未被 Slidev 识别，且不能用于写入 Vite 缓存。
+      (slidev-cli.overrideAttrs (old: {
+        postPatch = (old.postPatch or "") + ''
+          substituteInPlace packages/slidev/node/resolver.ts \
+            --replace-fail "|| (await import('is-installed-globally')).default" "|| true"
+          substituteInPlace packages/slidev/node/vite/extendConfig.ts \
+            --replace-fail "cacheDir: isInstalledGlobally.value ? join(options.cliRoot, 'node_modules/.vite') : undefined," "cacheDir: undefined,"
+        '';
+      }))
       ouch
+
+      # 视频分析与转码
+      ffmpeg
 
       # 磁盘、文件系统与虚拟化工具
       util-linux
@@ -145,7 +170,6 @@ in {
       qemu
       parted
       gptfdisk
-      libguestfs
 
       # 中英文系统手册页
       man
@@ -171,16 +195,21 @@ in {
     ++ (with llmAgentPackages; [
       trellis
       antigravity-cli
-      omp
+      configuredDsh
       pi
       herdr
+      # 直接复用上游原包及其缓存，语言资源已由上游打包。
+      hermes-agent
+      hermes-desktop
     ])
     ++ (with selfPackages; [
       cc-connect
       collie
       just-lsp
       mineru
+      slack-cli-official
     ])
+    ++ lib.optional (builtins.hasAttr "omp-release" selfPackages) selfPackages.omp-release
     ++ lib.optional (builtins.hasAttr "open-grok" selfPackages) selfPackages.open-grok
     ++ legacyAgentPackages;
   # Programs natively supported by home-manager.
@@ -203,11 +232,8 @@ in {
     bottom.enable = true;
     htop.enable = true;
 
-    # Tmate terminal sharing.
-    tmate = {
-      enable = true;
-      #host = ""; #In case you wish to use a server other than tmate.io
-    };
+    # Tmate terminal sharing（因上游停更且含 CVE-2018-19387，已被 nixpkgs 标记为 insecure，故禁用）
+    tmate.enable = false;
     # GitHub CLI
     gh.enable = true;
 

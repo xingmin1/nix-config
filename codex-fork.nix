@@ -5,39 +5,14 @@
   inputs,
   pkgs,
 }: let
-  inherit (pkgs) lib stdenv;
-
-  system = stdenv.hostPlatform.system;
-  codexTarget =
-    {
-      x86_64-linux = "x86_64-unknown-linux-musl";
-    }
-    .${
-      system
-    }
-    or (throw "codex fork 暂不支持 ${system}");
-  codexRelease = builtins.fromJSON (builtins.readFile inputs.codexLatestRelease);
-  codexVersion = lib.removePrefix "v" codexRelease.tag_name;
-  codexAssetName = "codex-package-${codexTarget}.tar.gz";
-  codexAsset =
-    lib.findFirst
-    (asset: asset.name == codexAssetName)
-    (throw "codex fork release ${codexRelease.tag_name} 中未找到资产 ${codexAssetName}")
-    codexRelease.assets;
-  codexArchive = pkgs.fetchurl {
-    url = codexAsset.browser_download_url;
-    hash = builtins.convertHash {
-      hash = lib.removePrefix "sha256:" codexAsset.digest;
-      hashAlgo = "sha256";
-      toHashFormat = "sri";
-    };
-  };
+  inherit (pkgs) lib;
 in
   pkgs.stdenvNoCC.mkDerivation {
     pname = "codex";
-    version = codexVersion;
+    version = "latest";
 
-    src = codexArchive;
+    # 上游资产名不含版本号，可直接锁定 latest/download 的稳定指针。
+    src = inputs.codexForkLinuxX64;
 
     dontConfigure = true;
     dontBuild = true;

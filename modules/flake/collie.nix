@@ -2,43 +2,27 @@
   perSystem = {pkgs, ...}: let
     inherit (pkgs) lib stdenv;
 
-    system = stdenv.hostPlatform.system;
-    hashFromGitHubAsset = asset:
-      builtins.convertHash {
-        hash = lib.removePrefix "sha256:" asset.digest;
-        hashAlgo = "sha256";
-        toHashFormat = "sri";
-      };
-
-    collieRelease = builtins.fromJSON (builtins.readFile inputs.collieLatestRelease);
-    collieVersion = lib.removePrefix "v" collieRelease.tag_name;
-    collieTarget =
-      {
-        x86_64-linux = "linux-x64";
-        aarch64-linux = "linux-arm64";
-        aarch64-darwin = "macos-arm64";
-      }
-      .${
-        system
-      }
-      or null;
-    collieAssetName = "collie-${collieVersion}-${collieTarget}.tar.gz";
-    collieAsset =
-      lib.findFirst
-      (asset: asset.name == collieAssetName)
-      (throw "Collie release ${collieRelease.tag_name} 中未找到资产 ${collieAssetName}")
-      collieRelease.assets;
-    collieArchive = pkgs.fetchurl {
-      url = collieAsset.browser_download_url;
-      hash = hashFromGitHubAsset collieAsset;
+    # 上游发布流程维护 packaging/nix/sources.json：版本号加各平台资产的 url/sha256。
+    release = builtins.fromJSON (builtins.readFile "${inputs.collieRepo}/packaging/nix/sources.json");
+    platformNames = {
+      x86_64-linux = "linux-x64";
+      aarch64-linux = "linux-arm64";
+      aarch64-darwin = "darwin-arm64";
     };
+    platformName = platformNames.${stdenv.hostPlatform.system} or null;
+    asset =
+      if platformName == null
+      then null
+      else release.platforms.${platformName} or null;
   in {
-    packages = lib.optionalAttrs (collieTarget != null) {
+    packages = lib.optionalAttrs (asset != null) {
       collie = pkgs.stdenv.mkDerivation {
         pname = "collie";
-        version = collieVersion;
+        version = release.version;
 
-        src = collieArchive;
+        src = pkgs.fetchurl {
+          inherit (asset) url sha256;
+        };
 
         nativeBuildInputs = lib.optionals stdenv.hostPlatform.isLinux [pkgs.autoPatchelfHook];
 
@@ -72,11 +56,7 @@
           homepage = "https://github.com/AltanS/collie";
           license = lib.licenses.mit;
           mainProgram = "collie";
-          platforms = [
-            "x86_64-linux"
-            "aarch64-linux"
-            "aarch64-darwin"
-          ];
+          platforms = builtins.attrNames platformNames;
           sourceProvenance = [lib.sourceTypes.binaryNativeCode];
         };
       };
