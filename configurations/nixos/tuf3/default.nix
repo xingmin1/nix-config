@@ -56,8 +56,8 @@ in {
     desktopManager.plasma6.enable = true;
     displayManager.sddm = {
       enable = true;
-      # 登录界面用 X11，规避 KDE #527428 报告的屏幕输出异常。
-      wayland.enable = false;
+      # Xorg 在本机混合显卡上无法创建登录界面的 pixmap。
+      wayland.enable = true;
     };
     xserver.enable = true;
     pipewire = {
