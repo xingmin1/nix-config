@@ -79,6 +79,13 @@ in {
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
     noto-fonts-color-emoji
+    # 补齐 WPS 与 Office 文档常用字体及其度量兼容替代。
+    caladea
+    carlito
+    corefonts
+    lxgw-wenkai
+    source-han-sans
+    zcool-qingke-huangyou
   ];
 
   programs.clash-verge = {
