@@ -1,8 +1,12 @@
 # This is your nixos configuration.
 # For home configuration, see /modules/home/*
-{flake, ...}: {
+{
+  flake,
+  lib,
+  ...
+}: {
   imports = [
     flake.inputs.self.nixosModules.common
   ];
-  services.openssh.enable = true;
+  services.openssh.enable = lib.mkDefault true;
 }

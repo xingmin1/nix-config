@@ -71,12 +71,5 @@ in {
 
     # 为了可以使用 VSCode 远程开发 see: https://nix-community.github.io/NixOS-WSL/how-to/vscode.html
     programs.nix-ld.enable = true;
-
-    # 为了可以使用 zed 远程开发 see: https://github.com/zed-industries/zed/issues/39710
-    wsl.extraBin = [
-      {src = "${pkgs.coreutils}/bin/uname";}
-      {src = "${pkgs.coreutils}/bin/mkdir";}
-      {src = "${pkgs.coreutils}/bin/cp";}
-    ];
   };
 }

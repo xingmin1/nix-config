@@ -10,6 +10,8 @@
 in {
   imports = [
     self.nixosModules.default
+    self.nixosModules.wsl
+    self.nixosModules.nix-cache
     # self.nixosModules.gui
   ];
 

@@ -1,31 +1,7 @@
 # Edit this configuration file to define what should be installed on
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-# NixOS-WSL specific options are documented on the NixOS-WSL repository:
-# https://github.com/nix-community/NixOS-WSL
-{
-  flake,
-  config,
-  lib,
-  pkgs,
-  ...
-}: rec {
-  imports = [
-    # include NixOS-WSL modules
-    flake.inputs.nixos-wsl.nixosModules.default
-  ];
-
-  wsl.enable = true;
-  wsl.defaultUser = "xmin";
-  wsl.interop = {
-    register = true;
-    includePath = false;
-  };
-  wsl.wslConf.interop = {
-    enabled = true;
-    appendWindowsPath = false;
-  };
-  wsl.wslConf.network.generateHosts = false;
+{pkgs, ...}: {
   nixpkgs.hostPlatform = "x86_64-linux";
 
   # 生成/启用 /etc/containers 下的通用容器配置文件支持
@@ -43,8 +19,6 @@
 
   # 可选：你还可以装一些常用工具
   environment.systemPackages = with pkgs; [
-    # 给 Codex WSL 兼容层补固定 shell 路径和 sandbox 依赖
-    bashInteractive
     bubblewrap
     podman-compose
 
@@ -52,25 +26,6 @@
     kmod
     bmaptool
   ];
-
-  # 给 Codex WSL 兼容层补固定路径，避免它在 WSL agent 模式下找不到 /usr/bin/bash
-  system.activationScripts.codexWslCompat = {
-    deps = ["usrbinenv"];
-    text = ''
-      mkdir -p /usr/bin
-      ln -sfn ${pkgs.bashInteractive}/bin/bash /usr/bin/bash
-    '';
-  };
-
-  services.cloudflareTunnelDirectRoutes.enable = true;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It's perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.05"; # Did you read the comment?
 
   nix.settings.experimental-features = [
     "cgroups"
@@ -89,9 +44,6 @@
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
     ];
   };
-
-  # WSL 里 Windows 会动态保留一批端口；使用当前未被 excludedportrange 覆盖的高位端口。
-  services.openssh.ports = [24022];
 
   # 当系统用户默认 shell = pkgs.zsh 时，按 NixOS 要求必须启用系统级 zsh，以确保 PATH 与 /etc/shells 设置正确。
   # 参见错误提示：users.users.<name>.shell = zsh 但 programs.zsh.enable 未开启将导致登录可能失败。

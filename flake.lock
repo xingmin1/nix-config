@@ -9,11 +9,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794330258,
-        "narHash": "sha256-5CECGEMGTxQN96g+DirU54tcP1VgrktjB6MFYpfXhIk=",
+        "lastModified": 1794852970,
+        "narHash": "sha256-b6MOxIQ7qDtDA0OMIKeym/fgvhN6SQWvsqGbmyrNg+k=",
         "owner": "aeroxy",
         "repo": "ast-bro",
-        "rev": "682cc25130ed440d9545639f12865e8c40d95c8f",
+        "rev": "0a276c8c24df01eb68ea863a873aa3d74994f10b",
         "type": "github"
       },
       "original": {
@@ -63,11 +63,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794001184,
-        "narHash": "sha256-i2+b4Rdp7/yIcVESrp0tzS97FkTuTJxIlqNOTjoswfk=",
+        "lastModified": 1794788055,
+        "narHash": "sha256-ne61lharrApQ3QVpm6sjd6k5AgD0xandc69h4QbopIY=",
         "owner": "catppuccin",
         "repo": "nix",
-        "rev": "5a735352cd3535d43109415bcbb512a72304226a",
+        "rev": "aa70e775fdb4e998314dd64fb4cf66aeaa87f6dd",
         "type": "github"
       },
       "original": {
@@ -79,7 +79,7 @@
     "ccConnectBeta": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-5FNKnXmxWKloZ5BzeEq5zZcivwOFUZjMZ0AecAFY/dg=",
+        "narHash": "sha256-GtQtzm7XopqaaQ2Px1Z95vSMTucofKIEwbp/d6UAr6Y=",
         "type": "file",
         "url": "https://registry.npmjs.org/cc-connect/beta"
       },
@@ -115,11 +115,11 @@
     "collieRepo": {
       "flake": false,
       "locked": {
-        "lastModified": 1794404444,
-        "narHash": "sha256-sCcfK1q1lYHsv+xAm2+3qXzJ6JYEdZlK0kg/wBgsJ3k=",
+        "lastModified": 1794987210,
+        "narHash": "sha256-YWRva4NdqOL7Z1exgU8GwzZCJXd73zvli6tB4/N2oGA=",
         "owner": "AltanS",
         "repo": "collie",
-        "rev": "22f2f813152a32beedb0a579758c718f6ef24123",
+        "rev": "866bfb2800b4bb99d8931417300eea1214a45e7d",
         "type": "github"
       },
       "original": {
@@ -241,11 +241,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794278858,
-        "narHash": "sha256-rkrJwLgLSHBnXfgoSKIDa+2LLGdTqynsV3GAxOTGhUU=",
+        "lastModified": 1794963576,
+        "narHash": "sha256-+CPrP74GDJ63f7bgEFC9Av4hbxc7K9WUNv1ZVRifRe8=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "82ce401aa350502897c3f2e85f384d61cd3b0b6d",
+        "rev": "2b13c9cb3aa20653e6f8ee0b7f8331a53ea9b0a9",
         "type": "github"
       },
       "original": {
@@ -257,7 +257,7 @@
     "jcodeLinuxAarch64": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-KUSofcmx9O59GjIPiOtMtdwvcOMfAU7W9sTp1E32rwk=",
+        "narHash": "sha256-BOppJrDXEmvgfBDFte1THCU4EtUa0XF5LLaI5C4dKcQ=",
         "type": "file",
         "url": "https://github.com/1jehuang/jcode/releases/latest/download/jcode-linux-aarch64.tar.gz"
       },
@@ -269,7 +269,7 @@
     "jcodeLinuxX64": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-v22LnCzuLc67L1zEC7pkNZiCoJMWZztHBisLY4aurNg=",
+        "narHash": "sha256-6wNg1heaRuaJc/c6JJ9Y6PN9aZgOMCBhW+ZaqUZi66Y=",
         "type": "file",
         "url": "https://github.com/1jehuang/jcode/releases/latest/download/jcode-linux-x86_64.tar.gz"
       },
@@ -287,11 +287,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1794443189,
-        "narHash": "sha256-dGjvh2roMoY0eLq1VXuB9uyptiLEyB8qVhwWDc334Ak=",
+        "lastModified": 1794966560,
+        "narHash": "sha256-j/hTgvxxu3pOrDkgihm+sidmfRguTVKtxSn9+B9kU3w=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "81977adaa62f79594a59f1aa984fe1ba814e2ff6",
+        "rev": "aca6bfb2440503d090003b1064a44df8a8a54b5f",
         "type": "github"
       },
       "original": {
@@ -327,11 +327,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794132860,
-        "narHash": "sha256-iGNtQnUZsi+v6/4NbtYr+dsmASa6GkzXtUcTpE8F3mE=",
+        "lastModified": 1794739050,
+        "narHash": "sha256-PCGNIyAydZcdUXCxEXTjrS1+wWS+k9E+ENqBkUK2Mpg=",
         "owner": "nix-community",
         "repo": "nix-index-database",
-        "rev": "af9249ca33bc2efaae5d071e4c67ddef19dcb681",
+        "rev": "9bd074026d6db75b59aae8cd6071b5f2fe27a36c",
         "type": "github"
       },
       "original": {
@@ -454,11 +454,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1794042290,
-        "narHash": "sha256-ziZn2PvCJE5JEEpqTdxXwJpPB+L3YqoCpTAMCzyaP3U=",
+        "lastModified": 1794890597,
+        "narHash": "sha256-lME2lHoDHAaSHP3/okgiVoJ0icVEvsQH8LeU3We7tcc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "f4a03c008967841f2a0b3cb7c436fc6fc31671f6",
+        "rev": "04906337b6d53e8bb0eaf0470ae9f070a4d4eb55",
         "type": "github"
       },
       "original": {
@@ -487,7 +487,7 @@
     "ompLinuxAarch64": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-brMru8ZooH8jDsPhYKMX9nZJIYG72cs+Lk2i7j3YvPk=",
+        "narHash": "sha256-J9SeNPVMZjxiM9IP5MlPCng4/MHM4ygCiR9QcOnVJrA=",
         "type": "file",
         "url": "https://github.com/can1357/oh-my-pi/releases/latest/download/omp-linux-arm64"
       },
@@ -499,7 +499,7 @@
     "ompLinuxX64": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-FuA/e5K3Cn4z0SjDyFS/JbMUUxvdu3CnpQX1yLiwBg8=",
+        "narHash": "sha256-QXU3RlbzCQDDZDKyVGO6a2+GrBkcxGv+sAFwTudWXoE=",
         "type": "file",
         "url": "https://github.com/can1357/oh-my-pi/releases/latest/download/omp-linux-x64"
       },
@@ -559,13 +559,14 @@
         "slackCliMacosAmd64": "slackCliMacosAmd64",
         "slackCliMacosArm64": "slackCliMacosArm64",
         "tftpNowBinary": "tftpNowBinary",
-        "vertex": "vertex"
+        "vertex": "vertex",
+        "wetypex": "wetypex"
       }
     },
     "slackCliLinuxAmd64": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-fspkzuDig9nEYNHRQMb1InZR34VUjhZgzy2c0a8edZI=",
+        "narHash": "sha256-c1/nd5BZ3CBefDljV47a4sFbL2/5LHVFBpC2GDoUjK8=",
         "type": "file",
         "url": "https://github.com/slackapi/slack-cli/releases/latest/download/slack_cli_latest_linux_amd64.tar.gz"
       },
@@ -577,7 +578,7 @@
     "slackCliLinuxArm64": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-/eLB/4NgfCqd+BQSsytY/IvKbtCGkIWGvtaS6YZ5D7g=",
+        "narHash": "sha256-PevY2QMR9lmWzYrEilPny+wvKomae8EkTxjLYe+R860=",
         "type": "file",
         "url": "https://github.com/slackapi/slack-cli/releases/latest/download/slack_cli_latest_linux_arm64.tar.gz"
       },
@@ -589,7 +590,7 @@
     "slackCliMacosAmd64": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-YndASJAQ+0et9B+2oz0/JW96Ye0NyWkbQ9wJE8Oe6p4=",
+        "narHash": "sha256-m4E/AYBLiDTvZgF4LKfpvttgc93Idi3weLQ7uLNvfBs=",
         "type": "file",
         "url": "https://github.com/slackapi/slack-cli/releases/latest/download/slack_cli_latest_macOS_amd64.tar.gz"
       },
@@ -601,7 +602,7 @@
     "slackCliMacosArm64": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-Fe+tbXhskGkB5DON9WIcU8XN8bXje08cAR6RHAFeUio=",
+        "narHash": "sha256-iiFz7dcRKiEKOLGPNCWUfLXArq+JibjWFo9Vdx4xND0=",
         "type": "file",
         "url": "https://github.com/slackapi/slack-cli/releases/latest/download/slack_cli_latest_macOS_arm64.tar.gz"
       },
@@ -674,6 +675,27 @@
       "original": {
         "owner": "juspay",
         "repo": "vertex",
+        "type": "github"
+      }
+    },
+    "wetypex": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1795111314,
+        "narHash": "sha256-0zmj8lEtQbdQO1hTJSP/5ACeqltCZAcXh21b8w92tfY=",
+        "owner": "panxuc",
+        "repo": "fcitx5-wetypex",
+        "rev": "0d55e7d2fb753abb8ff696a141b8f05953465d39",
+        "type": "github"
+      },
+      "original": {
+        "owner": "panxuc",
+        "ref": "v3.0.1.684-9",
+        "repo": "fcitx5-wetypex",
         "type": "github"
       }
     }

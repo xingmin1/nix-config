@@ -1,4 +1,8 @@
-{flake, ...}: let
+{
+  flake,
+  lib,
+  ...
+}: let
   inherit (flake) inputs;
   inherit (inputs) self;
 in {
@@ -33,15 +37,15 @@ in {
     quotaAutoRefreshEnabled = true;
   };
   services.codex2api = {
-    enable = true;
+    enable = lib.mkDefault true;
     port = 8080;
   };
-  services.grokOpenAICompat.enable = true;
+  services.grokOpenAICompat.enable = lib.mkDefault true;
   services.cloudflaredTunnel = {
-    enable = true;
+    enable = lib.mkDefault true;
     edgeBindAddress = "auto";
   };
-  services.ccConnect.enable = true;
+  services.ccConnect.enable = lib.mkDefault true;
 
   home.stateVersion = "24.11";
 }

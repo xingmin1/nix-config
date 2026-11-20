@@ -18,6 +18,10 @@
     nixos-unified.url = "github:srid/nixos-unified";
 
     # Software inputs
+    wetypex = {
+      url = "github:panxuc/fcitx5-wetypex/v3.0.1.684-9";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     vertex.url = "github:juspay/vertex";

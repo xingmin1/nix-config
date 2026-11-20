@@ -5,6 +5,7 @@
 in {
   imports = [
     self.nixosModules.default
+    self.nixosModules.wsl
   ];
 
   nix.settings.substituters = [
