@@ -5,6 +5,7 @@
   ...
 }: let
   magpiePackage = pkgs.callPackage ./magpie.nix {};
+  uuRemotePackage = pkgs.callPackage ./uu-remote-linux.nix {releaseMetadata = flake.inputs.uuRemoteLinuxRelease;};
 in {
   imports = [
     flake.inputs.self.nixosModules.default
@@ -44,6 +45,7 @@ in {
   environment.systemPackages = [
     (pkgs.callPackage ./krunner-pinyin-search.nix {src = flake.inputs.krunnerPinyinSrc;})
   ];
+  systemd.packages = [uuRemotePackage];
 
   services = {
     ghelper.enable = true;
@@ -143,6 +145,7 @@ in {
       typora
       (pkgs.callPackage ./arcmd.nix {releaseChecksums = flake.inputs.arcmdChecksums;})
       (pkgs.callPackage ./weflow.nix {})
+      uuRemotePackage
       magpiePackage
     ];
 

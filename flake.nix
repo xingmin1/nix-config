@@ -67,6 +67,11 @@
       url = "github:AOSC-Dev/krunner-pinyin-search";
       flake = false;
     };
+    uuRemoteLinuxRelease = {
+      type = "file";
+      url = "https://api.github.com/repos/VallierDev/uu-remote-linux/releases/latest";
+      flake = false;
+    };
     # Slack CLI 在每个 Release 里都附带无版本名的 latest 别名资产。
     slackCliLinuxAmd64 = {
       type = "file";
