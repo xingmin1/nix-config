@@ -614,6 +614,7 @@
         "tftpNowBinary": "tftpNowBinary",
         "uuRemoteLinuxRelease": "uuRemoteLinuxRelease",
         "vertex": "vertex",
+        "weflowRelease": "weflowRelease",
         "wetypex": "wetypex"
       }
     },
@@ -742,6 +743,18 @@
         "owner": "juspay",
         "repo": "vertex",
         "type": "github"
+      }
+    },
+    "weflowRelease": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-3jyKuoRuloveg3p3Jes4Ja+cCgx1/eVrBae+8DwHu7k=",
+        "type": "file",
+        "url": "https://api.github.com/repos/334456777/WeFlow/releases/latest"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://api.github.com/repos/334456777/WeFlow/releases/latest"
       }
     },
     "wetypex": {

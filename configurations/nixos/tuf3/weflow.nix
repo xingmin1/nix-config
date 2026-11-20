@@ -2,6 +2,7 @@
   lib,
   stdenv,
   fetchurl,
+  releaseMetadata,
   autoPatchelfHook,
   xz,
 }: let
@@ -9,20 +10,20 @@
     x86_64-linux = "x64";
     aarch64-linux = "arm64";
   };
-  release = builtins.fromJSON (builtins.readFile ./weflow-release.json);
-  inherit (release) tag;
-  version = lib.removePrefix "v" tag;
+  release = builtins.fromJSON (builtins.readFile releaseMetadata);
+  version = lib.removePrefix "v" release.tag_name;
   arch = architectures.${stdenv.hostPlatform.system};
-  assetName = "weflow-${tag}-linux-${arch}.tar.gz";
+  assetName = "weflow-${release.tag_name}-linux-${arch}.tar.gz";
+  asset = lib.findFirst (item: item.name == assetName) (throw "WeFlow release has no ${assetName}") release.assets;
 in
   stdenv.mkDerivation {
     pname = "weflow";
     inherit version;
 
     src = fetchurl {
-      url = "https://github.com/334456777/WeFlow/releases/download/${tag}/${assetName}";
+      url = asset.browser_download_url;
       hash = builtins.convertHash {
-        hash = release.sha256.${arch};
+        hash = lib.removePrefix "sha256:" asset.digest;
         hashAlgo = "sha256";
         toHashFormat = "sri";
       };
