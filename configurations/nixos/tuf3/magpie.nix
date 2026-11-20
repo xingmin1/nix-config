@@ -65,6 +65,11 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     runHook postInstall
   '';
 
+  # Magpie 的网页缩放最低为 100%，通过 GTK DPI 单独缩小其界面。
+  preFixup = ''
+    gappsWrapperArgs+=(--set-default GDK_DPI_SCALE 0.75)
+  '';
+
   meta = {
     description = "Desktop application for managing AI agents and model providers";
     homepage = "https://github.com/yetone/magpie";
