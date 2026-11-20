@@ -43,8 +43,10 @@
     desktopManager.plasma6.enable = true;
     displayManager.sddm = {
       enable = true;
-      wayland.enable = true;
+      # 登录界面用 X11，规避 KDE #527428 报告的屏幕输出异常。
+      wayland.enable = false;
     };
+    xserver.enable = true;
     pipewire = {
       enable = true;
       pulse.enable = true;
