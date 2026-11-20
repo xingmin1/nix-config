@@ -25,6 +25,10 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     url = "https://github.com/yetone/magpie/releases/download/v${finalAttrs.version}/magpie-linux-amd64";
     hash = "sha256-4IgcqEBPoNcrD5OBtj1GZ5nUW/7o7KxwRyjoOC8dqh8=";
   };
+  appIcon = fetchurl {
+    url = "https://raw.githubusercontent.com/yetone/magpie/v${finalAttrs.version}/internal/gui/icon-256.png";
+    hash = "sha256-V0N8ZZbgWo/PxC1CiMAwqgDthraf411GTWnXAmFQxwQ=";
+  };
   dontUnpack = true;
 
   nativeBuildInputs = [
@@ -61,7 +65,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
       desktopName = "Magpie";
       comment = "Manage AI agents and model providers";
       exec = "magpie %u";
-      icon = "applications-development";
+      icon = "magpie";
       startupWMClass = "magpie";
       mimeTypes = ["x-scheme-handler/magpie"];
       categories = ["Development" "Utility"];
@@ -71,6 +75,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   installPhase = ''
     runHook preInstall
     install -Dm755 "$src" "$out/bin/magpie"
+    install -Dm644 "$appIcon" "$out/share/icons/hicolor/256x256/apps/magpie.png"
     runHook postInstall
   '';
 
