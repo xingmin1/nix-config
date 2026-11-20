@@ -3,7 +3,9 @@
   modulesPath,
   pkgs,
   ...
-}: {
+}: let
+  magpiePackage = pkgs.callPackage ./magpie.nix {};
+in {
   imports = [
     flake.inputs.self.nixosModules.default
     flake.inputs.self.nixosModules.nix-cache
@@ -127,8 +129,11 @@
       wemeet
       typora
       (pkgs.callPackage ./arcmd.nix {releaseChecksums = flake.inputs.arcmdChecksums;})
-      (pkgs.callPackage ./magpie.nix {})
+      magpiePackage
     ];
+
+    # 阻止 Magpie 生成绕过启动包装的用户级快捷方式。
+    xdg.dataFile."applications/magpie.desktop".source = "${magpiePackage}/share/applications/magpie.desktop";
 
     xdg.configFile."autostart/snipaste.desktop".text = ''
       [Desktop Entry]

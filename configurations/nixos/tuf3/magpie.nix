@@ -46,6 +46,15 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     webkitgtk_4_1
   ];
 
+  preFixup = ''
+    # 使用实测更流畅的 WebKitGTK 硬件渲染路径。
+    gappsWrapperArgs+=(
+      --set-default GDK_BACKEND wayland,x11
+      --set-default WEBKIT_DISABLE_COMPOSITING_MODE 0
+      --set-default WEBKIT_DISABLE_DMABUF_RENDERER 0
+    )
+  '';
+
   desktopItems = [
     (makeDesktopItem {
       name = "magpie";
@@ -63,6 +72,11 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     runHook preInstall
     install -Dm755 "$src" "$out/bin/magpie"
     runHook postInstall
+  '';
+
+  postFixup = ''
+    substituteInPlace "$out/share/applications/magpie.desktop" \
+      --replace-fail 'Exec=magpie ' "Exec=$out/bin/magpie "
   '';
 
   meta = {
