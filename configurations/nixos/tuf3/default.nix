@@ -53,6 +53,12 @@
   };
   security.rtkit.enable = true;
 
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
+
+  i18n.defaultLocale = "zh_CN.UTF-8";
   i18n.inputMethod = {
     enable = true;
     type = "fcitx5";
@@ -106,6 +112,8 @@
       vscode
       code-cursor
       wemeet
+      typora
+      (pkgs.callPackage ./arcmd.nix {releaseChecksums = flake.inputs.arcmdChecksums;})
       (pkgs.callPackage ./magpie.nix {})
     ];
 

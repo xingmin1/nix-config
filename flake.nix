@@ -30,9 +30,7 @@
       url = "github:aeroxy/ast-bro";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # 锁定 Release 的预编译资产本身：`releases/latest/download/<资产>` 是稳定指针，
-    # 只在发版时改变目标，而资产字节在某个 release 下不可变，因此 `nix flake update`
-    # 既能推进到最新版本，也不会被下载计数之类的易变字段击穿 narHash 校验。
+    # 通过 latest 资产在更新锁文件时跟进上游发布。
     jcodeLinuxX64 = {
       type = "file";
       url = "https://github.com/1jehuang/jcode/releases/latest/download/jcode-linux-x86_64.tar.gz";
@@ -53,6 +51,12 @@
     codex2apiChecksums = {
       type = "file";
       url = "https://github.com/xingmin1/codex2api/releases/latest/download/SHA256SUMS.txt";
+      flake = false;
+    };
+    # ArcMD 的校验清单同时提供当前版本的资产名和哈希。
+    arcmdChecksums = {
+      type = "file";
+      url = "https://github.com/Ciao1019/ArcMD/releases/latest/download/SHA256SUMS.txt";
       flake = false;
     };
     # Slack CLI 在每个 Release 里都附带无版本名的 latest 别名资产。
@@ -86,7 +90,7 @@
       url = "https://github.com/mweinbach/open-grok/releases/latest/download/open-grok-linux-aarch64";
       flake = false;
     };
-    # OMP 官方预编译二进制；flake.lock 固定实际字节，更新时跟随最新 Release。
+    # OMP 官方预编译二进制；更新锁文件时跟随最新 Release。
     ompLinuxX64 = {
       type = "file";
       url = "https://github.com/can1357/oh-my-pi/releases/latest/download/omp-linux-x64";

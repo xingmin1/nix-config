@@ -1,5 +1,17 @@
 {
   "nodes": {
+    "arcmdChecksums": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-FTT+WXffnpXdRs6+3EPA3ERur+dgWjtwmrTYE+u7+7s=",
+        "type": "file",
+        "url": "https://github.com/Ciao1019/ArcMD/releases/latest/download/SHA256SUMS.txt"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/Ciao1019/ArcMD/releases/latest/download/SHA256SUMS.txt"
+      }
+    },
     "ast-bro": {
       "inputs": {
         "crane": "crane",
@@ -257,7 +269,7 @@
     "jcodeLinuxAarch64": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-BOppJrDXEmvgfBDFte1THCU4EtUa0XF5LLaI5C4dKcQ=",
+        "narHash": "sha256-s8/XSfynTY4s1NDHhjhdZEW+x+VjotMbVDONEP8PlYk=",
         "type": "file",
         "url": "https://github.com/1jehuang/jcode/releases/latest/download/jcode-linux-aarch64.tar.gz"
       },
@@ -269,7 +281,7 @@
     "jcodeLinuxX64": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-6wNg1heaRuaJc/c6JJ9Y6PN9aZgOMCBhW+ZaqUZi66Y=",
+        "narHash": "sha256-kbWU6UqBvIeDodh/qp8hdakvB+WMGiuiuD25nPk7N+4=",
         "type": "file",
         "url": "https://github.com/1jehuang/jcode/releases/latest/download/jcode-linux-x86_64.tar.gz"
       },
@@ -487,7 +499,7 @@
     "ompLinuxAarch64": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-J9SeNPVMZjxiM9IP5MlPCng4/MHM4ygCiR9QcOnVJrA=",
+        "narHash": "sha256-qlVCdd8YtDgM3IXlftMrvwXV5i/Oi5ldbtd3IQB5KJ0=",
         "type": "file",
         "url": "https://github.com/can1357/oh-my-pi/releases/latest/download/omp-linux-arm64"
       },
@@ -499,7 +511,7 @@
     "ompLinuxX64": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-QXU3RlbzCQDDZDKyVGO6a2+GrBkcxGv+sAFwTudWXoE=",
+        "narHash": "sha256-IYLYcVSkpXo5B67ekfvBp4usY2MUYmC0dTtLlEweco4=",
         "type": "file",
         "url": "https://github.com/can1357/oh-my-pi/releases/latest/download/omp-linux-x64"
       },
@@ -534,6 +546,7 @@
     },
     "root": {
       "inputs": {
+        "arcmdChecksums": "arcmdChecksums",
         "ast-bro": "ast-bro",
         "catppuccin": "catppuccin",
         "ccConnectBeta": "ccConnectBeta",
