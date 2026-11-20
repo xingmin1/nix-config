@@ -107,7 +107,18 @@
       snipaste
       wpsoffice-cn
       feishu
-      chatgpt
+      (symlinkJoin {
+        name = "chatgpt-wayland-ime";
+        paths = [chatgpt];
+        nativeBuildInputs = [makeWrapper];
+        postBuild = ''
+          # KDE Wayland 下使用原生输入法协议，避免 XIM 快速输入时漏键。
+          wrapProgram "$out/bin/chatgpt" \
+            --run 'if [ -n "''${WAYLAND_DISPLAY:-}" ]; then
+              set -- --ozone-platform=wayland --enable-wayland-ime --wayland-text-input-version=3 "$@"
+            fi'
+        '';
+      })
       zed-editor
       vscode
       code-cursor
