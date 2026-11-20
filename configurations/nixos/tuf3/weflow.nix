@@ -1,43 +1,36 @@
 {
   lib,
-  stdenv,
-  fetchurl,
-  releaseMetadata,
-  autoPatchelfHook,
-  xz,
+  rustPlatform,
+  makeWrapper,
+  pkg-config,
+  procps,
+  sqlite,
+  zstd,
+  src,
 }: let
-  architectures = {
-    x86_64-linux = "x64";
-    aarch64-linux = "arm64";
-  };
-  release = builtins.fromJSON (builtins.readFile releaseMetadata);
-  version = lib.removePrefix "v" release.tag_name;
-  arch = architectures.${stdenv.hostPlatform.system};
-  assetName = "weflow-${release.tag_name}-linux-${arch}.tar.gz";
-  asset = lib.findFirst (item: item.name == assetName) (throw "WeFlow release has no ${assetName}") release.assets;
+  workspace = builtins.fromTOML (builtins.readFile "${src}/Cargo.toml");
 in
-  stdenv.mkDerivation {
+  rustPlatform.buildRustPackage {
     pname = "weflow";
-    inherit version;
+    version = "${workspace.workspace.package.version}-unstable-${src.shortRev}";
+    inherit src;
+    nativeBuildInputs = [makeWrapper pkg-config];
+    buildInputs = [sqlite zstd];
 
-    src = fetchurl {
-      url = asset.browser_download_url;
-      hash = builtins.convertHash {
-        hash = lib.removePrefix "sha256:" asset.digest;
-        hashAlgo = "sha256";
-        toHashFormat = "sri";
-      };
+    cargoLock = {
+      lockFile = "${src}/Cargo.lock";
+      # 直接使用上游锁文件中的 Git 依赖，让 Flake 更新时同步跟进。
+      allowBuiltinFetchGit = true;
     };
+    cargoBuildFlags = ["-p" "weflow-cli"];
+    cargoTestFlags = ["-p" "weflow-core" "--test" "image_keys_e2e"];
 
-    nativeBuildInputs = [autoPatchelfHook];
-    buildInputs = [stdenv.cc.cc.lib xz];
-    dontStrip = true;
-
-    installPhase = ''
-      runHook preInstall
-      install -Dm755 weflow "$out/bin/weflow"
+    postInstall = ''
       install -Dm644 LICENSE "$out/share/licenses/weflow/LICENSE"
-      runHook postInstall
+    '';
+
+    postFixup = ''
+      wrapProgram "$out/bin/weflow" --prefix PATH : "${lib.makeBinPath [procps]}"
     '';
 
     meta = {
@@ -45,6 +38,6 @@ in
       homepage = "https://github.com/334456777/WeFlow";
       license = lib.licenses.unlicense;
       mainProgram = "weflow";
-      platforms = builtins.attrNames architectures;
+      platforms = ["x86_64-linux" "aarch64-linux"];
     };
   }

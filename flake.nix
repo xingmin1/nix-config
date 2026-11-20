@@ -72,9 +72,8 @@
       url = "https://api.github.com/repos/VallierDev/uu-remote-linux/releases/latest";
       flake = false;
     };
-    weflowRelease = {
-      type = "file";
-      url = "https://api.github.com/repos/334456777/WeFlow/releases/latest";
+    weflowSrc = {
+      url = "github:334456777/WeFlow/main";
       flake = false;
     };
     # Slack CLI 在每个 Release 里都附带无版本名的 latest 别名资产。

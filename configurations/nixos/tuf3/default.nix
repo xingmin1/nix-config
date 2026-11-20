@@ -147,7 +147,7 @@ in {
       wemeet
       typora
       (pkgs.callPackage ./arcmd.nix {releaseChecksums = flake.inputs.arcmdChecksums;})
-      (pkgs.callPackage ./weflow.nix {releaseMetadata = flake.inputs.weflowRelease;})
+      (pkgs.callPackage ./weflow.nix {src = flake.inputs.weflowSrc;})
       uuRemotePackage
       magpiePackage
     ];

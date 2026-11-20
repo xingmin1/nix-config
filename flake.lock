@@ -756,7 +756,7 @@
         "tftpNowBinary": "tftpNowBinary",
         "uuRemoteLinuxRelease": "uuRemoteLinuxRelease",
         "vertex": "vertex",
-        "weflowRelease": "weflowRelease",
+        "weflowSrc": "weflowSrc",
         "wetypex": "wetypex"
       }
     },
@@ -887,16 +887,21 @@
         "type": "github"
       }
     },
-    "weflowRelease": {
+    "weflowSrc": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-3jyKuoRuloveg3p3Jes4Ja+cCgx1/eVrBae+8DwHu7k=",
-        "type": "file",
-        "url": "https://api.github.com/repos/334456777/WeFlow/releases/latest"
+        "lastModified": 1795175056,
+        "narHash": "sha256-k4d4HBJAY4FXefnua7jwiGHJE7YiOiP8yoI4vnZoUL8=",
+        "owner": "334456777",
+        "repo": "WeFlow",
+        "rev": "d4a8fe46657abc838dcda568bb206ab60be3321a",
+        "type": "github"
       },
       "original": {
-        "type": "file",
-        "url": "https://api.github.com/repos/334456777/WeFlow/releases/latest"
+        "owner": "334456777",
+        "ref": "main",
+        "repo": "WeFlow",
+        "type": "github"
       }
     },
     "wetypex": {
