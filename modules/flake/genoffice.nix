@@ -1,14 +1,15 @@
-{...}: {
+{inputs, ...}: {
   perSystem = {pkgs, ...}: let
     inherit (pkgs) lib stdenv;
-    version = "0.11.829";
+    release = import ../../lib/github-release.nix {
+      inherit lib;
+      inherit (pkgs) fetchurl;
+      metadata = inputs.genofficeRelease;
+    };
+    inherit (release) version;
 
-    # 官方 Linux Release 遗漏了 cli/node_modules；只补齐同一标签锁定的 jsdom 运行闭包，
-    # 不重新构建 GenOffice，也不引入整仓工作区与开发依赖。
-    upstreamLock = builtins.fromJSON (builtins.readFile (pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/genspark-ai/genoffice/v${version}/package-lock.json";
-      hash = "sha256-Vtt1f9Vk4Emv77jqCH2eIjmdZduXJQyV89iMBGzFiR8=";
-    }));
+    # 补齐上游 Linux 包中缺少的 jsdom 运行依赖。
+    upstreamLock = builtins.fromJSON (builtins.readFile inputs.genofficeNpmLock);
     jsdomClosure = builtins.genericClosure {
       startSet = [{key = "node_modules/jsdom";}];
       operator = {key}: let
@@ -40,10 +41,7 @@
       genoffice = pkgs.stdenvNoCC.mkDerivation {
         pname = "genoffice";
         inherit version;
-        src = pkgs.fetchurl {
-          url = "https://github.com/genspark-ai/genoffice/releases/download/v${version}/genoffice_${version}_amd64.deb";
-          hash = "sha256-GB3QbYYSP10424wCduSH/SDclnbIi4Q9p0SI32AzvWc=";
-        };
+        src = release.asset "genoffice_${version}_amd64.deb";
 
         nativeBuildInputs = with pkgs; [
           dpkg

@@ -19,7 +19,7 @@
 
     # Software inputs
     wetypex = {
-      url = "github:panxuc/fcitx5-wetypex/v3.0.1.684-9";
+      url = "github:panxuc/fcitx5-wetypex";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-index-database.url = "github:nix-community/nix-index-database";
@@ -125,11 +125,56 @@
       url = "https://github.com/puhitaku/tftp-now/releases/latest/download/tftp-now-linux-amd64";
       flake = false;
     };
-    # 通过 npm beta dist-tag 固定当前可用的 cc-connect beta 元数据。
-    # 以后只需要 `nix flake update`，flake.lock 就会推进这里的版本信息。
-    ccConnectBeta = {
+    magpieRelease = {
       type = "file";
-      url = "https://registry.npmjs.org/cc-connect/beta";
+      url = "https://api.github.com/repos/yetone/magpie/releases/latest";
+      flake = false;
+    };
+    officecliRelease = {
+      type = "file";
+      url = "https://api.github.com/repos/iOfficeAI/OfficeCLI/releases/latest";
+      flake = false;
+    };
+    nbCliRelease = {
+      type = "file";
+      url = "https://api.github.com/repos/jupyter-ai-contrib/nb-cli/releases/latest";
+      flake = false;
+    };
+    justLspRelease = {
+      type = "file";
+      url = "https://api.github.com/repos/terror/just-lsp/releases/latest";
+      flake = false;
+    };
+    genofficeRelease = {
+      type = "file";
+      url = "https://api.github.com/repos/genspark-ai/genoffice/releases/latest";
+      flake = false;
+    };
+    ccConnectRelease = {
+      type = "file";
+      url = "https://api.github.com/repos/chenhg5/cc-connect/releases/latest";
+      flake = false;
+    };
+    officecliSkills = {
+      url = "github:iOfficeAI/OfficeCLI";
+      flake = false;
+    };
+    nbCliSkills = {
+      url = "github:jupyter-ai-contrib/nb-cli";
+      flake = false;
+    };
+    manPagesZhSrc = {
+      url = "github:man-pages-zh/manpages-zh";
+      flake = false;
+    };
+    magpieIcon = {
+      type = "file";
+      url = "https://raw.githubusercontent.com/yetone/magpie/HEAD/internal/gui/icon-256.png";
+      flake = false;
+    };
+    genofficeNpmLock = {
+      type = "file";
+      url = "https://raw.githubusercontent.com/genspark-ai/genoffice/HEAD/package-lock.json";
       flake = false;
     };
     # https://github.com/catppuccin/nix

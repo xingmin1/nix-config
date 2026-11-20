@@ -50,14 +50,8 @@
   );
   manPagesZh = pkgs.stdenv.mkDerivation {
     pname = "man-pages-zh";
-    version = "1.6.4.1-unstable-2026-07-31";
-
-    src = pkgs.fetchFromGitHub {
-      owner = "man-pages-zh";
-      repo = "manpages-zh";
-      rev = "b536c007574c5354e12b883893a5ec89b704dbe0";
-      hash = "sha256-dGV//enA1WzGsM1zmvXOqBe4nL+cBrXIf5WieOjzISk=";
-    };
+    version = "unstable-${flake.inputs.manPagesZhSrc.shortRev}";
+    src = flake.inputs.manPagesZhSrc;
 
     nativeBuildInputs = with pkgs; [
       cmake

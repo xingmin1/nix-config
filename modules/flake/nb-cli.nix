@@ -1,28 +1,19 @@
-{...}: {
+{inputs, ...}: {
   perSystem = {pkgs, ...}: let
     inherit (pkgs) lib stdenv;
-    version = "0.0.10";
+    release = import ../../lib/github-release.nix {
+      inherit lib;
+      inherit (pkgs) fetchurl;
+      metadata = inputs.nbCliRelease;
+    };
+    inherit (release) version;
     assets = {
-      x86_64-linux = {
-        name = "nb-linux-amd64";
-        hash = "sha256-CRDa8wMtpaPlKVEHLT3bDrKg2xOt+brLnhuK90WT/Z4=";
-      };
-      aarch64-linux = {
-        name = "nb-linux-arm64";
-        hash = "sha256-KggTa6i3NSVv/jJoiLuUJsAlLDekMwzdo6MowzZoODQ=";
-      };
+      x86_64-linux = "nb-linux-amd64";
+      aarch64-linux = "nb-linux-arm64";
     };
     asset = assets.${stdenv.hostPlatform.system} or null;
-    binary = pkgs.fetchurl {
-      url = "https://github.com/jupyter-ai-contrib/nb-cli/releases/download/v${version}/${asset.name}";
-      inherit (asset) hash;
-    };
-    # 同标签归档仅提供完整官方技能和许可证，不参与源码编译。
-    skills = pkgs.fetchurl {
-      url = "https://codeload.github.com/jupyter-ai-contrib/nb-cli/tar.gz/refs/tags/v${version}";
-      name = "nb-cli-${version}-skills.tar.gz";
-      hash = "sha256-kSDYKKvVRu9CJDpNFu/NeLk3Q0DWl0dqT91IeA/EFgg=";
-    };
+    binary = release.asset asset;
+    skills = inputs.nbCliSkills;
   in {
     packages = lib.optionalAttrs (asset != null) {
       nb-cli = pkgs.stdenvNoCC.mkDerivation {
@@ -49,7 +40,7 @@
         meta = {
           description = "Jupyter nb-cli 官方 Release 命令行工具及完整 Notebook 技能";
           homepage = "https://github.com/jupyter-ai-contrib/nb-cli";
-          changelog = "https://github.com/jupyter-ai-contrib/nb-cli/releases/tag/v${version}";
+          changelog = "https://github.com/jupyter-ai-contrib/nb-cli/releases/latest";
           license = lib.licenses.bsd3;
           mainProgram = "nb";
           platforms = builtins.attrNames assets;

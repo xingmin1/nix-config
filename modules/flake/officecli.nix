@@ -1,28 +1,19 @@
-{...}: {
+{inputs, ...}: {
   perSystem = {pkgs, ...}: let
     inherit (pkgs) lib stdenv;
-    version = "1.0.157";
+    release = import ../../lib/github-release.nix {
+      inherit lib;
+      inherit (pkgs) fetchurl;
+      metadata = inputs.officecliRelease;
+    };
+    inherit (release) version;
     assets = {
-      x86_64-linux = {
-        name = "officecli-linux-x64";
-        hash = "sha256-+O7+iNv6dGS+5CHlQh7+V/wmvDGAsw5W7vWFlMgkXJQ=";
-      };
-      aarch64-linux = {
-        name = "officecli-linux-arm64";
-        hash = "sha256-YNuSbIoTcZhLnpliKoNHd777Arb3PQ8//5FP/MJ2DS8=";
-      };
+      x86_64-linux = "officecli-linux-x64";
+      aarch64-linux = "officecli-linux-arm64";
     };
     asset = assets.${stdenv.hostPlatform.system} or null;
-    binary = pkgs.fetchurl {
-      url = "https://github.com/iOfficeAI/OfficeCLI/releases/download/v${version}/${asset.name}";
-      inherit (asset) hash;
-    };
-    # 标签归档仅提供完整官方技能和许可证，不参与编译。
-    skills = pkgs.fetchurl {
-      url = "https://codeload.github.com/iOfficeAI/OfficeCLI/tar.gz/refs/tags/v${version}";
-      name = "officecli-${version}-skills.tar.gz";
-      hash = "sha256-z9hYyjLMPstRsWuIKrJhRReSHEsUFnS4KwiD7rB6N1Q=";
-    };
+    binary = release.asset asset;
+    skills = inputs.officecliSkills;
     # 自包含 .NET 二进制仍通过 dlopen 加载系统库，不能只修复 ELF 的 NEEDED 项。
     runtimeLibraries = with pkgs; [stdenv.cc.cc.lib icu openssl zlib krb5];
   in {
@@ -62,7 +53,7 @@
         meta = {
           description = "OfficeCLI 官方 Release 命令行工具及完整文档编辑技能";
           homepage = "https://github.com/iOfficeAI/OfficeCLI";
-          changelog = "https://github.com/iOfficeAI/OfficeCLI/releases/tag/v${version}";
+          changelog = "https://github.com/iOfficeAI/OfficeCLI/releases/latest";
           license = lib.licenses.asl20;
           mainProgram = "officecli";
           platforms = builtins.attrNames assets;

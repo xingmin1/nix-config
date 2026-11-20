@@ -88,16 +88,16 @@
         "type": "github"
       }
     },
-    "ccConnectBeta": {
+    "ccConnectRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-GtQtzm7XopqaaQ2Px1Z95vSMTucofKIEwbp/d6UAr6Y=",
+        "narHash": "sha256-XIfBrgkaliYWXAxcUoBRJuTB4dkGmBQ3JhEdWa+0lgQ=",
         "type": "file",
-        "url": "https://registry.npmjs.org/cc-connect/beta"
+        "url": "https://api.github.com/repos/chenhg5/cc-connect/releases/latest"
       },
       "original": {
         "type": "file",
-        "url": "https://registry.npmjs.org/cc-connect/beta"
+        "url": "https://api.github.com/repos/chenhg5/cc-connect/releases/latest"
       }
     },
     "codex2apiChecksums": {
@@ -246,6 +246,30 @@
         "type": "github"
       }
     },
+    "genofficeNpmLock": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-WfLQkePifKaqFY8rms8YlkMIHCQF9cSiPs0MaHn8shU=",
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/genspark-ai/genoffice/HEAD/package-lock.json"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/genspark-ai/genoffice/HEAD/package-lock.json"
+      }
+    },
+    "genofficeRelease": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-Bk092SItSwtcMluuglGUuwt7mJc9cAAHouhbchmHZtw=",
+        "type": "file",
+        "url": "https://api.github.com/repos/genspark-ai/genoffice/releases/latest"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://api.github.com/repos/genspark-ai/genoffice/releases/latest"
+      }
+    },
     "ghelper": {
       "inputs": {
         "nixpkgs": [
@@ -312,6 +336,18 @@
         "url": "https://github.com/1jehuang/jcode/releases/latest/download/jcode-linux-x86_64.tar.gz"
       }
     },
+    "justLspRelease": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-iGcpVq4hA9j74yG+3PB/Q2NKDkkC3I9+WjUP19gD/tA=",
+        "type": "file",
+        "url": "https://api.github.com/repos/terror/just-lsp/releases/latest"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://api.github.com/repos/terror/just-lsp/releases/latest"
+      }
+    },
     "krunnerPinyinSrc": {
       "flake": false,
       "locked": {
@@ -347,6 +383,74 @@
       "original": {
         "owner": "numtide",
         "repo": "llm-agents.nix",
+        "type": "github"
+      }
+    },
+    "magpieIcon": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-+yMynbrPgj5a0/v6W+3a1VJW8CpoCVo//t+5Tq1pHrw=",
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/yetone/magpie/HEAD/internal/gui/icon-256.png"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/yetone/magpie/HEAD/internal/gui/icon-256.png"
+      }
+    },
+    "magpieRelease": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-ZKXbo20ZeQjwE26M/VCp6GxYx8nAaUBIlnsHDH22z0o=",
+        "type": "file",
+        "url": "https://api.github.com/repos/yetone/magpie/releases/latest"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://api.github.com/repos/yetone/magpie/releases/latest"
+      }
+    },
+    "manPagesZhSrc": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1785513508,
+        "narHash": "sha256-dGV//enA1WzGsM1zmvXOqBe4nL+cBrXIf5WieOjzISk=",
+        "owner": "man-pages-zh",
+        "repo": "manpages-zh",
+        "rev": "b536c007574c5354e12b883893a5ec89b704dbe0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "man-pages-zh",
+        "repo": "manpages-zh",
+        "type": "github"
+      }
+    },
+    "nbCliRelease": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-3WlY8fVWTLqk/BfyuII1ZCxnYKum2OzylOXvx5MqSW8=",
+        "type": "file",
+        "url": "https://api.github.com/repos/jupyter-ai-contrib/nb-cli/releases/latest"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://api.github.com/repos/jupyter-ai-contrib/nb-cli/releases/latest"
+      }
+    },
+    "nbCliSkills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793815590,
+        "narHash": "sha256-EX0dJa2PeAVVaLeMkRNLihkV8oHWdLLhhYxcayUKqvU=",
+        "owner": "jupyter-ai-contrib",
+        "repo": "nb-cli",
+        "rev": "14e6f94c73270db6a2d6a28d7eff764b8be99770",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jupyter-ai-contrib",
+        "repo": "nb-cli",
         "type": "github"
       }
     },
@@ -534,6 +638,34 @@
         "type": "github"
       }
     },
+    "officecliRelease": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-DYtdjvaBaAoANiypmDuKf1GuldpMnxQRaCpXywIdyZ8=",
+        "type": "file",
+        "url": "https://api.github.com/repos/iOfficeAI/OfficeCLI/releases/latest"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://api.github.com/repos/iOfficeAI/OfficeCLI/releases/latest"
+      }
+    },
+    "officecliSkills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1795155149,
+        "narHash": "sha256-JozZh4SkLSRN9wOGQJqytYYRtI6APzM2TEUGWZ5kWkE=",
+        "owner": "iOfficeAI",
+        "repo": "OfficeCLI",
+        "rev": "fecece3ee6054f419d2e8ecca899d7498142d417",
+        "type": "github"
+      },
+      "original": {
+        "owner": "iOfficeAI",
+        "repo": "OfficeCLI",
+        "type": "github"
+      }
+    },
     "ompLinuxAarch64": {
       "flake": false,
       "locked": {
@@ -587,22 +719,32 @@
         "arcmdChecksums": "arcmdChecksums",
         "ast-bro": "ast-bro",
         "catppuccin": "catppuccin",
-        "ccConnectBeta": "ccConnectBeta",
+        "ccConnectRelease": "ccConnectRelease",
         "codex2apiChecksums": "codex2apiChecksums",
         "codexForkLinuxX64": "codexForkLinuxX64",
         "collieRepo": "collieRepo",
         "flake-parts": "flake-parts_2",
+        "genofficeNpmLock": "genofficeNpmLock",
+        "genofficeRelease": "genofficeRelease",
         "ghelper": "ghelper",
         "home-manager": "home-manager",
         "jcodeLinuxAarch64": "jcodeLinuxAarch64",
         "jcodeLinuxX64": "jcodeLinuxX64",
+        "justLspRelease": "justLspRelease",
         "krunnerPinyinSrc": "krunnerPinyinSrc",
         "llm-agents": "llm-agents",
+        "magpieIcon": "magpieIcon",
+        "magpieRelease": "magpieRelease",
+        "manPagesZhSrc": "manPagesZhSrc",
+        "nbCliRelease": "nbCliRelease",
+        "nbCliSkills": "nbCliSkills",
         "nix-darwin": "nix-darwin",
         "nix-index-database": "nix-index-database",
         "nixos-unified": "nixos-unified",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_3",
+        "officecliRelease": "officecliRelease",
+        "officecliSkills": "officecliSkills",
         "ompLinuxAarch64": "ompLinuxAarch64",
         "ompLinuxX64": "ompLinuxX64",
         "openGrokLinuxAarch64": "openGrokLinuxAarch64",
@@ -773,7 +915,6 @@
       },
       "original": {
         "owner": "panxuc",
-        "ref": "v3.0.1.684-9",
         "repo": "fcitx5-wetypex",
         "type": "github"
       }

@@ -4,7 +4,10 @@
   pkgs,
   ...
 }: let
-  magpiePackage = pkgs.callPackage ./magpie.nix {};
+  magpiePackage = pkgs.callPackage ./magpie.nix {
+    releaseMetadata = flake.inputs.magpieRelease;
+    appIcon = flake.inputs.magpieIcon;
+  };
   uuRemotePackage = pkgs.callPackage ./uu-remote-linux.nix {releaseMetadata = flake.inputs.uuRemoteLinuxRelease;};
 in {
   imports = [
