@@ -312,6 +312,22 @@
         "url": "https://github.com/1jehuang/jcode/releases/latest/download/jcode-linux-x86_64.tar.gz"
       }
     },
+    "krunnerPinyinSrc": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1787191187,
+        "narHash": "sha256-XYapRZM1/qchOhpamD+s/hWpQG+055mM01kGhx1lesk=",
+        "owner": "AOSC-Dev",
+        "repo": "krunner-pinyin-search",
+        "rev": "7a8788199b93a4ed2afcb8a8976523a3beb9c518",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AOSC-Dev",
+        "repo": "krunner-pinyin-search",
+        "type": "github"
+      }
+    },
     "llm-agents": {
       "inputs": {
         "bun2nix": "bun2nix",
@@ -580,6 +596,7 @@
         "home-manager": "home-manager",
         "jcodeLinuxAarch64": "jcodeLinuxAarch64",
         "jcodeLinuxX64": "jcodeLinuxX64",
+        "krunnerPinyinSrc": "krunnerPinyinSrc",
         "llm-agents": "llm-agents",
         "nix-darwin": "nix-darwin",
         "nix-index-database": "nix-index-database",

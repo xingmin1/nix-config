@@ -41,6 +41,10 @@ in {
 
   nixpkgs.config.allowUnfree = true;
 
+  environment.systemPackages = [
+    (pkgs.callPackage ./krunner-pinyin-search.nix {src = flake.inputs.krunnerPinyinSrc;})
+  ];
+
   services = {
     ghelper.enable = true;
     openssh.enable = false;
