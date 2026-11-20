@@ -59,6 +59,10 @@
       url = "https://github.com/Ciao1019/ArcMD/releases/latest/download/SHA256SUMS.txt";
       flake = false;
     };
+    ghelper = {
+      url = "github:utajum/g-helper-linux?dir=nixos";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # Slack CLI 在每个 Release 里都附带无版本名的 latest 别名资产。
     slackCliLinuxAmd64 = {
       type = "file";

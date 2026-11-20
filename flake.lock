@@ -246,6 +246,28 @@
         "type": "github"
       }
     },
+    "ghelper": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "dir": "nixos",
+        "lastModified": 1795128728,
+        "narHash": "sha256-VXFj5oQ+Emr3G35fFqmzMbOZiJsSXhnbI2eHMCDEfGo=",
+        "owner": "utajum",
+        "repo": "g-helper-linux",
+        "rev": "44518e724b6f1b847e808ccdc82032a29ba163f3",
+        "type": "github"
+      },
+      "original": {
+        "dir": "nixos",
+        "owner": "utajum",
+        "repo": "g-helper-linux",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -554,6 +576,7 @@
         "codexForkLinuxX64": "codexForkLinuxX64",
         "collieRepo": "collieRepo",
         "flake-parts": "flake-parts_2",
+        "ghelper": "ghelper",
         "home-manager": "home-manager",
         "jcodeLinuxAarch64": "jcodeLinuxAarch64",
         "jcodeLinuxX64": "jcodeLinuxX64",

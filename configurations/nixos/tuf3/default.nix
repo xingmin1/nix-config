@@ -9,6 +9,7 @@ in {
   imports = [
     flake.inputs.self.nixosModules.default
     flake.inputs.self.nixosModules.nix-cache
+    flake.inputs.ghelper.nixosModules.default
     (modulesPath + "/installer/scan/not-detected.nix")
     ./hardware-configuration.nix
     ./micron-code-login.nix
@@ -41,6 +42,7 @@ in {
   nixpkgs.config.allowUnfree = true;
 
   services = {
+    ghelper.enable = true;
     openssh.enable = false;
     desktopManager.plasma6.enable = true;
     displayManager.sddm = {
@@ -136,6 +138,7 @@ in {
       wemeet
       typora
       (pkgs.callPackage ./arcmd.nix {releaseChecksums = flake.inputs.arcmdChecksums;})
+      (pkgs.callPackage ./weflow.nix {})
       magpiePackage
     ];
 
