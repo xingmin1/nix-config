@@ -155,6 +155,19 @@ in {
     # 阻止 Magpie 生成绕过启动包装的用户级快捷方式。
     xdg.dataFile."applications/magpie.desktop".source = "${magpiePackage}/share/applications/magpie.desktop";
 
+    # KDE 登录后再启动主机服务，确保 Wayland 会话已就绪。
+    xdg.configFile."systemd/user/xdg-desktop-autostart.target.wants/uuremote-native.service".source = "${uuRemotePackage}/share/systemd/user/uuremote-native.service";
+
+    # 使用带渲染环境的包装入口，登录时只打开托盘。
+    xdg.configFile."autostart/magpie.desktop".text = ''
+      [Desktop Entry]
+      Type=Application
+      Name=Magpie
+      Exec=${magpiePackage}/bin/magpie tray
+      Icon=magpie
+      Terminal=false
+    '';
+
     xdg.configFile."autostart/snipaste.desktop".text = ''
       [Desktop Entry]
       Type=Application
