@@ -33,6 +33,7 @@
     "/mnt/windows-c" = {
       device = "/dev/disk/by-uuid/C8907F9A907F8E26";
       fsType = "ntfs3";
+      noCheck = true;
       # 从 Linux 只读访问 Windows 系统分区，首次访问时再挂载。
       options = [
         "ro"
