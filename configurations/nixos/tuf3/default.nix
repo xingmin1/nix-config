@@ -49,6 +49,10 @@ in {
     (pkgs.callPackage ./krunner-pinyin-search.nix {src = flake.inputs.krunnerPinyinSrc;})
   ];
   systemd.packages = [uuRemotePackage];
+  systemd.tmpfiles.rules = [
+    # Magpie Cursor Bridge 只探测固定安装目录，使用用户配置的稳定路径跟随 Nix 构建。
+    "L /opt/cursor - - - - /etc/profiles/per-user/xmin/lib/cursor"
+  ];
 
   services = {
     ghelper.enable = true;
