@@ -30,6 +30,23 @@
       fsType = "ext4";
       options = ["noauto" "nofail" "x-systemd.device-timeout=8s"];
     };
+    "/mnt/windows-c" = {
+      device = "/dev/disk/by-uuid/C8907F9A907F8E26";
+      fsType = "ntfs3";
+      # 从 Linux 只读访问 Windows 系统分区，首次访问时再挂载。
+      options = [
+        "ro"
+        "nosuid"
+        "nodev"
+        "uid=${toString config.users.users.xmin.uid}"
+        "gid=${toString config.users.groups.users.gid}"
+        "umask=0077"
+        "iocharset=utf8"
+        "nofail"
+        "x-systemd.automount"
+        "x-systemd.device-timeout=8s"
+      ];
+    };
     "/home/xmin/code" = {
       device = "/mnt/micron-code/code";
       fsType = "none";
