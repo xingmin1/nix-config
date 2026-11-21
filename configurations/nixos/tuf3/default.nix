@@ -143,7 +143,7 @@ in {
       })
       zed-editor
       vscode
-      code-cursor
+      (callPackage ./cursor.nix {})
       wemeet
       typora
       (pkgs.callPackage ./arcmd.nix {releaseChecksums = flake.inputs.arcmdChecksums;})
