@@ -276,7 +276,154 @@ in {
     extraGroups = ["wheel" "networkmanager"];
   };
 
-  home-manager.users.xmin = let
+  home-manager.users.xmin = {
+    config,
+    lib,
+    ...
+  }: let
+    favnyrKdeOpenWith = pkgs.stdenv.mkDerivation {
+      name = "favnyr-kde-open-with";
+      src = pkgs.linkFarm "favnyr-kde-open-with-source" [
+        {
+          name = "CMakeLists.txt";
+          path = pkgs.writeText "CMakeLists.txt" ''
+            cmake_minimum_required(VERSION 3.16)
+            project(favnyr-kde-open-with LANGUAGES CXX)
+            find_package(Qt6 REQUIRED COMPONENTS Widgets)
+            find_package(KF6KIO REQUIRED)
+            add_executable(favnyr-kde-open-with main.cpp)
+            target_link_libraries(favnyr-kde-open-with PRIVATE Qt6::Widgets KF6::KIOWidgets)
+            install(TARGETS favnyr-kde-open-with DESTINATION bin)
+          '';
+        }
+        {
+          name = "main.cpp";
+          path = pkgs.writeText "main.cpp" ''
+            #include <QApplication>
+            #include <QUrl>
+            #include <KIO/ApplicationLauncherJob>
+            #include <KIO/JobUiDelegateFactory>
+
+            int main(int argc, char **argv)
+            {
+                QApplication app(argc, argv);
+                if (app.arguments().size() < 2) {
+                    return 1;
+                }
+                app.setQuitOnLastWindowClosed(false);
+
+                QList<QUrl> urls;
+                for (const auto &path : app.arguments().mid(1)) {
+                    urls.append(QUrl::fromLocalFile(path));
+                }
+
+                auto *job = new KIO::ApplicationLauncherJob(&app);
+                job->setUrls(urls);
+                job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, nullptr));
+                QObject::connect(job, &KJob::result, &app, [&app](KJob *result) {
+                    app.exit(result->error() != 0);
+                });
+                QMetaObject::invokeMethod(job, &KIO::ApplicationLauncherJob::start, Qt::QueuedConnection);
+                return app.exec();
+            }
+          '';
+        }
+      ];
+      nativeBuildInputs = [pkgs.cmake pkgs.kdePackages.wrapQtAppsHook];
+      buildInputs = with pkgs.kdePackages; [qtbase qtwayland kio];
+    };
+    favnyrArchiveOpeners = (pkgs.formats.toml {}).generate "favnyr-openers.toml" {
+      openers = let
+        archiveExtensions = ["7z" "ar" "bz2" "cab" "gz" "iso" "lz" "lzma" "lzo" "rar" "tar" "tbz2" "tgz" "txz" "xz" "zip" "zst"];
+        archiveOpener = {
+          program = "7zz";
+          icon = "seven-zip";
+          ctx_menu = 1;
+          ctx_exts = archiveExtensions;
+        };
+      in [
+        (archiveOpener
+          // {
+            id = "compress-to-7zip";
+            label = "压缩到…";
+            args = ["a" "{dir}/{setname}.zip" "{files}"];
+            archive_dialog = true;
+            ctx_menu = 3;
+            ctx_exts = ["*"];
+          })
+        (archiveOpener
+          // {
+            id = "extract-here-7zip";
+            label = "解压到此处";
+            args = ["x" "-o{dir}" "{file}"];
+          })
+        (archiveOpener
+          // {
+            id = "extract-to-folder-7zip";
+            label = "解压到文件夹";
+            args = ["x" "-o{dir}/{stem}" "{file}"];
+          })
+        {
+          # Favnyr 的内置列表会把 .md 当成 text/plain，跳过实际的 Markdown 处理程序。
+          id = "kde-open-with";
+          label = "用 KDE 选择应用…";
+          program = "favnyr-kde-open-with";
+          args = ["{files}"];
+          ctx_menu = 1;
+          ctx_exts = ["*"];
+        }
+      ];
+    };
+    seedFavnyrArchiveOpeners = pkgs.writeShellScript "seed-favnyr-archive-openers" ''
+      exec ${pkgs.python3.withPackages (ps: [ps.tomlkit])}/bin/python3 - ${favnyrArchiveOpeners} "$1" <<'PY'
+      import os
+      import sys
+      import tomllib
+      from pathlib import Path
+      from tempfile import NamedTemporaryFile
+
+      import tomlkit
+      from tomlkit.items import Array
+
+
+      def recipe_key(entry):
+          if Path(entry.get("program", "")).name in {"7zz", "7z", "7za"}:
+              return (tuple(entry.get("args", [])), bool(entry.get("archive_dialog", False)))
+          return None
+
+
+      defaults_path, target = map(Path, sys.argv[1:])
+      defaults = tomlkit.parse(defaults_path.read_text())["openers"]
+      original = target.read_text() if target.exists() else None
+      store = tomlkit.parse(original) if original is not None else tomlkit.document()
+      entries = store.setdefault("openers", tomlkit.aot())
+      ids = {entry.get("id") for entry in entries}
+      recipes = {recipe_key(entry) for entry in entries} - {None}
+      missing = [entry for entry in defaults if entry["id"] not in ids and recipe_key(entry) not in recipes]
+      if not missing:
+          sys.exit(0)
+
+      if isinstance(entries, Array):
+          for entry in missing:
+              inline = tomlkit.inline_table()
+              inline.update(entry.unwrap())
+              entries.append(inline)
+      else:
+          entries.extend(missing)
+      updated = tomlkit.dumps(store)
+      tomllib.loads(updated)
+      target.parent.mkdir(parents=True, exist_ok=True)
+      with NamedTemporaryFile(mode="w", dir=target.parent, delete=False) as output:
+          output.write(updated)
+          pending = Path(output.name)
+      try:
+          if (target.read_text() if target.exists() else None) != original:
+              sys.exit(f"Favnyr changed {target} during activation. Retry after saving.")
+          os.replace(pending, target)
+      finally:
+          pending.unlink(missing_ok=True)
+      PY
+    '';
     intelDesktop = {
       text = ''
         [Service]
@@ -313,6 +460,11 @@ in {
       done
     '';
   in {
+    # 激活时补齐菜单项，保留 Favnyr 保存的自定义命令。
+    home.activation.favnyrArchiveOpeners = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      run ${seedFavnyrArchiveOpeners} ${lib.escapeShellArg "${config.xdg.dataHome}/favnyr/openers.toml"}
+    '';
+
     # Bitwarden 使用内核 keyring，避免 secretmem 阻止磁盘休眠。
     systemd.user.sessionVariables.SECURE_KEY_CONTAINER_BACKEND = "keyctl";
 
@@ -324,6 +476,28 @@ in {
       grokOpenAICompat.enable = false;
     };
     home.packages = with pkgs; [
+      # 实际试用过 Favnyr、Spacedrive、Sigma File Manager、Xplorer、
+      # Strata、Flea 和 Double Commander。Flea 和 Strata 的体验也不错，最终保留 Favnyr。
+      (let
+        favnyr = flake.inputs.favnyr.packages.${system}.default;
+      in
+        symlinkJoin {
+          pname = "favnyr-with-tools";
+          inherit (favnyr) version;
+          paths = [favnyr];
+          nativeBuildInputs = [makeWrapper];
+          postBuild = ''
+            # 补齐 Dock 精简环境中可能缺失的应用入口与程序路径。
+            wrapProgram "$out/bin/favnyr" \
+              --prefix PATH : ${lib.makeBinPath [ffmpeg poppler-utils _7zz favnyrKdeOpenWith]} \
+              --suffix PATH : ${lib.escapeShellArg "${config.home.profileDirectory}/bin:${config.home.homeDirectory}/.nix-profile/bin:/run/current-system/sw/bin"} \
+              --suffix XDG_DATA_DIRS : ${lib.escapeShellArg "${config.home.profileDirectory}/share:${config.home.homeDirectory}/.nix-profile/share:/run/current-system/sw/share:${config.xdg.dataHome}/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share"}
+            desktop=share/applications/favnyr.desktop
+            substitute "${favnyr}/$desktop" "$TMPDIR/favnyr.desktop" \
+              --replace-fail 'Exec=favnyr ' "Exec=$out/bin/favnyr "
+            cp --remove-destination "$TMPDIR/favnyr.desktop" "$out/$desktop"
+          '';
+        })
       google-chrome
       bitwarden-desktop
       wechat
@@ -390,6 +564,12 @@ in {
     # 让 Magpie Cursor Bridge 维护的 cursor-agent-bridge 包装器进入默认 PATH。
     home.sessionPath = ["/home/xmin/.config/magpie-cursor-bridge/bin"];
 
+    # 只声明 KDE 的目录默认程序，保留用户自行设置的其他文件关联。
+    xdg.configFile."kde-mimeapps.list".text = ''
+      [Default Applications]
+      inode/directory=favnyr.desktop;
+    '';
+
     # Plasma 应用统一优先使用独显。Vulkan 仍可选择其他显卡。
     xdg.configFile."plasma-workspace/env/nvidia-offload.sh".text = ''
       export __NV_PRIME_RENDER_OFFLOAD=1
@@ -401,7 +581,7 @@ in {
     xdg.configFile."systemd/user/plasma-plasmashell.service.d/prime-offload.conf" = intelDesktop;
     # 共享选择器在核显上显示 KWin 的屏幕和窗口预览。
     xdg.configFile."systemd/user/plasma-xdg-desktop-portal-kde.service.d/prime-offload.conf" = intelDesktop;
-    # 保持 RTX 3060 渲染，用 Vulkan 避开 Qt OpenGL 路径的着色器编译错误。
+    # 保留 Vulkan，改用 Intel 以绕过 RTX 3060 在 vkDestroyImage 内的卡死。
     xdg.configFile."systemd/user/kos-shell.service.d/nextkde-local.conf".text = ''
       [Unit]
       Wants=kos-dock-vram.service
@@ -409,7 +589,7 @@ in {
 
       [Service]
       Environment=QSG_RHI_BACKEND=vulkan
-      Environment=VK_DRIVER_FILES=/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.json
+      Environment=VK_DRIVER_FILES=/run/opengl-driver/share/vulkan/icd.d/intel_icd.x86_64.json
       ExecStartPre=${installDockUsageWidget}
     '';
 

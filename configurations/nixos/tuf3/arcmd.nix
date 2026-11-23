@@ -73,6 +73,9 @@ in
       runHook preInstall
       install -Dm755 arcmd "$out/bin/arcmd"
       install -Dm644 arcmd.desktop "$out/share/applications/arcmd.desktop"
+      # 从 Dock 或其他应用调用 KDE 文件关联时，PATH 可能没有用户软件目录。
+      substituteInPlace "$out/share/applications/arcmd.desktop" \
+        --replace-fail 'Exec=arcmd ' "Exec=$out/bin/arcmd "
       install -Dm644 arcmd.png "$out/share/pixmaps/arcmd.png"
       install -Dm644 arcmd.xml "$out/share/mime/packages/arcmd.xml"
       install -Dm644 LICENSE "$out/share/licenses/arcmd/LICENSE"

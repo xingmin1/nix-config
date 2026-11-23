@@ -34,6 +34,7 @@
       url = "github:aeroxy/ast-bro";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    favnyr.url = "github:GlitchAwakened/Favnyr/33e0e446d7a0dec43d3bfacd295abfae4b87afeb?dir=packaging/nix";
     nextkde = {
       # v0.1.1 的 NixOS 模块无法构建，固定修复打包与部署的上游提交（#253）。
       url = "github:NextKde/NextKde/3e47c795ab20cf1174a36fada59e2faacbc7e9eb";
@@ -62,10 +63,10 @@
       url = "https://github.com/xingmin1/codex2api/releases/latest/download/SHA256SUMS.txt";
       flake = false;
     };
-    # ArcMD 的校验清单同时提供当前版本的资产名和哈希。
+    # 固定到当前已验证的 ArcMD 发布，避免 latest 变动让锁定的校验清单失效。
     arcmdChecksums = {
       type = "file";
-      url = "https://github.com/Ciao1019/ArcMD/releases/latest/download/SHA256SUMS.txt";
+      url = "https://github.com/Ciao1019/ArcMD/releases/download/v0.2.5/SHA256SUMS.txt";
       flake = false;
     };
     ghelper = {
@@ -78,7 +79,8 @@
     };
     uuRemoteLinuxRelease = {
       type = "file";
-      url = "https://api.github.com/repos/VallierDev/uu-remote-linux/releases/latest";
+      # 固定已安装版本，避免最新发布变化时原锁文件无法重新构建。
+      url = "https://api.github.com/repos/VallierDev/uu-remote-linux/releases/tags/v0.2.62";
       flake = false;
     };
     sheprdChecksums = {
@@ -140,7 +142,7 @@
     };
     magpieRelease = {
       type = "file";
-      url = "https://api.github.com/repos/yetone/magpie/releases/latest";
+      url = "https://api.github.com/repos/yetone/magpie/releases/tags/v0.1.4634";
       flake = false;
     };
     officecliRelease = {

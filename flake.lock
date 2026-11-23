@@ -26,11 +26,11 @@
       "locked": {
         "narHash": "sha256-p1LTeMu8alvE76Wb++f+7/z1KQUmGK24kVniTsUzu84=",
         "type": "file",
-        "url": "https://github.com/Ciao1019/ArcMD/releases/latest/download/SHA256SUMS.txt"
+        "url": "https://github.com/Ciao1019/ArcMD/releases/download/v0.2.5/SHA256SUMS.txt"
       },
       "original": {
         "type": "file",
-        "url": "https://github.com/Ciao1019/ArcMD/releases/latest/download/SHA256SUMS.txt"
+        "url": "https://github.com/Ciao1019/ArcMD/releases/download/v0.2.5/SHA256SUMS.txt"
       }
     },
     "ast-bro": {
@@ -164,6 +164,28 @@
         "type": "github"
       }
     },
+    "favnyr": {
+      "inputs": {
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "dir": "packaging/nix",
+        "lastModified": 1794006549,
+        "narHash": "sha256-VunQJzUGdnCmIWPg6IW7WHSwcfwBD+QDf1Dz8urdsKI=",
+        "owner": "GlitchAwakened",
+        "repo": "Favnyr",
+        "rev": "33e0e446d7a0dec43d3bfacd295abfae4b87afeb",
+        "type": "github"
+      },
+      "original": {
+        "dir": "packaging/nix",
+        "owner": "GlitchAwakened",
+        "repo": "Favnyr",
+        "rev": "33e0e446d7a0dec43d3bfacd295abfae4b87afeb",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -273,10 +295,28 @@
         "type": "github"
       }
     },
+    "flake-utils_2": {
+      "inputs": {
+        "systems": "systems_2"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "genofficeNpmLock": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-WfLQkePifKaqFY8rms8YlkMIHCQF9cSiPs0MaHn8shU=",
+        "narHash": "sha256-hFbMTnTidPmbVOEn8vS7Qne+6yi2NrrW69GrOJNX6HI=",
         "type": "file",
         "url": "https://raw.githubusercontent.com/genspark-ai/genoffice/HEAD/package-lock.json"
       },
@@ -288,7 +328,7 @@
     "genofficeRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-jfz1tDsXg5hlJ+rGRDUvpPJrztGdo1Yr1eFzDFAL13E=",
+        "narHash": "sha256-9Wupb27H8Y2lduqo6IB+NRikxEYdhnVWGKy3EMKworA=",
         "type": "file",
         "url": "https://api.github.com/repos/genspark-ai/genoffice/releases/latest"
       },
@@ -366,7 +406,7 @@
     "justLspRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-T9tAWsaH6u9RizK3oR5kBtDrJTNm2QNeq6VagQLG/8o=",
+        "narHash": "sha256-au6SZOP+Qug01k2JZLE0hp1rufuM1ugBCLLRpz/TKrM=",
         "type": "file",
         "url": "https://api.github.com/repos/terror/just-lsp/releases/latest"
       },
@@ -395,8 +435,8 @@
       "inputs": {
         "bun2nix": "bun2nix",
         "flake-parts": "flake-parts_3",
-        "nixpkgs": "nixpkgs",
-        "systems": "systems_2",
+        "nixpkgs": "nixpkgs_2",
+        "systems": "systems_3",
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
@@ -428,13 +468,13 @@
     "magpieRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-QoYNJI3yLTcrhzcel7dTMmFruU6uAGA8RZj05Fb5aHw=",
+        "narHash": "sha256-Lx05CNN6MQFqR4LSxHSFkcvjVyYiV5SD0mgRuYbycHg=",
         "type": "file",
-        "url": "https://api.github.com/repos/yetone/magpie/releases/latest"
+        "url": "https://api.github.com/repos/yetone/magpie/releases/tags/v0.1.4634"
       },
       "original": {
         "type": "file",
-        "url": "https://api.github.com/repos/yetone/magpie/releases/latest"
+        "url": "https://api.github.com/repos/yetone/magpie/releases/tags/v0.1.4634"
       }
     },
     "manPagesZhSrc": {
@@ -456,7 +496,7 @@
     "nbCliRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-/taPIVTXfkJFvDIsn2zvJNWeTz27YrySKii2oiVgtDM=",
+        "narHash": "sha256-pkLGWz+187nVFJykrm2c7hS94N6msJZ+d9tYUxuJ6wM=",
         "type": "file",
         "url": "https://api.github.com/repos/jupyter-ai-contrib/nb-cli/releases/latest"
       },
@@ -560,7 +600,7 @@
     "nixos-wsl": {
       "inputs": {
         "flake-compat": "flake-compat",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
         "lastModified": 1794368463,
@@ -579,16 +619,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1793977579,
-        "narHash": "sha256-WrSODdZFVIs/Hh2NzC0bY+ROByi0bATg8WfePX8dPj8=",
+        "lastModified": 1791048980,
+        "narHash": "sha256-KgItSKML8Xvte0B7/uGnBDsYzSnnKHcOaiUbgWBXLXw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "4fe25e12eb9f4c744966dd3de5a05246cf098601",
+        "rev": "a7868a727837f3c09cee2ce0ca671c76b1589fed",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -640,6 +680,22 @@
     },
     "nixpkgs_2": {
       "locked": {
+        "lastModified": 1793977579,
+        "narHash": "sha256-WrSODdZFVIs/Hh2NzC0bY+ROByi0bATg8WfePX8dPj8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "4fe25e12eb9f4c744966dd3de5a05246cf098601",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
         "lastModified": 1794042290,
         "narHash": "sha256-ziZn2PvCJE5JEEpqTdxXwJpPB+L3YqoCpTAMCzyaP3U=",
         "owner": "NixOS",
@@ -654,7 +710,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_3": {
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1794890597,
         "narHash": "sha256-lME2lHoDHAaSHP3/okgiVoJ0icVEvsQH8LeU3We7tcc=",
@@ -670,7 +726,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_4": {
+    "nixpkgs_5": {
       "locked": {
         "lastModified": 1764950072,
         "narHash": "sha256-BmPWzogsG2GsXZtlT+MTcAWeDK5hkbGRZTeZNW42fwA=",
@@ -689,7 +745,7 @@
     "officecliRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-aLjmmfs5yJNtuyTNsuFUVUtyVFehwaVBZUhzTeAkjHI=",
+        "narHash": "sha256-D89ALIMSdzpguQpVTwpDg/lHMxusrTZIuf0LxN6iPUo=",
         "type": "file",
         "url": "https://api.github.com/repos/iOfficeAI/OfficeCLI/releases/latest"
       },
@@ -771,6 +827,7 @@
         "codex2apiChecksums": "codex2apiChecksums",
         "codexForkLinuxX64": "codexForkLinuxX64",
         "collieRepo": "collieRepo",
+        "favnyr": "favnyr",
         "flake-parts": "flake-parts_2",
         "genofficeNpmLock": "genofficeNpmLock",
         "genofficeRelease": "genofficeRelease",
@@ -791,7 +848,7 @@
         "nix-index-database": "nix-index-database",
         "nixos-unified": "nixos-unified",
         "nixos-wsl": "nixos-wsl",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_4",
         "officecliRelease": "officecliRelease",
         "officecliSkills": "officecliSkills",
         "ompLinuxAarch64": "ompLinuxAarch64",
@@ -887,6 +944,21 @@
     },
     "systems_2": {
       "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_3": {
+      "locked": {
         "lastModified": 1791244623,
         "narHash": "sha256-uuanbkFk8a313Zfrxdcz8Us/yQtaxNnKJtX8v0ZPpd8=",
         "owner": "nix-systems",
@@ -936,19 +1008,19 @@
     "uuRemoteLinuxRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-OoVa9/eDqRuCjs6zQbbYh+7+jGQHAXGbDi8fUaVZav0=",
+        "narHash": "sha256-r720/Q9VsFK0FhEIQ/BwdL9oqxPMv78MjqqYp58PX5M=",
         "type": "file",
-        "url": "https://api.github.com/repos/VallierDev/uu-remote-linux/releases/latest"
+        "url": "https://api.github.com/repos/VallierDev/uu-remote-linux/releases/tags/v0.2.62"
       },
       "original": {
         "type": "file",
-        "url": "https://api.github.com/repos/VallierDev/uu-remote-linux/releases/latest"
+        "url": "https://api.github.com/repos/VallierDev/uu-remote-linux/releases/tags/v0.2.62"
       }
     },
     "vertex": {
       "inputs": {
         "flake-parts": "flake-parts_4",
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_5"
       },
       "locked": {
         "lastModified": 1765247860,

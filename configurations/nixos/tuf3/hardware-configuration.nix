@@ -60,8 +60,8 @@
   hardware.graphics.enable = true;
   services.xserver.videoDrivers = ["modesetting" "nvidia"];
   hardware.nvidia = {
-    # 对照开放内核模块下出现的 NVKMS 显存分配失败。
-    open = false;
+    # RTX 3060 支持 NVIDIA Open，继续用同一版驱动对照 NVKMS 的表现。
+    open = true;
     modesetting.enable = true;
     # 用 NVIDIA 的休眠服务保存并恢复独显上的显存分配。
     powerManagement.enable = true;
