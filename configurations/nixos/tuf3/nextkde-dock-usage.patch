@@ -1,0 +1,108 @@
+--- a/shell/desktop/modules/dock/DockTemperatureWidget.qml
++++ b/shell/desktop/modules/dock/DockTemperatureWidget.qml
+@@ -1,12 +1,13 @@
+ import QtQuick
+ import QtQuick.Effects
++import Quickshell
++import Quickshell.Io
+ import "../../../shared/qml/i18n"
+ import qs.desktop.modules.bar
+ import qs.desktop.modules.common
+
+-// Permanent thermal page for DockInfoCarousel. It is deliberately a pure
+-// MetricsService consumer: the Bar, Dock and DeskCenter all render the same
+-// kos-data-service snapshot and never start their own sensor pollers.
++// The full-size thermal page uses the shared metrics service. The compact
++// readout also shows a host-provided RTX 3060 VRAM sample.
+ Item {
+     id: widget
+
+@@ -16,6 +17,7 @@
+     property int widthUnits: 4
+     // Set by DockInfoCarousel; the activity Canvas only repaints while shown.
+     property bool pageActive: true
++    property int vramPercent: -1
+     readonly property real backgroundGap: iconSize * 0.1
+     readonly property real contentWidth: iconSize * widthUnits
+     readonly property bool compact: iconSize < 32
+@@ -240,39 +242,50 @@
+         }
+     }
+
++    FileView {
++        id: vramSample
++        path: Quickshell.env("XDG_RUNTIME_DIR") + "/kos-dock-vram/percent"
++        onLoaded: widget.vramPercent = Number(text().trim())
++        onLoadFailed: widget.vramPercent = -1
++    }
++
++    Timer {
++        interval: 5000
++        repeat: true
++        running: widget.compact && widget.pageActive
++        triggeredOnStart: true
++        onTriggered: vramSample.reload()
++    }
++
+     Row {
+         anchors.centerIn: parent
+         visible: widget.compact
+-        height: parent.height
+-        spacing: Math.max(2, Math.round(widget.iconSize * 0.10))
+-
+-        DockMetricGlyph {
+-            width: Math.max(9, Math.round(widget.iconSize * 0.52))
+-            height: width
+-            kind: "temperature"
+-            glyphColor: "white"
+-            anchors.verticalCenter: parent.verticalCenter
+-        }
+-        Text {
+-            text: widget.available ? widget.currentC + "°" : "--°"
+-            color: "white"
+-            anchors.verticalCenter: parent.verticalCenter
+-            font {
+-                family: "SF Pro Display"
+-                pixelSize: Math.max(9, Math.round(widget.iconSize * 0.48))
+-                weight: Font.DemiBold
+-            }
+-        }
+-        Text {
+-            text: I18n.tr("· Peak %1").arg(widget.available
+-                ? widget.maximum5MinuteC + "°" : "--°")
+-            color: "white"
+-            opacity: 0.68
+-            anchors.verticalCenter: parent.verticalCenter
+-            font {
+-                family: "Noto Sans CJK SC"
+-                pixelSize: Math.max(6, Math.round(widget.iconSize * 0.28))
+-                weight: Font.Medium
++        spacing: Math.max(3, Math.round(widget.iconSize * 0.14))
++
++        Repeater {
++            model: [
++                {
++                    label: I18n.tr("Memory"),
++                    percent: MetricsService.ready && MetricsService.memoryTotalBytes > 0
++                        ? Math.round(widget.memoryValue * 100) : -1
++                },
++                {
++                    label: "显存",
++                    percent: widget.vramPercent
++                }
++            ]
++
++            delegate: Text {
++                required property var modelData
++
++                text: modelData.label + " " + (modelData.percent >= 0
++                    ? modelData.percent + "%" : "—")
++                color: "white"
++                font {
++                    family: "Noto Sans CJK SC"
++                    pixelSize: Math.max(9, Math.round(widget.iconSize * 0.34))
++                    weight: Font.DemiBold
++                }
+             }
+         }
+     }

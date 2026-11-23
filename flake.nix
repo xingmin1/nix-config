@@ -26,8 +26,17 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     vertex.url = "github:juspay/vertex";
     llm-agents.url = "github:numtide/llm-agents.nix";
+    antigravity-nix = {
+      url = "github:jacopone/antigravity-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     ast-bro = {
       url = "github:aeroxy/ast-bro";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nextkde = {
+      # v0.1.1 的 NixOS 模块无法构建，固定修复打包与部署的上游提交（#253）。
+      url = "github:NextKde/NextKde/3e47c795ab20cf1174a36fada59e2faacbc7e9eb";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # 通过 latest 资产在更新锁文件时跟进上游发布。
@@ -70,6 +79,11 @@
     uuRemoteLinuxRelease = {
       type = "file";
       url = "https://api.github.com/repos/VallierDev/uu-remote-linux/releases/latest";
+      flake = false;
+    };
+    sheprdChecksums = {
+      type = "file";
+      url = "https://github.com/sheprd-labs/sheprd/releases/latest/download/SHA256SUMS";
       flake = false;
     };
     weflowSrc = {
@@ -147,11 +161,6 @@
     genofficeRelease = {
       type = "file";
       url = "https://api.github.com/repos/genspark-ai/genoffice/releases/latest";
-      flake = false;
-    };
-    ccConnectRelease = {
-      type = "file";
-      url = "https://api.github.com/repos/chenhg5/cc-connect/releases/latest";
       flake = false;
     };
     officecliSkills = {

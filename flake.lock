@@ -1,9 +1,30 @@
 {
   "nodes": {
+    "antigravity-nix": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1795158749,
+        "narHash": "sha256-IFJkCCpI3o73F5v1sM8Qxk0bsf7QAEp4kt8K2bMcB3Q=",
+        "owner": "jacopone",
+        "repo": "antigravity-nix",
+        "rev": "f9d701390c7af42f4e1bf3a657a31281210e3e58",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jacopone",
+        "repo": "antigravity-nix",
+        "type": "github"
+      }
+    },
     "arcmdChecksums": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-FTT+WXffnpXdRs6+3EPA3ERur+dgWjtwmrTYE+u7+7s=",
+        "narHash": "sha256-p1LTeMu8alvE76Wb++f+7/z1KQUmGK24kVniTsUzu84=",
         "type": "file",
         "url": "https://github.com/Ciao1019/ArcMD/releases/latest/download/SHA256SUMS.txt"
       },
@@ -86,18 +107,6 @@
         "owner": "catppuccin",
         "repo": "nix",
         "type": "github"
-      }
-    },
-    "ccConnectRelease": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-XIfBrgkaliYWXAxcUoBRJuTB4dkGmBQ3JhEdWa+0lgQ=",
-        "type": "file",
-        "url": "https://api.github.com/repos/chenhg5/cc-connect/releases/latest"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://api.github.com/repos/chenhg5/cc-connect/releases/latest"
       }
     },
     "codex2apiChecksums": {
@@ -246,6 +255,24 @@
         "type": "github"
       }
     },
+    "flake-utils": {
+      "inputs": {
+        "systems": "systems"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "genofficeNpmLock": {
       "flake": false,
       "locked": {
@@ -261,7 +288,7 @@
     "genofficeRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-Bk092SItSwtcMluuglGUuwt7mJc9cAAHouhbchmHZtw=",
+        "narHash": "sha256-jfz1tDsXg5hlJ+rGRDUvpPJrztGdo1Yr1eFzDFAL13E=",
         "type": "file",
         "url": "https://api.github.com/repos/genspark-ai/genoffice/releases/latest"
       },
@@ -339,7 +366,7 @@
     "justLspRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-iGcpVq4hA9j74yG+3PB/Q2NKDkkC3I9+WjUP19gD/tA=",
+        "narHash": "sha256-T9tAWsaH6u9RizK3oR5kBtDrJTNm2QNeq6VagQLG/8o=",
         "type": "file",
         "url": "https://api.github.com/repos/terror/just-lsp/releases/latest"
       },
@@ -369,7 +396,7 @@
         "bun2nix": "bun2nix",
         "flake-parts": "flake-parts_3",
         "nixpkgs": "nixpkgs",
-        "systems": "systems",
+        "systems": "systems_2",
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
@@ -401,7 +428,7 @@
     "magpieRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-ZKXbo20ZeQjwE26M/VCp6GxYx8nAaUBIlnsHDH22z0o=",
+        "narHash": "sha256-QoYNJI3yLTcrhzcel7dTMmFruU6uAGA8RZj05Fb5aHw=",
         "type": "file",
         "url": "https://api.github.com/repos/yetone/magpie/releases/latest"
       },
@@ -429,7 +456,7 @@
     "nbCliRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-3WlY8fVWTLqk/BfyuII1ZCxnYKum2OzylOXvx5MqSW8=",
+        "narHash": "sha256-/taPIVTXfkJFvDIsn2zvJNWeTz27YrySKii2oiVgtDM=",
         "type": "file",
         "url": "https://api.github.com/repos/jupyter-ai-contrib/nb-cli/releases/latest"
       },
@@ -451,6 +478,27 @@
       "original": {
         "owner": "jupyter-ai-contrib",
         "repo": "nb-cli",
+        "type": "github"
+      }
+    },
+    "nextkde": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792659069,
+        "narHash": "sha256-h0aVOpBr73wcmHxfZgNBr94YeKMy4mpDUzHnp4+qQ3U=",
+        "owner": "NextKde",
+        "repo": "NextKde",
+        "rev": "3e47c795ab20cf1174a36fada59e2faacbc7e9eb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NextKde",
+        "repo": "NextKde",
+        "rev": "3e47c795ab20cf1174a36fada59e2faacbc7e9eb",
         "type": "github"
       }
     },
@@ -641,7 +689,7 @@
     "officecliRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-DYtdjvaBaAoANiypmDuKf1GuldpMnxQRaCpXywIdyZ8=",
+        "narHash": "sha256-aLjmmfs5yJNtuyTNsuFUVUtyVFehwaVBZUhzTeAkjHI=",
         "type": "file",
         "url": "https://api.github.com/repos/iOfficeAI/OfficeCLI/releases/latest"
       },
@@ -716,10 +764,10 @@
     },
     "root": {
       "inputs": {
+        "antigravity-nix": "antigravity-nix",
         "arcmdChecksums": "arcmdChecksums",
         "ast-bro": "ast-bro",
         "catppuccin": "catppuccin",
-        "ccConnectRelease": "ccConnectRelease",
         "codex2apiChecksums": "codex2apiChecksums",
         "codexForkLinuxX64": "codexForkLinuxX64",
         "collieRepo": "collieRepo",
@@ -738,6 +786,7 @@
         "manPagesZhSrc": "manPagesZhSrc",
         "nbCliRelease": "nbCliRelease",
         "nbCliSkills": "nbCliSkills",
+        "nextkde": "nextkde",
         "nix-darwin": "nix-darwin",
         "nix-index-database": "nix-index-database",
         "nixos-unified": "nixos-unified",
@@ -749,6 +798,7 @@
         "ompLinuxX64": "ompLinuxX64",
         "openGrokLinuxAarch64": "openGrokLinuxAarch64",
         "openGrokLinuxX64": "openGrokLinuxX64",
+        "sheprdChecksums": "sheprdChecksums",
         "slackCliLinuxAmd64": "slackCliLinuxAmd64",
         "slackCliLinuxArm64": "slackCliLinuxArm64",
         "slackCliMacosAmd64": "slackCliMacosAmd64",
@@ -758,6 +808,18 @@
         "vertex": "vertex",
         "weflowSrc": "weflowSrc",
         "wetypex": "wetypex"
+      }
+    },
+    "sheprdChecksums": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-ZgdPwD65tObYme5bp4iNXq8gmpzBnt7JISqJew72pIk=",
+        "type": "file",
+        "url": "https://github.com/sheprd-labs/sheprd/releases/latest/download/SHA256SUMS"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/sheprd-labs/sheprd/releases/latest/download/SHA256SUMS"
       }
     },
     "slackCliLinuxAmd64": {
@@ -810,6 +872,21 @@
     },
     "systems": {
       "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_2": {
+      "locked": {
         "lastModified": 1791244623,
         "narHash": "sha256-uuanbkFk8a313Zfrxdcz8Us/yQtaxNnKJtX8v0ZPpd8=",
         "owner": "nix-systems",
@@ -859,7 +936,7 @@
     "uuRemoteLinuxRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-pKEDHtSWpyB/uGJfVrwXsotZTdHTBYqW+ILXIuXQkoI=",
+        "narHash": "sha256-OoVa9/eDqRuCjs6zQbbYh+7+jGQHAXGbDi8fUaVZav0=",
         "type": "file",
         "url": "https://api.github.com/repos/VallierDev/uu-remote-linux/releases/latest"
       },

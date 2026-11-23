@@ -60,11 +60,15 @@ in
 
     installPhase = ''
       runHook preInstall
+      desktopDir="packaging/common/desktop"
+      if [ ! -d "$desktopDir" ]; then
+        desktopDir="contrib/desktop"
+      fi
       install -Dm755 uuremote-server "$out/bin/uuremote-server"
       install -Dm755 uuremote-viewer "$out/bin/uuremote-viewer"
       install -Dm644 -t "$out/lib/uu-remote-linux" libuu-portal.so libuu-wayland.so
-      install -Dm644 -t "$out/share/applications" contrib/desktop/*.desktop
-      install -Dm644 contrib/desktop/uu-remote-linux.svg "$out/share/icons/hicolor/scalable/apps/uu-remote-linux.svg"
+      install -Dm644 -t "$out/share/applications" "$desktopDir"/*.desktop
+      install -Dm644 "$desktopDir/uu-remote-linux.svg" "$out/share/icons/hicolor/scalable/apps/uu-remote-linux.svg"
       install -Dm644 LICENSE "$out/share/licenses/uu-remote-linux/LICENSE"
 
       # 由主机启动器或控制端设置按需启动服务。

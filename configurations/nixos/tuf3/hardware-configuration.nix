@@ -63,6 +63,8 @@
     # 对照开放内核模块下出现的 NVKMS 显存分配失败。
     open = false;
     modesetting.enable = true;
+    # 用 NVIDIA 的休眠服务保存并恢复独显上的显存分配。
+    powerManagement.enable = true;
     prime = {
       # FX507ZM 的 PCI 地址，按 Windows PnP 查询结果填写。
       intelBusId = "PCI:0:2:0";
