@@ -35,11 +35,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     favnyr.url = "github:GlitchAwakened/Favnyr/33e0e446d7a0dec43d3bfacd295abfae4b87afeb?dir=packaging/nix";
-    nextkde = {
-      # v0.1.1 的 NixOS 模块无法构建，固定修复打包与部署的上游提交（#253）。
-      url = "github:NextKde/NextKde/3e47c795ab20cf1174a36fada59e2faacbc7e9eb";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     # 通过 latest 资产在更新锁文件时跟进上游发布。
     jcodeLinuxX64 = {
       type = "file";

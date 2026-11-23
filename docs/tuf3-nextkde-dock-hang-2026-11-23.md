@@ -49,6 +49,18 @@
 - 整机构建曾报 `mismatch in field 'narHash'`。`justLspRelease`、`genofficeRelease`、`genofficeNpmLock`、`officecliRelease` 和 `nbCliRelease` 刷新锁定记录后仍解析到已安装的发行版本。UU Remote Linux / Magpie 的最新发行已变，改用已安装版本 `v0.2.62` / `v0.1.4634` 的 GitHub Release 标签 URL。`nix build --no-update-lock-file '.#nixosConfigurations.tuf3.config.system.build.toplevel'` 构建成功，`nix flake check --no-update-lock-file` 通过。
 - 13:11 通过 `sudo nixos-rebuild boot --store-path <已构建的系统>` 将第 41 代设为下次启动默认项，第 40 代仍可回退。`boot` 操作后当前的 `/proc/driver/nvidia/version` 仍返回 `NVIDIA UNIX x86_64 Kernel Module 595.112.07`。重启后核验该文件应报告 `Open Kernel Module`，并用 `nvidia-smi` 检查 RTX 3060 是否正常识别。写入启动项时没有重启桌面会话。
 
+## 停止 NextKDE 后恢复 Plasma 桌面
+
+- 停止 `kos-shell.service`、`kos-platform.service`、`kos-data.service` 和 `kos-dock-vram.service` 后，本机只剩黑屏和鼠标。`plasma-plasmashell.service` 与 `plasma-kwin_wayland.service` 仍在运行，但 `org.kde.PlasmaShell.shell` 返回 `org.kos.desktop`。根因是 `/etc/xdg/plasmashellrc` 中 `[Shell]` 的默认 `ShellPackage=org.kos.desktop`，它没有 Plasma 的面板和桌面布局。
+- 13:26 在会话内执行 `qdbus6 org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.changeShell org.kde.plasma.desktop`。Plasma 报告外壳为 `org.kde.plasma.desktop`，恢复两个输出上的桌面和主屏原有面板，用户确认画面出现。KWin 和用户会话未重启，NextKDE 仍已停止。这是运行时切换，系统默认配置和开机启动设置仍沿用仓库值。之后手动停用 NextKDE 可先切到 Plasma 外壳，再停止 NextKDE 服务。
+- KWin 仍单独运行 NextKDE 的插件。关闭前的 `org.kde.kwin.Effects.activeEffects` 返回 `kos_context_menu_input`、`glass`、`kos_bridge`，加载列表还有 `kos_dock_window_animation`。窗框报告 `org.kde.breeze`。普通窗口的圆角来自 `kos_bridge` 里调用 `setBorderRadius()` 的窗口外观功能，本机 `~/.config/kos/window-appearance.json` 的 `enabled` 为 `true`。
+- 按用户要求关闭时，用 `kwriteconfig6 --file kwinrc --group Plugins --key "${plugin}Enabled" --type bool false` 写入 `glass`、`kos_bridge`、`kos_context_menu_input`、`kos_dock_window_animation` 及原先就关闭的 `stageanim13`。`org.kde.KWin.reconfigure` 后已加载的四项依旧存在，逐一调用 `/Effects` 的 `org.kde.kwin.Effects.unloadEffect` 才卸载。平台服务先前注入的 `kos-window-bridge` 脚本通过 `/Scripting` 的 `org.kde.kwin.Scripting.unloadScript` 单独卸载。再次查询五项特效与脚本均返回 `false`，Plasma 和 KWin PID 均未变化。NextKDE 的自启动设置未在这一步修改。
+
+## 完全卸载 NextKDE
+
+- 13:43 从 `tuf3` 移除 NextKDE 的 NixOS 模块和 flake 输入、`org.kos.desktop` 的 Plasma 默认设置、Dock 显存采样服务及其补丁。`nix flake lock` 只移除了 NextKDE 输入，整机系统构建与 `nix flake check --no-update-lock-file` 均通过。通过 `sudo nixos-rebuild switch --store-path <已构建的系统>` 激活第 42 代，旧代保留用于回滚。对当前系统运行 `nix-store -qR /run/current-system` 的解析路径，确认无 NextKDE、Quickshell 或其 KWin 插件。
+- Home Manager 激活成功。把手动覆盖的 `kos-dock-vram.service` 和 `kos-shell.service.d`、KOS 应用设定及状态、Quickshell 部署、剪贴板历史和自动生成的壁纸从运行目录移到 `~/.local/state/desktop-uninstall-backups/nextkde.oAEr38Tj`。单独从 KGlobalAccel 注销七个 `net.local.kos-*` 快捷键，从 `kwinrc` 清掉这套插件专用配置和为 Glass 加的官方模糊禁用覆盖。`systemctl --user list-unit-files 'kos-*'` 不再返回服务，`kos-window-bridge` 未加载，KWin 和 Plasma 仍是原会话的进程，Favnyr 仍是目录的默认打开方式。
+
 ## 文件管理器安装与关联的经验
 
 - 七个试用软件为 Favnyr、Spacedrive、Sigma File Manager、Xplorer、Strata、Flea、Double Commander。Flea 和 Strata 体验也不错，最终保留 Favnyr。Favnyr 0.3.8 使用上游 Nix Flake 里的发布二进制，提交 `33e0e446d7a0dec43d3bfacd295abfae4b87afeb`。

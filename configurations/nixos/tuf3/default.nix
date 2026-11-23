@@ -1,5 +1,4 @@
 {
-  config,
   flake,
   lib,
   modulesPath,
@@ -12,12 +11,6 @@
     appIcon = flake.inputs.magpieIcon;
   };
   uuRemotePackage = pkgs.callPackage ./uu-remote-linux.nix {releaseMetadata = flake.inputs.uuRemoteLinuxRelease;};
-  nextkdeWallpaperShell = pkgs.runCommand "nextkde-wallpaper-shell" {} ''
-    src=${flake.inputs.nextkde}/apps/lockscreen
-    dest=$out/share/plasma/shells/org.kos.desktop
-    install -Dm644 "$src/metadata.json" "$dest/metadata.json"
-    install -Dm644 "$src/contents/defaults" "$dest/contents/defaults"
-  '';
   herdrVpsAddress = "216.167.127.46";
   herdrVpsSshPort = 2911;
   herdrVpsForwardPort = 2912;
@@ -30,7 +23,6 @@ in {
     flake.inputs.self.nixosModules.default
     flake.inputs.self.nixosModules.nix-cache
     flake.inputs.ghelper.nixosModules.default
-    flake.inputs.nextkde.nixosModules.kos
     (modulesPath + "/installer/scan/not-detected.nix")
     ./hardware-configuration.nix
     ./micron-code-login.nix
@@ -101,30 +93,11 @@ in {
 
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages =
-    [
-      (pkgs.callPackage ./krunner-pinyin-search.nix {src = flake.inputs.krunnerPinyinSrc;})
-      # 手机通过非交互 SSH 会话调用 herdr-core。
-      flake.inputs.llm-agents.packages.${system}.herdr-core
-    ]
-    ++ lib.optionals config.services.kos.enable [
-      nextkdeWallpaperShell
-      # NextKDE 的平台服务使用它们记录 Wayland 剪贴板历史。
-      pkgs.wl-clipboard
-      pkgs.cliphist
-      # NextKDE 台前侧栏调用 qdbus6，Nixpkgs 的 Qt 6 工具安装为 qdbus。
-      (pkgs.writeShellScriptBin "qdbus6" ''
-        exec ${lib.getExe' pkgs.kdePackages.qttools "qdbus"} "$@"
-      '')
-    ];
-  # 上游 NixOS 模块启动了 KOS，但遗漏了只绘制壁纸的 Plasma 桌面包。
-  # 使用系统默认值，停用 KOS 后可回到独立保存的原 Plasma 布局。
-  environment.etc."xdg/plasmashellrc" = lib.mkIf config.services.kos.enable {
-    text = ''
-      [Shell]
-      ShellPackage=org.kos.desktop
-    '';
-  };
+  environment.systemPackages = [
+    (pkgs.callPackage ./krunner-pinyin-search.nix {src = flake.inputs.krunnerPinyinSrc;})
+    # 手机通过非交互 SSH 会话调用 herdr-core。
+    flake.inputs.llm-agents.packages.${system}.herdr-core
+  ];
   systemd.packages = [uuRemotePackage];
   systemd.tmpfiles.rules = [
     # Magpie Cursor Bridge 只探测固定安装目录，使用用户配置的稳定路径跟随 Nix 构建。
@@ -190,7 +163,6 @@ in {
       };
     };
     desktopManager.plasma6.enable = true;
-    kos.enable = true;
     displayManager.sddm = {
       enable = true;
       # Xorg 在本机混合显卡上无法创建登录界面的 pixmap。
@@ -430,35 +402,6 @@ in {
         UnsetEnvironment=__NV_PRIME_RENDER_OFFLOAD __GLX_VENDOR_LIBRARY_NAME
       '';
     };
-    dockWidgetPath = "shell/desktop/modules/dock/DockTemperatureWidget.qml";
-    dockUsageWidget = pkgs.runCommand "nextkde-dock-usage.qml" {nativeBuildInputs = [pkgs.patch];} ''
-      install -Dm644 ${flake.inputs.nextkde}/${dockWidgetPath} ${dockWidgetPath}
-      patch -p1 < ${./nextkde-dock-usage.patch}
-      cp ${dockWidgetPath} "$out"
-    '';
-    installDockUsageWidget = pkgs.writeShellScript "install-nextkde-dock-usage" ''
-      ${pkgs.coreutils}/bin/install -m644 ${dockUsageWidget} \
-        "$HOME/.config/quickshell/kos/desktop/modules/dock/DockTemperatureWidget.qml"
-    '';
-    sampleDockVram = pkgs.writeShellScript "nextkde-dock-vram" ''
-      set -euo pipefail
-      sample="$RUNTIME_DIRECTORY/percent"
-      while true; do
-        percent=$(
-          ${pkgs.coreutils}/bin/timeout 4 /run/current-system/sw/bin/nvidia-smi \
-            --id=00000000:01:00.0 --query-gpu=memory.used,memory.total \
-            --format=csv,noheader,nounits 2>/dev/null |
-            ${pkgs.gawk}/bin/awk -F, '
-              NF == 2 && $1 ~ /^[[:space:]]*[0-9]+[[:space:]]*$/ &&
-              $2 ~ /^[[:space:]]*[0-9]+[[:space:]]*$/ && $2 > 0 && $1 <= $2 {
-                printf "%d\n", ($1 * 100 / $2) + 0.5
-              }'
-        ) || percent=
-        printf '%s\n' "''${percent:--1}" > "$sample.next"
-        ${pkgs.coreutils}/bin/mv -f "$sample.next" "$sample"
-        ${pkgs.coreutils}/bin/sleep 5
-      done
-    '';
   in {
     # 激活时补齐菜单项，保留 Favnyr 保存的自定义命令。
     home.activation.favnyrArchiveOpeners = lib.hm.dag.entryAfter ["writeBoundary"] ''
@@ -581,29 +524,6 @@ in {
     xdg.configFile."systemd/user/plasma-plasmashell.service.d/prime-offload.conf" = intelDesktop;
     # 共享选择器在核显上显示 KWin 的屏幕和窗口预览。
     xdg.configFile."systemd/user/plasma-xdg-desktop-portal-kde.service.d/prime-offload.conf" = intelDesktop;
-    # 保留 Vulkan，改用 Intel 以绕过 RTX 3060 在 vkDestroyImage 内的卡死。
-    xdg.configFile."systemd/user/kos-shell.service.d/nextkde-local.conf".text = ''
-      [Unit]
-      Wants=kos-dock-vram.service
-      After=kos-dock-vram.service
-
-      [Service]
-      Environment=QSG_RHI_BACKEND=vulkan
-      Environment=VK_DRIVER_FILES=/run/opengl-driver/share/vulkan/icd.d/intel_icd.x86_64.json
-      ExecStartPre=${installDockUsageWidget}
-    '';
-
-    xdg.configFile."systemd/user/kos-dock-vram.service".text = ''
-      [Unit]
-      Description=NextKDE Dock RTX 3060 VRAM readings
-      PartOf=kos-shell.service
-
-      [Service]
-      RuntimeDirectory=kos-dock-vram
-      Environment=LC_ALL=C
-      ExecStart=${sampleDockVram}
-    '';
-
     # 阻止 Magpie 生成绕过启动包装的用户级快捷方式。
     xdg.dataFile."applications/magpie.desktop".source = "${magpiePackage}/share/applications/magpie.desktop";
 

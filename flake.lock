@@ -521,27 +521,6 @@
         "type": "github"
       }
     },
-    "nextkde": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1792659069,
-        "narHash": "sha256-h0aVOpBr73wcmHxfZgNBr94YeKMy4mpDUzHnp4+qQ3U=",
-        "owner": "NextKde",
-        "repo": "NextKde",
-        "rev": "3e47c795ab20cf1174a36fada59e2faacbc7e9eb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NextKde",
-        "repo": "NextKde",
-        "rev": "3e47c795ab20cf1174a36fada59e2faacbc7e9eb",
-        "type": "github"
-      }
-    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -843,7 +822,6 @@
         "manPagesZhSrc": "manPagesZhSrc",
         "nbCliRelease": "nbCliRelease",
         "nbCliSkills": "nbCliSkills",
-        "nextkde": "nextkde",
         "nix-darwin": "nix-darwin",
         "nix-index-database": "nix-index-database",
         "nixos-unified": "nixos-unified",
