@@ -54,6 +54,12 @@ in {
   # Windows 默认将硬件时钟当作本地时间。
   time.hardwareClockInLocalTime = true;
   zramSwap.enable = true;
+  # Alder Lake i915 在恢复后出现 QSGRenderThread GPU HANG 和黑屏，先按社区常用方案关闭 PSR 与显示电源 C-state。
+  # 详见 docs/tuf3-power-sleep-research-2026-11-25.md，验证稳定后再评估是否恢复省电路径。
+  boot.kernelParams = [
+    "i915.enable_psr=0"
+    "i915.enable_dc=0"
+  ];
   # 本机 s2idle 曾卡在进入睡眠，双屏和独显已实测能从 S3 恢复。
   systemd.sleep.settings.Sleep.MemorySleepMode = "deep";
   # 禁用 RTX 3060 上游端口 PEG1 的唤醒后，本机实测可完整进入 S4 并恢复双屏。
@@ -219,6 +225,18 @@ in {
         flake.inputs.wetypex.packages.${pkgs.stdenv.hostPlatform.system}.fcitx5-wetypex
         (pkgs.fcitx5-rime.override {rimeDataPkgs = [pkgs.rime-ice];})
       ];
+      settings = {
+        globalOptions.Behavior.ActiveByDefault = true;
+        inputMethod = {
+          "Groups/0" = {
+            Name = "Default";
+            DefaultIM = "wetypex";
+          };
+          "Groups/0/Items/0".Name = "keyboard-us";
+          "Groups/0/Items/1".Name = "wetypex";
+          GroupOrder."0" = "Default";
+        };
+      };
     };
   };
   fonts.packages = with pkgs; [
@@ -445,6 +463,7 @@ in {
         "org.kde.plasma-systemmonitor" = "xi tong jian shi qi";
         "org.kde.plasma.emojier" = "biao qing fu hao";
         "org.kde.spectacle" = "jie tu";
+        aionui = "aion ui ai agent";
         systemsettings = "xi tong she zhi";
       };
       settings.providers.kde-settings.entrypoints.kcm_fcitx5.alias = "shu ru fa pei zhi";
@@ -458,6 +477,15 @@ in {
       icon = "vicinae";
       categories = ["Utility" "Accessibility"];
       settings.StartupWMClass = "vicinae";
+    };
+    xdg.desktopEntries.aionui = {
+      name = "AionUi";
+      genericName = "AI Agent Desktop";
+      comment = "AI Agent 工作台";
+      exec = lib.getExe flake.inputs.llm-agents.packages.${system}.aionui;
+      icon = "aionui";
+      categories = ["Development" "Utility"];
+      terminal = false;
     };
 
     # 激活时补齐菜单项，保留 Favnyr 保存的自定义命令。
@@ -601,6 +629,8 @@ in {
       application/wps-office.potx=wps-office-wpp.desktop;
       application/wps-office.dps=wps-office-wpp.desktop;
       application/wps-office.dpt=wps-office-wpp.desktop;
+      x-scheme-handler/cindy=cindy.desktop;
+      x-scheme-handler/xdt-maker=cindy.desktop;
     '';
 
     # Plasma 应用统一优先使用独显。Vulkan 仍可选择其他显卡。
@@ -616,10 +646,18 @@ in {
     xdg.configFile."systemd/user/plasma-xdg-desktop-portal-kde.service.d/prime-offload.conf" = intelDesktop;
     # 阻止 Magpie 生成绕过启动包装的用户级快捷方式。
     xdg.dataFile."applications/magpie.desktop".source = "${magpiePackage}/share/applications/magpie.desktop";
+    # Magpie 通过 cindy:// 导入链接打开 Cindy。显式导出桌面入口，避免仅在 profile 中时 GIO 索引不到。
+    xdg.dataFile."applications/cindy.desktop".source = "${flake.inputs.llm-agents.packages.${system}.cindy}/share/applications/cindy.desktop";
 
     # KDE 登录后再启动主机服务，确保 Wayland 会话已就绪。
-    xdg.configFile."systemd/user/xdg-desktop-autostart.target.wants/uuremote-native.service".source = "${uuRemotePackage}/share/systemd/user/uuremote-native.service";
-    xdg.configFile."systemd/user/graphical-session.target.wants/uuremote-native.service".source = "${uuRemotePackage}/share/systemd/user/uuremote-native.service";
+    xdg.configFile."systemd/user/xdg-desktop-autostart.target.wants/uuremote-native.service" = {
+      source = "${uuRemotePackage}/share/systemd/user/uuremote-native.service";
+      force = true;
+    };
+    xdg.configFile."systemd/user/graphical-session.target.wants/uuremote-native.service" = {
+      source = "${uuRemotePackage}/share/systemd/user/uuremote-native.service";
+      force = true;
+    };
 
     # 使用带渲染环境的包装入口，登录时只打开托盘。
     xdg.configFile."autostart/magpie.desktop".text = ''

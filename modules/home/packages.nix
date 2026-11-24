@@ -146,12 +146,14 @@ in {
       touying
       # Nix store 中的安装布局未被 Slidev 识别，且不能用于写入 Vite 缓存。
       (slidev-cli.overrideAttrs (old: {
-        postPatch = (old.postPatch or "") + ''
-          substituteInPlace packages/slidev/node/resolver.ts \
-            --replace-fail "|| (await import('is-installed-globally')).default" "|| true"
-          substituteInPlace packages/slidev/node/vite/extendConfig.ts \
-            --replace-fail "cacheDir: isInstalledGlobally.value ? join(options.cliRoot, 'node_modules/.vite') : undefined," "cacheDir: undefined,"
-        '';
+        postPatch =
+          (old.postPatch or "")
+          + ''
+            substituteInPlace packages/slidev/node/resolver.ts \
+              --replace-fail "|| (await import('is-installed-globally')).default" "|| true"
+            substituteInPlace packages/slidev/node/vite/extendConfig.ts \
+              --replace-fail "cacheDir: isInstalledGlobally.value ? join(options.cliRoot, 'node_modules/.vite') : undefined," "cacheDir: undefined,"
+          '';
       }))
       ouch
 
@@ -192,6 +194,10 @@ in {
       configuredDsh
       pi
       herdr
+      aionui
+      cindy
+      orca
+      t3code-desktop
       # 直接复用上游原包及其缓存，语言资源已由上游打包。
       hermes-agent
       hermes-desktop
