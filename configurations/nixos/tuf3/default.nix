@@ -241,6 +241,7 @@ in {
     autoStart = true;
     group = "wheel";
   };
+  programs.localsend.enable = true;
 
   users.users.xmin = {
     uid = 1000;
@@ -403,6 +404,62 @@ in {
       '';
     };
   in {
+    programs.vicinae = {
+      enable = true;
+      systemd.enable = true;
+      mutableSettings = true;
+      settings.providers.applications.entrypoints = lib.mapAttrs (_: alias: {inherit alias;}) {
+        "com.toolstack.Folio" = "便笺 笔记 便签 bian jian bi ji bian qian";
+        wechat = "wei xin";
+        bytedance-feishu = "fei shu";
+        wemeetapp = "teng xun hui yi";
+        wps-office-et = "biao ge";
+        wps-office-wpp = "yan shi";
+        wps-office-wps = "wen zi";
+        uu-remote-linux = "uu yuan cheng zhu ji";
+        uu-remote-linux-viewer = "uu yuan cheng kong zhi duan";
+        cups = "da yin ji guan li";
+        fcitx5-wetypex-settings = "wetypex she zhi";
+        kbd-layout-viewer5 = "jian pan bu ju";
+        nvidia-settings = "nvidia she zhi";
+        "org.fcitx.fcitx5-migrator" = "shu ru fa qian yi";
+        "org.kde.akonadiconsole" = "akonadi kong zhi tai";
+        "org.kde.akonadiimportwizard" = "you jian dao ru";
+        "org.kde.ark" = "ya suo";
+        "org.kde.discover" = "ruan jian zhong xin";
+        "org.kde.dolphin" = "wen jian guan li qi";
+        "org.kde.drkonqi.coredump.gui" = "beng kui jin cheng";
+        "org.kde.elisa" = "yin yue bo fang qi";
+        "org.kde.gwenview" = "tu xiang cha kan qi";
+        "org.kde.kate" = "bian ji qi";
+        "org.kde.khelpcenter" = "bang zhu zhong xin";
+        "org.kde.kinfocenter" = "xi tong xin xi";
+        "org.kde.kmenuedit" = "cai dan bian ji qi";
+        "org.kde.konsole" = "zhong duan";
+        "org.kde.kwalletmanager" = "mi ma ku";
+        "org.kde.kwrite" = "ji shi ben";
+        "org.kde.merkuro.calendar" = "ri li";
+        "org.kde.merkuro.contact" = "lian xi ren";
+        "org.kde.merkuro.mail" = "you jian";
+        "org.kde.okular" = "wen dang cha kan qi";
+        "org.kde.plasma-systemmonitor" = "xi tong jian shi qi";
+        "org.kde.plasma.emojier" = "biao qing fu hao";
+        "org.kde.spectacle" = "jie tu";
+        systemsettings = "xi tong she zhi";
+      };
+      settings.providers.kde-settings.entrypoints.kcm_fcitx5.alias = "shu ru fa pei zhi";
+    };
+
+    # KDE 应用菜单直接打开已运行的启动器。
+    xdg.desktopEntries.vicinae = {
+      name = "Vicinae";
+      comment = "应用启动器";
+      exec = "${lib.getExe pkgs.vicinae} open";
+      icon = "vicinae";
+      categories = ["Utility" "Accessibility"];
+      settings.StartupWMClass = "vicinae";
+    };
+
     # 激活时补齐菜单项，保留 Favnyr 保存的自定义命令。
     home.activation.favnyrArchiveOpeners = lib.hm.dag.entryAfter ["writeBoundary"] ''
       run ${seedFavnyrArchiveOpeners} ${lib.escapeShellArg "${config.xdg.dataHome}/favnyr/openers.toml"}
@@ -446,7 +503,7 @@ in {
       wechat
       qq
       snipaste
-      wpsoffice-cn
+      (callPackage ./wps-office.nix {})
       feishu
       (symlinkJoin {
         name = "chatgpt-wayland-ime";
@@ -496,7 +553,7 @@ in {
         '';
       })
       (pkgs.callPackage ./arcmd.nix {releaseChecksums = flake.inputs.arcmdChecksums;})
-      (pkgs.callPackage ./weflow.nix {src = flake.inputs.weflowSrc;})
+      (pkgs.callPackage ./weflow.nix {})
       uuRemotePackage
       magpiePackage
       # Magpie Cursor Bridge 需要 certutil 导入用户 NSS 证书库，以及 sqlite3 做数据库检查与清理。
@@ -507,10 +564,43 @@ in {
     # 让 Magpie Cursor Bridge 维护的 cursor-agent-bridge 包装器进入默认 PATH。
     home.sessionPath = ["/home/xmin/.config/magpie-cursor-bridge/bin"];
 
-    # 只声明 KDE 的目录默认程序，保留用户自行设置的其他文件关联。
+    # 同时覆盖共享 MIME 类型和 WPS 注册的类型，因为同一扩展名可能被识别为不同类型。
     xdg.configFile."kde-mimeapps.list".text = ''
       [Default Applications]
-      inode/directory=favnyr.desktop;
+      inode/directory=org.kde.dolphin.desktop;
+      application/pdf=wps-office-pdf.desktop;
+      application/msword=wps-office-wps.desktop;
+      application/msword-template=wps-office-wps.desktop;
+      application/rtf=wps-office-wps.desktop;
+      application/vnd.ms-word.document.macroEnabled.12=wps-office-wps.desktop;
+      application/vnd.openxmlformats-officedocument.wordprocessingml.document=wps-office-wps.desktop;
+      application/vnd.openxmlformats-officedocument.wordprocessingml.template=wps-office-wps.desktop;
+      application/wps-office.doc=wps-office-wps.desktop;
+      application/wps-office.docx=wps-office-wps.desktop;
+      application/wps-office.dot=wps-office-wps.desktop;
+      application/wps-office.dotx=wps-office-wps.desktop;
+      application/wps-office.wps=wps-office-wps.desktop;
+      application/wps-office.wpt=wps-office-wps.desktop;
+      application/vnd.ms-excel=wps-office-et.desktop;
+      application/vnd.ms-excel.sheet.macroEnabled.12=wps-office-et.desktop;
+      application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=wps-office-et.desktop;
+      application/vnd.openxmlformats-officedocument.spreadsheetml.template=wps-office-et.desktop;
+      application/wps-office.xls=wps-office-et.desktop;
+      application/wps-office.xlsx=wps-office-et.desktop;
+      application/wps-office.xlt=wps-office-et.desktop;
+      application/wps-office.xltx=wps-office-et.desktop;
+      application/wps-office.et=wps-office-et.desktop;
+      application/wps-office.ett=wps-office-et.desktop;
+      application/vnd.ms-powerpoint=wps-office-wpp.desktop;
+      application/vnd.openxmlformats-officedocument.presentationml.presentation=wps-office-wpp.desktop;
+      application/vnd.openxmlformats-officedocument.presentationml.slideshow=wps-office-wpp.desktop;
+      application/vnd.openxmlformats-officedocument.presentationml.template=wps-office-wpp.desktop;
+      application/wps-office.ppt=wps-office-wpp.desktop;
+      application/wps-office.pptx=wps-office-wpp.desktop;
+      application/wps-office.pot=wps-office-wpp.desktop;
+      application/wps-office.potx=wps-office-wpp.desktop;
+      application/wps-office.dps=wps-office-wpp.desktop;
+      application/wps-office.dpt=wps-office-wpp.desktop;
     '';
 
     # Plasma 应用统一优先使用独显。Vulkan 仍可选择其他显卡。
@@ -529,6 +619,7 @@ in {
 
     # KDE 登录后再启动主机服务，确保 Wayland 会话已就绪。
     xdg.configFile."systemd/user/xdg-desktop-autostart.target.wants/uuremote-native.service".source = "${uuRemotePackage}/share/systemd/user/uuremote-native.service";
+    xdg.configFile."systemd/user/graphical-session.target.wants/uuremote-native.service".source = "${uuRemotePackage}/share/systemd/user/uuremote-native.service";
 
     # 使用带渲染环境的包装入口，登录时只打开托盘。
     xdg.configFile."autostart/magpie.desktop".text = ''

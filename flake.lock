@@ -328,7 +328,7 @@
     "genofficeRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-9Wupb27H8Y2lduqo6IB+NRikxEYdhnVWGKy3EMKworA=",
+        "narHash": "sha256-oAvdWuwAGec0kkzUcgmwS1V2PpgvjVisw7bYvAsL2AM=",
         "type": "file",
         "url": "https://api.github.com/repos/genspark-ai/genoffice/releases/latest"
       },
@@ -406,7 +406,7 @@
     "justLspRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-au6SZOP+Qug01k2JZLE0hp1rufuM1ugBCLLRpz/TKrM=",
+        "narHash": "sha256-WR/2T55urwGIafcu9rnEyJIlFzidehkFnc/9Veb1CrM=",
         "type": "file",
         "url": "https://api.github.com/repos/terror/just-lsp/releases/latest"
       },
@@ -724,7 +724,7 @@
     "officecliRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-D89ALIMSdzpguQpVTwpDg/lHMxusrTZIuf0LxN6iPUo=",
+        "narHash": "sha256-V9kjy5XJNlXyFqwx5+01eCNVk55GpZyKW6uklPpIN+g=",
         "type": "file",
         "url": "https://api.github.com/repos/iOfficeAI/OfficeCLI/releases/latest"
       },
@@ -841,7 +841,6 @@
         "tftpNowBinary": "tftpNowBinary",
         "uuRemoteLinuxRelease": "uuRemoteLinuxRelease",
         "vertex": "vertex",
-        "weflowSrc": "weflowSrc",
         "wetypex": "wetypex"
       }
     },
@@ -850,11 +849,11 @@
       "locked": {
         "narHash": "sha256-ZgdPwD65tObYme5bp4iNXq8gmpzBnt7JISqJew72pIk=",
         "type": "file",
-        "url": "https://github.com/sheprd-labs/sheprd/releases/latest/download/SHA256SUMS"
+        "url": "https://github.com/sheprd-labs/sheprd/releases/download/v20261118.1/SHA256SUMS"
       },
       "original": {
         "type": "file",
-        "url": "https://github.com/sheprd-labs/sheprd/releases/latest/download/SHA256SUMS"
+        "url": "https://github.com/sheprd-labs/sheprd/releases/download/v20261118.1/SHA256SUMS"
       }
     },
     "slackCliLinuxAmd64": {
@@ -986,7 +985,7 @@
     "uuRemoteLinuxRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-r720/Q9VsFK0FhEIQ/BwdL9oqxPMv78MjqqYp58PX5M=",
+        "narHash": "sha256-UMgKzw6lPF/vTFEU8KpEG0vPAMQougiQ2J9D6fhG/U4=",
         "type": "file",
         "url": "https://api.github.com/repos/VallierDev/uu-remote-linux/releases/tags/v0.2.62"
       },
@@ -1011,23 +1010,6 @@
       "original": {
         "owner": "juspay",
         "repo": "vertex",
-        "type": "github"
-      }
-    },
-    "weflowSrc": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1795175056,
-        "narHash": "sha256-k4d4HBJAY4FXefnua7jwiGHJE7YiOiP8yoI4vnZoUL8=",
-        "owner": "334456777",
-        "repo": "WeFlow",
-        "rev": "d4a8fe46657abc838dcda568bb206ab60be3321a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "334456777",
-        "ref": "main",
-        "repo": "WeFlow",
         "type": "github"
       }
     },

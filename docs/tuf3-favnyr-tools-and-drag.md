@@ -2,6 +2,10 @@
 
 2026-11-23，tuf3 的 KDE Plasma Wayland 会话。Favnyr 为 `0.3.8`，使用上游提交 `33e0e446d7a0dec43d3bfacd295abfae4b87afeb` 提供的 Nix 包，包内解包官方 Linux 发布二进制。
 
+## 改回 Dolphin 默认打开目录
+
+- 2026-11-23 将 `inode/directory` 改为 `org.kde.dolphin.desktop`。Plasma 下 `~/.config/kde-mimeapps.list` 的默认项优先于通用的 `~/.config/mimeapps.list`，先改通用文件时 `xdg-mime` 和 `gio` 仍查询到 Favnyr。更新 `tuf3` 的 Home Manager 声明，再应用 NixOS 新一代后，两种查询均返回 Dolphin。Favnyr 保留在应用列表和目录的可用打开方式中。
+
 ## 可选工具
 
 设置页把 `ffmpeg`、`poppler-utils` 和 `7-Zip` 都显示为「未找到」。终端已能从 `/etc/profiles/per-user/xmin/bin/ffmpeg` 找到 FFmpeg，Dock 启动的 Favnyr 进程使用更短的 `PATH`，该目录未出现在进程环境里。环境差异与此前从 Favnyr 打开 Markdown 找不到 ArcMD 的原因相近。

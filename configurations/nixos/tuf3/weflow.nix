@@ -1,36 +1,45 @@
 {
   lib,
-  rustPlatform,
+  stdenv,
+  fetchurl,
+  autoPatchelfHook,
   makeWrapper,
-  pkg-config,
   procps,
-  sqlite,
-  zstd,
-  src,
+  xz,
 }: let
-  workspace = builtins.fromTOML (builtins.readFile "${src}/Cargo.toml");
-in
-  rustPlatform.buildRustPackage {
-    pname = "weflow";
-    version = "${workspace.workspace.package.version}-unstable-${src.shortRev}";
-    inherit src;
-    nativeBuildInputs = [makeWrapper pkg-config];
-    buildInputs = [sqlite zstd];
-
-    cargoLock = {
-      lockFile = "${src}/Cargo.lock";
-      # 直接使用上游锁文件中的 Git 依赖，让 Flake 更新时同步跟进。
-      allowBuiltinFetchGit = true;
+  version = "7.0.0";
+  releases = {
+    x86_64-linux = {
+      arch = "x64";
+      hash = "sha256-MAZy4vvgMAR9LMGnt1WyAD3NkjyQdF3xQoxTdIZY1AA=";
     };
-    cargoBuildFlags = ["-p" "weflow-cli"];
-    cargoTestFlags = ["-p" "weflow-core" "--test" "image_keys_e2e"];
+    aarch64-linux = {
+      arch = "arm64";
+      hash = "sha256-VljdMCfK9gVJOYWKQQW13lOY3xasUAtYcaMPN1Izryw=";
+    };
+  };
+  release = releases.${stdenv.hostPlatform.system};
+in
+  stdenv.mkDerivation {
+    pname = "weflow";
+    inherit version;
 
-    postInstall = ''
+    # 采用固定版本的官方二进制，同步核对发布页的 SHA-256 清单。
+    src = fetchurl {
+      url = "https://github.com/334456777/WeFlow/releases/download/v${version}/weflow-v${version}-linux-${release.arch}.tar.gz";
+      inherit (release) hash;
+    };
+    nativeBuildInputs = [autoPatchelfHook makeWrapper];
+    buildInputs = [stdenv.cc.cc.lib xz];
+    dontBuild = true;
+    dontStrip = true;
+
+    installPhase = ''
+      runHook preInstall
+      install -Dm755 weflow "$out/bin/weflow"
       install -Dm644 LICENSE "$out/share/licenses/weflow/LICENSE"
-    '';
-
-    postFixup = ''
       wrapProgram "$out/bin/weflow" --prefix PATH : "${lib.makeBinPath [procps]}"
+      runHook postInstall
     '';
 
     meta = {
@@ -38,6 +47,6 @@ in
       homepage = "https://github.com/334456777/WeFlow";
       license = lib.licenses.unlicense;
       mainProgram = "weflow";
-      platforms = ["x86_64-linux" "aarch64-linux"];
+      platforms = builtins.attrNames releases;
     };
   }

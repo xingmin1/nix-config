@@ -43,7 +43,7 @@ in
       jupyterMcp
     ];
 
-    home.file.".omp/agent/skills/notebook-cli".source = "${packages.nb-cli}/share/skills/notebook-cli";
+    home.file.".agents/skills/notebook-cli".source = "${packages.nb-cli}/share/skills/notebook-cli";
     xdg.dataFile."jupyter/kernels/omp-python/kernel.json".text = builtins.toJSON {
       argv = ["${runtime}/bin/notebook-python" "-m" "ipykernel_launcher" "-f" "{connection_file}"];
       display_name = "Python (OMP Notebook)";

@@ -80,11 +80,8 @@
     };
     sheprdChecksums = {
       type = "file";
-      url = "https://github.com/sheprd-labs/sheprd/releases/latest/download/SHA256SUMS";
-      flake = false;
-    };
-    weflowSrc = {
-      url = "github:334456777/WeFlow/main";
+      # 固定已安装版本的校验清单，避免发布新版时旧配置无法重建。
+      url = "https://github.com/sheprd-labs/sheprd/releases/download/v20261118.1/SHA256SUMS";
       flake = false;
     };
     # Slack CLI 在每个 Release 里都附带无版本名的 latest 别名资产。
