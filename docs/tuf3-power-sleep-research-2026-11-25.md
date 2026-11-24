@@ -39,6 +39,40 @@ Nixpkgs 官方 WPS 包主要处理动态库和安装路径，没有给首页 CEF
 
 当前文档编辑器可使用 WeTypeX，首页搜索框仍不能输入中文。进程检查显示 WPS 主编辑器使用 Qt，首页搜索框由内嵌 CEF 页面提供。公开配置没有找到可信的 CEF 子进程修复方式，因此没有保留自定义 CEF 包装方案。
 
+### 2026-11-24/25 CEF 输入链路补充排查
+
+这轮排查没有把结论停留在“继续加环境变量”。在隔离 HOME 下分别启动了 WPS 12.1.2.29183，并保留真实的 KDE Wayland 会话环境。以下组合都能启动完整的 `wpsoffice`、`kcef` 和 `promecefpluginhost` 进程链：
+
+```text
+QT_IM_MODULE=xim
+GTK_IM_MODULE=xim
+XMODIFIERS=@im=fcitx
+QT_IM_MODULES=wayland;fcitx;ibus
+```
+
+也测试了保留 Qt Fcitx、只将 GTK 改为 XIM 的组合：
+
+```text
+QT_IM_MODULE=fcitx
+GTK_IM_MODULE=xim
+XMODIFIERS=@im=fcitx
+QT_IM_MODULES=wayland;fcitx;ibus
+```
+
+WPS 会自行重建 CEF 子进程的启动环境。`wpsoffice` 和 CEF 宿主可以看到这些变量，但 `promecefpluginhost` 的 renderer 子进程不再保留它们。Fcitx 的诊断信息也没有出现对应的 CEF X11 输入上下文。因此，当前现象不是 Nix desktop 文件漏写一行变量就能解释的，CEF 宿主没有把首页输入框接入 Fcitx 是更直接的证据。
+
+外部参数 `--enable-wayland-ime` 和 `--ozone-platform=wayland` 也不会沿用到 WPS 创建的 CEF 子进程，WPS 仍按自己的参数启动 `promecefpluginhost`。没有把这些未经 WPS 或社区验证的参数写入配置。
+
+官方版本记录显示 12.1.2.29183 之前存在 12.1.2.28080、12.1.2.26885 等 Linux 版本。下一次继续时可以用 12.1.2.28080 做隔离回归，并单独测试 IBus 路径。当前没有切换版本或启动 IBus。
+
+相关资料：
+
+- Fcitx 对 XWayland Chromium/CEF 使用 GTK 输入模块的说明：https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland
+- WPS 官方 Linux 下载与版本页：https://www.wps.cn/product/wpslinux
+- WPS Flathub 元数据中的 Linux 版本记录：https://github.com/flathub/cn.wps.wps_365/blob/master/cn.wps.wps_365.metainfo.xml
+- openKylin 对 12.1.2.29183 输入法回归的报告：https://bbs.openkylin.top/t/topic/173893
+- CEF 宿主输入法组合状态研究：https://github.com/ravenq/ravenq.github.io/blob/main/docs/blog/cef-sogou-ime-composition.md
+
 ## 本机睡眠与休眠现状
 
 当前配置在 `configurations/nixos/tuf3/default.nix`：
