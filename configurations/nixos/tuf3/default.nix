@@ -37,6 +37,9 @@ in {
     '';
   };
 
+  # Agent Tincan 通过 Tailscale 私有网络连接本机与其他 Agent。
+  services.tailscale.enable = true;
+
   boot.loader = {
     efi = {
       efiSysMountPoint = "/boot/efi";
