@@ -30,8 +30,11 @@
       url = "github:jacopone/antigravity-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # 临时锁定到 4.5.0。2026-11-25 上游 ast-bro 4.7.0 缺少
+    # src/installers/pi_extension.ts，导致 ast-bro-4.7.0.drv 构建失败。
+    # 上游补齐文件并恢复构建后，可解除此版本锁定。
     ast-bro = {
-      url = "github:aeroxy/ast-bro";
+      url = "github:aeroxy/ast-bro/4.5.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     favnyr.url = "github:GlitchAwakened/Favnyr/33e0e446d7a0dec43d3bfacd295abfae4b87afeb?dir=packaging/nix";

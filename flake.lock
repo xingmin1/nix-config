@@ -42,15 +42,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1795570543,
-        "narHash": "sha256-e0oU9omWTxmn58iheQh+ztwe8vRe/uB8n6x/iQXJ7wU=",
+        "lastModified": 1795014644,
+        "narHash": "sha256-baMt0fB+ciOaEKNDVKyKIn+dmNwH4z8yCl9oeSc/wKc=",
         "owner": "aeroxy",
         "repo": "ast-bro",
-        "rev": "9025f8605361b38b9c5dfac99dcdcf87db1a9f5d",
+        "rev": "f1a1229e98b1ae2e0b952e73246368f64ee3b17d",
         "type": "github"
       },
       "original": {
         "owner": "aeroxy",
+        "ref": "4.5.0",
         "repo": "ast-bro",
         "type": "github"
       }
@@ -328,7 +329,7 @@
     "genofficeRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-EQ8JR38mDh3oMBDVwlPTr73li16zvwzRUkumOOyuZnU=",
+        "narHash": "sha256-chGjLohmtbdfPGHAy7g0LWwUKg3TPlsDYZvBPOMcQvU=",
         "type": "file",
         "url": "https://api.github.com/repos/genspark-ai/genoffice/releases/latest"
       },
@@ -394,7 +395,7 @@
     "justLspRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-fjXIosCiIxPkvvjPTu6+LMVd1t1zp/GrsUpqYLWmznY=",
+        "narHash": "sha256-I3SBFj2zeIjvCXZkqsDMOitIfgczut+Fjy/I8M8kwfw=",
         "type": "file",
         "url": "https://api.github.com/repos/terror/just-lsp/releases/latest"
       },
@@ -712,7 +713,7 @@
     "officecliRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-NWZ3437nC1fHy0ABZqV2O6iWVpz64kLCnAEYpDCTs2M=",
+        "narHash": "sha256-DxzZeQurF+TyRU3LSqJN+mo9g67y3/Km4F8VOfQOo3I=",
         "type": "file",
         "url": "https://api.github.com/repos/iOfficeAI/OfficeCLI/releases/latest"
       },
