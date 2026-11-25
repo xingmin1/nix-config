@@ -41,11 +41,6 @@
       url = "https://github.com/1jehuang/jcode/releases/latest/download/jcode-linux-x86_64.tar.gz";
       flake = false;
     };
-    jcodeLinuxAarch64 = {
-      type = "file";
-      url = "https://github.com/1jehuang/jcode/releases/latest/download/jcode-linux-aarch64.tar.gz";
-      flake = false;
-    };
     codexForkLinuxX64 = {
       type = "file";
       url = "https://github.com/xingmin1/codex/releases/latest/download/codex-package-x86_64-unknown-linux-musl.tar.gz";

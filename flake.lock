@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795158749,
-        "narHash": "sha256-IFJkCCpI3o73F5v1sM8Qxk0bsf7QAEp4kt8K2bMcB3Q=",
+        "lastModified": 1795590815,
+        "narHash": "sha256-Ht1kIYqrhLW4+Ke6i7O3BIhoSqnkTeiRR4ezgD/m2O0=",
         "owner": "jacopone",
         "repo": "antigravity-nix",
-        "rev": "f9d701390c7af42f4e1bf3a657a31281210e3e58",
+        "rev": "b589f42919ba2059baa4141f7103dd8cb18fcb90",
         "type": "github"
       },
       "original": {
@@ -42,11 +42,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794852970,
-        "narHash": "sha256-b6MOxIQ7qDtDA0OMIKeym/fgvhN6SQWvsqGbmyrNg+k=",
+        "lastModified": 1795570543,
+        "narHash": "sha256-e0oU9omWTxmn58iheQh+ztwe8vRe/uB8n6x/iQXJ7wU=",
         "owner": "aeroxy",
         "repo": "ast-bro",
-        "rev": "0a276c8c24df01eb68ea863a873aa3d74994f10b",
+        "rev": "9025f8605361b38b9c5dfac99dcdcf87db1a9f5d",
         "type": "github"
       },
       "original": {
@@ -96,11 +96,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794788055,
-        "narHash": "sha256-ne61lharrApQ3QVpm6sjd6k5AgD0xandc69h4QbopIY=",
+        "lastModified": 1795601684,
+        "narHash": "sha256-82Re0lBl8qLEPnDYKjf+p0bw5JzlVXq9O+3q0KnAagI=",
         "owner": "catppuccin",
         "repo": "nix",
-        "rev": "aa70e775fdb4e998314dd64fb4cf66aeaa87f6dd",
+        "rev": "d8561c05d09cd22d175b0cb50de634a4214a4c3e",
         "type": "github"
       },
       "original": {
@@ -136,11 +136,11 @@
     "collieRepo": {
       "flake": false,
       "locked": {
-        "lastModified": 1794987210,
-        "narHash": "sha256-YWRva4NdqOL7Z1exgU8GwzZCJXd73zvli6tB4/N2oGA=",
+        "lastModified": 1795603647,
+        "narHash": "sha256-NTtC2nkqDyH/mVAb8P9+OJqFmUTv5qAnyNENei1IHyY=",
         "owner": "AltanS",
         "repo": "collie",
-        "rev": "866bfb2800b4bb99d8931417300eea1214a45e7d",
+        "rev": "f582ea8d4ca49e36e8b169042a79a58229b4ec53",
         "type": "github"
       },
       "original": {
@@ -328,7 +328,7 @@
     "genofficeRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-hCBn875AqgEwkMsW2tNQ4kBVeY/wOw2EnmIFgcQ3voc=",
+        "narHash": "sha256-EQ8JR38mDh3oMBDVwlPTr73li16zvwzRUkumOOyuZnU=",
         "type": "file",
         "url": "https://api.github.com/repos/genspark-ai/genoffice/releases/latest"
       },
@@ -345,11 +345,11 @@
       },
       "locked": {
         "dir": "nixos",
-        "lastModified": 1795128728,
-        "narHash": "sha256-VXFj5oQ+Emr3G35fFqmzMbOZiJsSXhnbI2eHMCDEfGo=",
+        "lastModified": 1795556531,
+        "narHash": "sha256-XChDr3HjyXHrr57KrDNaj9QEj95btcRVfGPzlQAKJjQ=",
         "owner": "utajum",
         "repo": "g-helper-linux",
-        "rev": "44518e724b6f1b847e808ccdc82032a29ba163f3",
+        "rev": "21f9c7b6de1e9c12d1c8860cc08b3ab363c3cfeb",
         "type": "github"
       },
       "original": {
@@ -366,29 +366,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1794963576,
-        "narHash": "sha256-+CPrP74GDJ63f7bgEFC9Av4hbxc7K9WUNv1ZVRifRe8=",
+        "lastModified": 1795534022,
+        "narHash": "sha256-xkRZ+PcPWaAyf9YrEBszYD5w2S6/Ac2tIfsufzd4dEQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "2b13c9cb3aa20653e6f8ee0b7f8331a53ea9b0a9",
+        "rev": "b56bcd042b5e69ad188eca20d9bec1bfbf3dd453",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
         "type": "github"
-      }
-    },
-    "jcodeLinuxAarch64": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-s8/XSfynTY4s1NDHhjhdZEW+x+VjotMbVDONEP8PlYk=",
-        "type": "file",
-        "url": "https://github.com/1jehuang/jcode/releases/latest/download/jcode-linux-aarch64.tar.gz"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/1jehuang/jcode/releases/latest/download/jcode-linux-aarch64.tar.gz"
       }
     },
     "jcodeLinuxX64": {
@@ -406,7 +394,7 @@
     "justLspRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-kqOXP6WcDNHlZQzBdK0lSfOhvJqLMdmf+59Sm5M7s1Q=",
+        "narHash": "sha256-fjXIosCiIxPkvvjPTu6+LMVd1t1zp/GrsUpqYLWmznY=",
         "type": "file",
         "url": "https://api.github.com/repos/terror/just-lsp/releases/latest"
       },
@@ -440,11 +428,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1795495638,
-        "narHash": "sha256-hhROWq9062PdIznKMqiQuy3L9F7l4LHwofEVrcncfZM=",
+        "lastModified": 1795534330,
+        "narHash": "sha256-HUVg1F7c3btLD++JDjdTsSAwp50NvrciqTMFdCKEfAg=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "45e6e554481f962d4134021d3a63c96d8755f395",
+        "rev": "d70dfebdbd4616aa852fdb47c16588ec1ba8fc6f",
         "type": "github"
       },
       "original": {
@@ -496,7 +484,7 @@
     "nbCliRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-GI7WkOMx4cAMWQIG0fQwXlNsz6DptHT0xx5fzRwNXis=",
+        "narHash": "sha256-1717JnO4BBFuyzcHidUKJhNwSPY5ccZLX0Q/+CBfYeQ=",
         "type": "file",
         "url": "https://api.github.com/repos/jupyter-ai-contrib/nb-cli/releases/latest"
       },
@@ -528,11 +516,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793418699,
-        "narHash": "sha256-+RpTlcdh9KqZ+ZiLkNSTvibQWm935EcIdBzRPCTFsrQ=",
+        "lastModified": 1795373241,
+        "narHash": "sha256-Gd1+Oaj8nS+p1qLpKk4MGv/qGh62+lTkX4262e2UDgc=",
         "owner": "LnL7",
         "repo": "nix-darwin",
-        "rev": "ff0e21a414d4547183396da1b44a66f2577b65e9",
+        "rev": "663d8b962a11cda261b6e9f14e03911fac94baf0",
         "type": "github"
       },
       "original": {
@@ -548,11 +536,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794739050,
-        "narHash": "sha256-PCGNIyAydZcdUXCxEXTjrS1+wWS+k9E+ENqBkUK2Mpg=",
+        "lastModified": 1795345257,
+        "narHash": "sha256-p1dA8lUFQTLJfDI2gaTZQ+CcMKw3nxvyHNbwpVMy2rY=",
         "owner": "nix-community",
         "repo": "nix-index-database",
-        "rev": "9bd074026d6db75b59aae8cd6071b5f2fe27a36c",
+        "rev": "905f3e6f1e78165e79457c0bbe7ec4b885a5fce1",
         "type": "github"
       },
       "original": {
@@ -691,11 +679,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1794890597,
-        "narHash": "sha256-lME2lHoDHAaSHP3/okgiVoJ0icVEvsQH8LeU3We7tcc=",
+        "lastModified": 1795234589,
+        "narHash": "sha256-f/VVvxf5RsQgWVhUtefoca5ktVg0DA2bnkMOcmSnozo=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "04906337b6d53e8bb0eaf0470ae9f070a4d4eb55",
+        "rev": "2786a2a72088ecf32aea5b3ec52099e6a7cff78f",
         "type": "github"
       },
       "original": {
@@ -724,7 +712,7 @@
     "officecliRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-MlLpoEOXjVSXom123/ltU8tt1Gy+fTUkP9SG6yoVB4w=",
+        "narHash": "sha256-NWZ3437nC1fHy0ABZqV2O6iWVpz64kLCnAEYpDCTs2M=",
         "type": "file",
         "url": "https://api.github.com/repos/iOfficeAI/OfficeCLI/releases/latest"
       },
@@ -752,7 +740,7 @@
     "ompLinuxAarch64": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-VliqdhjXjbsn6rvqQPOD2eA7dy3Lr5GXseS0agxaNOg=",
+        "narHash": "sha256-tSgbZYn5mcicIKUhmmYh6EdzCUDFEttHAu7tnn69ZQg=",
         "type": "file",
         "url": "https://github.com/can1357/oh-my-pi/releases/latest/download/omp-linux-arm64"
       },
@@ -764,7 +752,7 @@
     "ompLinuxX64": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-ph5lBYIX9BaeF43/xckc1kyIPWlUDnKGP6E/ovMCYUs=",
+        "narHash": "sha256-wNveswwldjJ6cV+yIh1L6bcq9q6pS1zqc4SNZqbgblg=",
         "type": "file",
         "url": "https://github.com/can1357/oh-my-pi/releases/latest/download/omp-linux-x64"
       },
@@ -812,7 +800,6 @@
         "genofficeRelease": "genofficeRelease",
         "ghelper": "ghelper",
         "home-manager": "home-manager",
-        "jcodeLinuxAarch64": "jcodeLinuxAarch64",
         "jcodeLinuxX64": "jcodeLinuxX64",
         "justLspRelease": "justLspRelease",
         "krunnerPinyinSrc": "krunnerPinyinSrc",
@@ -985,7 +972,7 @@
     "uuRemoteLinuxRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-ABwAAkv6gDoN8LjHsJGTI1vbWkazZMrp2NZ7Y17TjDw=",
+        "narHash": "sha256-xrbTgt2vyhN0ZSjsiMDcODba0WQvxhIjUVTtyu77Hmc=",
         "type": "file",
         "url": "https://api.github.com/repos/VallierDev/uu-remote-linux/releases/tags/v0.2.62"
       },
@@ -1020,11 +1007,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795111314,
-        "narHash": "sha256-0zmj8lEtQbdQO1hTJSP/5ACeqltCZAcXh21b8w92tfY=",
+        "lastModified": 1795353384,
+        "narHash": "sha256-cq+xxk2kbsRAW+eVDisdhFcPOCpBOgxvOlao5C0VWhQ=",
         "owner": "panxuc",
         "repo": "fcitx5-wetypex",
-        "rev": "0d55e7d2fb753abb8ff696a141b8f05953465d39",
+        "rev": "68699d7c8320be745877b51ed3c63e347b4d1b81",
         "type": "github"
       },
       "original": {

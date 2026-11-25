@@ -5,11 +5,9 @@
     system = stdenv.hostPlatform.system;
     archives = {
       x86_64-linux = inputs.jcodeLinuxX64;
-      aarch64-linux = inputs.jcodeLinuxAarch64;
     };
     targetNames = {
       x86_64-linux = "linux-x86_64";
-      aarch64-linux = "linux-aarch64";
     };
     archive = archives.${system} or null;
     target = targetNames.${system} or null;
