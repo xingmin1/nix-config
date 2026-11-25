@@ -6,6 +6,78 @@
   ...
 }: let
   system = pkgs.stdenv.hostPlatform.system;
+  tailscaleRelease = pkgs.stdenvNoCC.mkDerivation {
+    pname = "tailscale";
+    version = "1.104.7";
+    src = pkgs.fetchurl {
+      url = "https://pkgs.tailscale.com/stable/tailscale_1.104.7_amd64.tgz";
+      hash = "sha256-5WaT/3SmTyWRt+gZwoBjWhAKrh3fsO8Fj80FK3zY0Ww=";
+    };
+    sourceRoot = "tailscale_1.104.7_amd64";
+    dontBuild = true;
+    installPhase = ''
+      install -Dm755 tailscale "$out/bin/tailscale"
+      install -Dm755 tailscaled "$out/bin/tailscaled"
+      install -d "$out/lib/systemd/system"
+      sed \
+        -e "/EnvironmentFile=\\/etc\\/default\\/tailscaled/d" \
+        -e "s#/usr/sbin/tailscaled#$out/bin/tailscaled#g" \
+        systemd/tailscaled.service > "$out/lib/systemd/system/tailscaled.service"
+      install -Dm644 systemd/tailscaled.defaults "$out/lib/systemd/system/tailscaled.defaults"
+      install -Dm644 systemd/tailscale-online.target "$out/lib/systemd/system/tailscale-online.target"
+      install -Dm644 systemd/tailscale-wait-online.service "$out/lib/systemd/system/tailscale-wait-online.service"
+    '';
+  };
+  tailscaleControlProxy = pkgs.writeText "tailscale-control-proxy.py" ''
+    import asyncio, re, socket, ssl
+
+    LISTEN = ("127.0.0.1", 8443)
+    SNI = "login.tailscale.com"
+    context = ssl.create_default_context()
+
+    async def pipe(reader, writer):
+        try:
+            while data := await reader.read(65536):
+                writer.write(data)
+                await writer.drain()
+        except Exception:
+            pass
+        finally:
+            writer.close()
+
+    async def handle(client_reader, client_writer):
+        try:
+            first = await asyncio.wait_for(client_reader.read(65536), 30)
+            if not first:
+                client_writer.close()
+                return
+            header, separator, rest = first.partition(b"\\r\\n\\r\\n")
+            header = re.sub(
+                rb"(?im)^host:.*$",
+                b"Host: " + SNI.encode(),
+                header,
+                count=1,
+            )
+            address = socket.gethostbyname(SNI)
+            remote_reader, remote_writer = await asyncio.open_connection(
+                address, 443, ssl=context, server_hostname=SNI
+            )
+            remote_writer.write(header + separator + rest)
+            await remote_writer.drain()
+            await asyncio.gather(
+                pipe(client_reader, remote_writer),
+                pipe(remote_reader, client_writer),
+            )
+        except Exception:
+            client_writer.close()
+
+    async def main():
+        server = await asyncio.start_server(handle, *LISTEN)
+        async with server:
+            await server.serve_forever()
+
+    asyncio.run(main())
+  '';
   magpiePackage = pkgs.callPackage ./magpie.nix {
     releaseMetadata = flake.inputs.magpieRelease;
     appIcon = flake.inputs.magpieIcon;
@@ -38,7 +110,25 @@ in {
   };
 
   # Agent Tincan 通过 Tailscale 私有网络连接本机与其他 Agent。
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    package = tailscaleRelease;
+  };
+
+  # 该网络会拦截 tailscale.com 的原始 SNI，转发器保持控制面连接可用。
+  systemd.services.tailscale-control-proxy = {
+    description = "Tailscale control-plane SNI relay";
+    wantedBy = ["multi-user.target"];
+    before = ["tailscaled.service"];
+    after = ["network-online.target"];
+    wants = ["network-online.target"];
+    serviceConfig = {
+      ExecStart = "${pkgs.python3}/bin/python3 ${tailscaleControlProxy}";
+      Restart = "always";
+      RestartSec = 2;
+      DynamicUser = true;
+    };
+  };
 
   boot.loader = {
     efi = {
