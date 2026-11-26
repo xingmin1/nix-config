@@ -739,6 +739,13 @@ in {
     xdg.configFile."systemd/user/plasma-plasmashell.service.d/prime-offload.conf" = intelDesktop;
     # 共享选择器在核显上显示 KWin 的屏幕和窗口预览。
     xdg.configFile."systemd/user/plasma-xdg-desktop-portal-kde.service.d/prime-offload.conf" = intelDesktop;
+    # XDG autostart 生成的 Fcitx 单元默认 Restart=no。仅添加 drop-in，保留
+    # generator 提供的 ExecStart，避免崩溃后输入法长期消失，也避免启动第二个实例。
+    xdg.configFile."systemd/user/app-org.fcitx.Fcitx5@autostart.service.d/restart.conf".text = ''
+      [Service]
+      Restart=on-failure
+      RestartSec=2
+    '';
     # 阻止 Magpie 生成绕过启动包装的用户级快捷方式。
     xdg.dataFile."applications/magpie.desktop".source = "${magpiePackage}/share/applications/magpie.desktop";
     # Magpie 通过 cindy:// 导入链接打开 Cindy。显式导出桌面入口，避免仅在 profile 中时 GIO 索引不到。

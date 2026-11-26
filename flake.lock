@@ -329,7 +329,7 @@
     "genofficeRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-fEnteE16yNhVwEsis8gyF/PEFgbPAidqhnUHMIRRNnA=",
+        "narHash": "sha256-nvavkc4V8D2eK6lOfEDaCzGC/a8I91ZMYLSKR1gN0Ps=",
         "type": "file",
         "url": "https://api.github.com/repos/genspark-ai/genoffice/releases/latest"
       },
@@ -346,11 +346,11 @@
       },
       "locked": {
         "dir": "nixos",
-        "lastModified": 1795556531,
-        "narHash": "sha256-XChDr3HjyXHrr57KrDNaj9QEj95btcRVfGPzlQAKJjQ=",
+        "lastModified": 1795638757,
+        "narHash": "sha256-gOYza8PdCdKK70gJnacmUx9XdWOaJMgItY32cFbijRo=",
         "owner": "utajum",
         "repo": "g-helper-linux",
-        "rev": "21f9c7b6de1e9c12d1c8860cc08b3ab363c3cfeb",
+        "rev": "083e33f71fa2a0216e1a44b14ae838b0218ecb02",
         "type": "github"
       },
       "original": {
@@ -367,11 +367,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795534022,
-        "narHash": "sha256-xkRZ+PcPWaAyf9YrEBszYD5w2S6/Ac2tIfsufzd4dEQ=",
+        "lastModified": 1795618997,
+        "narHash": "sha256-d9Osol//t6hqeo1xlspsYMbhTJK507h6t0EmPyF5Db0=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "b56bcd042b5e69ad188eca20d9bec1bfbf3dd453",
+        "rev": "6a13737c0ed27c7c285f59e3be423ed972aa605f",
         "type": "github"
       },
       "original": {
@@ -395,7 +395,7 @@
     "justLspRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-PYVXEAabJvJ110fiFVgzcohG0CFLczpDdKUPpbCmQPc=",
+        "narHash": "sha256-QMr6i9rF/gPOLL/JanrA9kKI5cV0jP2pbShVxLEVGgU=",
         "type": "file",
         "url": "https://api.github.com/repos/terror/just-lsp/releases/latest"
       },
@@ -429,11 +429,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1795534330,
-        "narHash": "sha256-HUVg1F7c3btLD++JDjdTsSAwp50NvrciqTMFdCKEfAg=",
+        "lastModified": 1795661926,
+        "narHash": "sha256-nSkVEw+lhKvoHNE0RovM52c/xiS57ENesYDDK9AZTUs=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "d70dfebdbd4616aa852fdb47c16588ec1ba8fc6f",
+        "rev": "9a0ba3c142be7fcb3d819741d65d3d14c65a72d7",
         "type": "github"
       },
       "original": {
@@ -485,7 +485,7 @@
     "nbCliRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-1717JnO4BBFuyzcHidUKJhNwSPY5ccZLX0Q/+CBfYeQ=",
+        "narHash": "sha256-friX4B74c3Hc2r69xj+BGbV9pNWd0gsnIUiyJJnQ4SM=",
         "type": "file",
         "url": "https://api.github.com/repos/jupyter-ai-contrib/nb-cli/releases/latest"
       },
@@ -713,7 +713,7 @@
     "officecliRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-Ajf7CgkenJjfypZNWcfzqhBpYL4Tpw+mWs1UK4Ox6Nc=",
+        "narHash": "sha256-4Gp+vRCTrl49uJ7c+9qtQJ4Bku1KXzc3pj5E7D5rRvs=",
         "type": "file",
         "url": "https://api.github.com/repos/iOfficeAI/OfficeCLI/releases/latest"
       },
@@ -741,7 +741,7 @@
     "ompLinuxAarch64": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-tSgbZYn5mcicIKUhmmYh6EdzCUDFEttHAu7tnn69ZQg=",
+        "narHash": "sha256-eHcMTX07+Eoa7U6b74d47p0KT01NW3nlDphEYxARs0I=",
         "type": "file",
         "url": "https://github.com/can1357/oh-my-pi/releases/latest/download/omp-linux-arm64"
       },
@@ -753,7 +753,7 @@
     "ompLinuxX64": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-wNveswwldjJ6cV+yIh1L6bcq9q6pS1zqc4SNZqbgblg=",
+        "narHash": "sha256-gENmEzn/GOSGPAAFMOvt71zZVK2nei/YAszYa4TFw1U=",
         "type": "file",
         "url": "https://github.com/can1357/oh-my-pi/releases/latest/download/omp-linux-x64"
       },
@@ -957,11 +957,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795173499,
-        "narHash": "sha256-J8IYl3oEdctyvBgWr+/L01MY5Xm0TU4WXwZDccN5jjk=",
+        "lastModified": 1795615686,
+        "narHash": "sha256-/C0FK2Fwq0aWE/GADYyYbAIdQeGfYBbWMin3tfks1NA=",
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "rev": "a0a97e31a897a3537eea5c49df4f8adaa83b3b37",
+        "rev": "b7b56d3c8833016c650ca542b1230e6130299741",
         "type": "github"
       },
       "original": {
@@ -973,7 +973,7 @@
     "uuRemoteLinuxRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-xrbTgt2vyhN0ZSjsiMDcODba0WQvxhIjUVTtyu77Hmc=",
+        "narHash": "sha256-5yGIEs3Xpk2Of9kQQrv1XYJhVTKD9Q5JfSc2ZSpmdNc=",
         "type": "file",
         "url": "https://api.github.com/repos/VallierDev/uu-remote-linux/releases/tags/v0.2.62"
       },
