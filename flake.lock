@@ -329,7 +329,7 @@
     "genofficeRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-2B2aw7vGwJnG/eq++NgP1DfpefA7SIISK7wMQh/KJws=",
+        "narHash": "sha256-gD0q8hHijuicQfec4Inq1+WJyjgzf/j1ImwVr5Q/Zq4=",
         "type": "file",
         "url": "https://api.github.com/repos/genspark-ai/genoffice/releases/latest"
       },
@@ -395,7 +395,7 @@
     "justLspRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-4FvmN39SX8SYxv7SaCr+TAGDZ7xB21PHaK0kQa6QoUs=",
+        "narHash": "sha256-f8eAyFSOGACCnc1Lcx9N7Thw1kr5WctslEHcsFAvD/I=",
         "type": "file",
         "url": "https://api.github.com/repos/terror/just-lsp/releases/latest"
       },
@@ -713,7 +713,7 @@
     "officecliRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-c74xQnajwMuEdRXuhbrxvI0qlIw5YoF06DDn/bWBAVg=",
+        "narHash": "sha256-Z7HWDO/QENl4MveABEDyjNBKNqmHdsUrIwtRDQ498tE=",
         "type": "file",
         "url": "https://api.github.com/repos/iOfficeAI/OfficeCLI/releases/latest"
       },

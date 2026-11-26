@@ -329,6 +329,7 @@ in {
           };
           "Groups/0/Items/0".Name = "keyboard-us";
           "Groups/0/Items/1".Name = "wetypex";
+          "Groups/0/Items/2".Name = "rime";
           GroupOrder."0" = "Default";
         };
       };
@@ -556,7 +557,12 @@ in {
       fi
 
       if [ "$dbus_ready" -eq 0 ] && { [ "$state" != 2 ] || [ "$backend_count" -eq 0 ]; }; then
-        ${pkgs.systemd}/bin/systemctl --user restart "$service"
+        if [ "''${XDG_SESSION_TYPE:-}" = wayland ]; then
+          printf '[%s] skipping autostart restart in KDE Wayland; KWin must relaunch Fcitx5\n' \
+            "$(${pkgs.coreutils}/bin/date --iso-8601=seconds)" >> "$logFile"
+        else
+          ${pkgs.systemd}/bin/systemctl --user restart "$service"
+        fi
       fi
 
       if [ -f "$logFile" ]; then
@@ -815,6 +821,10 @@ in {
       [Service]
       Restart=on-failure
       RestartSec=2
+    '';
+    xdg.configFile."systemd/user/app-org.fcitx.Fcitx5@autostart.service.d/wayland.conf".text = ''
+      [Unit]
+      ConditionEnvironment=XDG_SESSION_TYPE=x11
     '';
     # 阻止 Magpie 生成绕过启动包装的用户级快捷方式。
     xdg.dataFile."applications/magpie.desktop".source = "${magpiePackage}/share/applications/magpie.desktop";
