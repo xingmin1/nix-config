@@ -329,7 +329,7 @@
     "genofficeRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-KNYKVck8FJvp7GvJtUMvgpbwaodQrGOTU8lzCF5uxMg=",
+        "narHash": "sha256-2B2aw7vGwJnG/eq++NgP1DfpefA7SIISK7wMQh/KJws=",
         "type": "file",
         "url": "https://api.github.com/repos/genspark-ai/genoffice/releases/latest"
       },
@@ -395,7 +395,7 @@
     "justLspRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-WsC+7T6seqH8XvMMa7o6VpFODzEl3aoM7Tpgu2GSvrI=",
+        "narHash": "sha256-4FvmN39SX8SYxv7SaCr+TAGDZ7xB21PHaK0kQa6QoUs=",
         "type": "file",
         "url": "https://api.github.com/repos/terror/just-lsp/releases/latest"
       },
@@ -485,7 +485,7 @@
     "nbCliRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-grQRF455KNtEcx5bEHTfL/2ctlR+Z46LOaYXRbY6SFY=",
+        "narHash": "sha256-GBjOw3PP/HJHDEtbRsy6hmXE7YSpi4y7g/+Pl/EV8To=",
         "type": "file",
         "url": "https://api.github.com/repos/jupyter-ai-contrib/nb-cli/releases/latest"
       },
@@ -713,7 +713,7 @@
     "officecliRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-2BnMeqT7I3v2UZZl3ZCaPu5JPfcllBdcLsX3Cj8P4fM=",
+        "narHash": "sha256-c74xQnajwMuEdRXuhbrxvI0qlIw5YoF06DDn/bWBAVg=",
         "type": "file",
         "url": "https://api.github.com/repos/iOfficeAI/OfficeCLI/releases/latest"
       },

@@ -65,6 +65,8 @@
     modesetting.enable = true;
     # 用 NVIDIA 的休眠服务保存并恢复独显上的显存分配。
     powerManagement.enable = true;
+    # 595 Open 在混合显卡休眠恢复时的 kernel notifier 路径会触发 -5，改用 procfs/systemd 保存路径。
+    powerManagement.kernelSuspendNotifier = false;
     prime = {
       # FX507ZM 的 PCI 地址，按 Windows PnP 查询结果填写。
       intelBusId = "PCI:0:2:0";
