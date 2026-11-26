@@ -329,7 +329,7 @@
     "genofficeRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-nvavkc4V8D2eK6lOfEDaCzGC/a8I91ZMYLSKR1gN0Ps=",
+        "narHash": "sha256-qWeLZWtYJuRHaz4zmLUyHINAfCkFoDxgc0qIRhydL4k=",
         "type": "file",
         "url": "https://api.github.com/repos/genspark-ai/genoffice/releases/latest"
       },
@@ -395,7 +395,7 @@
     "justLspRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-QMr6i9rF/gPOLL/JanrA9kKI5cV0jP2pbShVxLEVGgU=",
+        "narHash": "sha256-tPlRFNEfaObgomglt3dCBL6DMNIM8shS8alXQZRgEwA=",
         "type": "file",
         "url": "https://api.github.com/repos/terror/just-lsp/releases/latest"
       },
@@ -429,11 +429,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1795661926,
-        "narHash": "sha256-nSkVEw+lhKvoHNE0RovM52c/xiS57ENesYDDK9AZTUs=",
+        "lastModified": 1795663188,
+        "narHash": "sha256-j1S8p6N1lAu0Ab4csCu3JmSDS1xzPc5nlUqFUcjMNBg=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "9a0ba3c142be7fcb3d819741d65d3d14c65a72d7",
+        "rev": "a8e2ca87ef6a622821d175555d320e196cac2d34",
         "type": "github"
       },
       "original": {
@@ -485,7 +485,7 @@
     "nbCliRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-friX4B74c3Hc2r69xj+BGbV9pNWd0gsnIUiyJJnQ4SM=",
+        "narHash": "sha256-+FrUx+rFtX7xU9/QOH0clsxk7zoD/MzW7gskXTct4Yo=",
         "type": "file",
         "url": "https://api.github.com/repos/jupyter-ai-contrib/nb-cli/releases/latest"
       },
@@ -713,7 +713,7 @@
     "officecliRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-4Gp+vRCTrl49uJ7c+9qtQJ4Bku1KXzc3pj5E7D5rRvs=",
+        "narHash": "sha256-euFa80cSsxpVpR6VZXmut5H8yKSWmBo1av1dy6JXY4I=",
         "type": "file",
         "url": "https://api.github.com/repos/iOfficeAI/OfficeCLI/releases/latest"
       },
