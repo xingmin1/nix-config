@@ -98,6 +98,7 @@ in {
     (modulesPath + "/installer/scan/not-detected.nix")
     ./hardware-configuration.nix
     ./micron-code-login.nix
+    ./phone-input.nix
   ];
 
   networking = {
@@ -106,6 +107,7 @@ in {
     # Sheprd 手机控制只接受当前 Wi-Fi 局域网的 IPv4 连接。
     firewall.extraCommands = ''
       iptables -w -A nixos-fw -i wlp44s0 -s 192.168.5.0/24 -p tcp --dport 7443 -j nixos-fw-accept
+      iptables -w -A nixos-fw -i wlp44s0 -s 192.168.5.0/24 -p tcp --dport 6768 -j nixos-fw-accept
     '';
   };
 
