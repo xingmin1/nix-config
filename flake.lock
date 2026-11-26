@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795590815,
-        "narHash": "sha256-Ht1kIYqrhLW4+Ke6i7O3BIhoSqnkTeiRR4ezgD/m2O0=",
+        "lastModified": 1795677075,
+        "narHash": "sha256-wxmI7pyE/XuYlWwHic0bHsR2L3gI8zyQjkxQGQ1u0jw=",
         "owner": "jacopone",
         "repo": "antigravity-nix",
-        "rev": "b589f42919ba2059baa4141f7103dd8cb18fcb90",
+        "rev": "c7b60189f6c5d728d8da3e2bb71a3684f1598a95",
         "type": "github"
       },
       "original": {
@@ -329,7 +329,7 @@
     "genofficeRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-qWeLZWtYJuRHaz4zmLUyHINAfCkFoDxgc0qIRhydL4k=",
+        "narHash": "sha256-KNYKVck8FJvp7GvJtUMvgpbwaodQrGOTU8lzCF5uxMg=",
         "type": "file",
         "url": "https://api.github.com/repos/genspark-ai/genoffice/releases/latest"
       },
@@ -395,7 +395,7 @@
     "justLspRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-tPlRFNEfaObgomglt3dCBL6DMNIM8shS8alXQZRgEwA=",
+        "narHash": "sha256-WsC+7T6seqH8XvMMa7o6VpFODzEl3aoM7Tpgu2GSvrI=",
         "type": "file",
         "url": "https://api.github.com/repos/terror/just-lsp/releases/latest"
       },
@@ -485,7 +485,7 @@
     "nbCliRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-+FrUx+rFtX7xU9/QOH0clsxk7zoD/MzW7gskXTct4Yo=",
+        "narHash": "sha256-grQRF455KNtEcx5bEHTfL/2ctlR+Z46LOaYXRbY6SFY=",
         "type": "file",
         "url": "https://api.github.com/repos/jupyter-ai-contrib/nb-cli/releases/latest"
       },
@@ -713,7 +713,7 @@
     "officecliRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-euFa80cSsxpVpR6VZXmut5H8yKSWmBo1av1dy6JXY4I=",
+        "narHash": "sha256-2BnMeqT7I3v2UZZl3ZCaPu5JPfcllBdcLsX3Cj8P4fM=",
         "type": "file",
         "url": "https://api.github.com/repos/iOfficeAI/OfficeCLI/releases/latest"
       },
@@ -973,7 +973,7 @@
     "uuRemoteLinuxRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-5yGIEs3Xpk2Of9kQQrv1XYJhVTKD9Q5JfSc2ZSpmdNc=",
+        "narHash": "sha256-aX0fkwkxN9JhBrIRkP3ODbnYtHjlxTy402k4sfG5u/0=",
         "type": "file",
         "url": "https://api.github.com/repos/VallierDev/uu-remote-linux/releases/tags/v0.2.62"
       },

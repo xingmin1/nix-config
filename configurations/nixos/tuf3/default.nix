@@ -726,7 +726,7 @@ in {
           # 使用 Nixpkgs 的 XWayland 入口及其屏幕采集兼容库。
           ln -sfn ${writeShellScript "wemeet-launch" ''
             if [ "''${XDG_SESSION_TYPE:-}" = wayland ]; then
-              exec ${wemeet}/bin/wemeet-xwayland "$@"
+              exec env GTK_IM_MODULE=fcitx QT_IM_MODULE=fcitx XMODIFIERS=@im=fcitx ${wemeet}/bin/wemeet-xwayland "$@"
             fi
             exec ${wemeet}/bin/wemeet "$@"
           ''} "$out/bin/wemeet"
