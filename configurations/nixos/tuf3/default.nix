@@ -318,7 +318,6 @@ in {
       addons = [
         pkgs.fcitx5-gtk
         flake.inputs.wetypex.packages.${pkgs.stdenv.hostPlatform.system}.fcitx5-wetypex
-        (pkgs.fcitx5-rime.override {rimeDataPkgs = [pkgs.rime-ice];})
       ];
       settings = {
         globalOptions.Behavior.ActiveByDefault = true;
@@ -329,7 +328,6 @@ in {
           };
           "Groups/0/Items/0".Name = "keyboard-us";
           "Groups/0/Items/1".Name = "wetypex";
-          "Groups/0/Items/2".Name = "rime";
           GroupOrder."0" = "Default";
         };
       };
@@ -511,65 +509,6 @@ in {
           pending.unlink(missing_ok=True)
       PY
     '';
-    fcitx5Watchdog = pkgs.writeShellScript "fcitx5-watchdog" ''
-      set -u
-
-      service="app-org.fcitx.Fcitx5@autostart.service"
-      logDir="''${XDG_STATE_HOME:-$HOME/.local/state}"
-      logFile="$logDir/fcitx5-watchdog.log"
-      cooldownFile="$logDir/fcitx5-watchdog.last-restart"
-      mkdir -p "$logDir"
-
-      state=$(${pkgs.coreutils}/bin/timeout 3s ${pkgs.fcitx5}/bin/fcitx5-remote 2>/dev/null || printf 'error')
-      backend_count=$(${pkgs.procps}/bin/pgrep -fc '[f]citx5-wetypex-backend' || true)
-      service_state=$(${pkgs.systemd}/bin/systemctl --user is-active "$service" 2>/dev/null || true)
-      dbus_ready=0
-      if ${pkgs.systemd}/bin/busctl --user list 2>/dev/null | ${pkgs.gnugrep}/bin/grep -q '^org.fcitx.Fcitx5 '; then
-        dbus_ready=1
-      fi
-
-      if [ "$state" = 2 ] && [ "$backend_count" -gt 0 ] && [ "$dbus_ready" -eq 1 ]; then
-        exit 0
-      fi
-
-      now=$(${pkgs.coreutils}/bin/date +%s)
-      last=0
-      if [ -r "$cooldownFile" ]; then
-        last=$(cat "$cooldownFile" 2>/dev/null || printf '0')
-      fi
-      {
-        printf '[%s] unhealthy service=%s state=%s wetypex_backend=%s\n' \
-          "$(${pkgs.coreutils}/bin/date --iso-8601=seconds)" "$service_state" "$state" "$backend_count"
-        ${pkgs.systemd}/bin/systemctl --user --no-pager --full status "$service" 2>&1 | ${pkgs.coreutils}/bin/head -n 18
-      } >> "$logFile"
-
-      if [ "$((now - last))" -lt 30 ]; then
-        exit 0
-      fi
-      printf '%s\n' "$now" > "$cooldownFile"
-
-      # KWin 的虚拟键盘可能直接托管 Fcitx，导致生成的 autostart 单元显示
-      # inactive。只要 D-Bus 仍有 Fcitx 服务，就先激活输入法，不重启 KWin 托管的进程。
-      if [ "$dbus_ready" -eq 1 ] && [ "$state" != 2 ]; then
-        ${pkgs.fcitx5}/bin/fcitx5-remote -o 2>/dev/null || true
-        sleep 1
-        state=$(${pkgs.coreutils}/bin/timeout 3s ${pkgs.fcitx5}/bin/fcitx5-remote 2>/dev/null || printf 'error')
-      fi
-
-      if [ "$dbus_ready" -eq 0 ] && { [ "$state" != 2 ] || [ "$backend_count" -eq 0 ]; }; then
-        if [ "''${XDG_SESSION_TYPE:-}" = wayland ]; then
-          printf '[%s] skipping autostart restart in KDE Wayland; KWin must relaunch Fcitx5\n' \
-            "$(${pkgs.coreutils}/bin/date --iso-8601=seconds)" >> "$logFile"
-        else
-          ${pkgs.systemd}/bin/systemctl --user restart "$service"
-        fi
-      fi
-
-      if [ -f "$logFile" ]; then
-        ${pkgs.coreutils}/bin/tail -n 400 "$logFile" > "$logFile.tmp"
-        ${pkgs.coreutils}/bin/mv "$logFile.tmp" "$logFile"
-      fi
-    '';
     intelDesktop = {
       text = ''
         [Service]
@@ -650,23 +589,6 @@ in {
 
     # Bitwarden 使用内核 keyring，避免 secretmem 阻止磁盘休眠。
     systemd.user.sessionVariables.SECURE_KEY_CONTAINER_BACKEND = "keyctl";
-    systemd.user.services.fcitx5-watchdog = {
-      Unit.Description = "Monitor and recover the Fcitx5 input method session";
-      Service = {
-        Type = "oneshot";
-        ExecStart = "${fcitx5Watchdog}";
-      };
-    };
-    systemd.user.timers.fcitx5-watchdog = {
-      Unit.Description = "Run the Fcitx5 watchdog periodically";
-      Timer = {
-        OnBootSec = "2min";
-        OnUnitActiveSec = "20s";
-        Unit = "fcitx5-watchdog.service";
-      };
-      Install.WantedBy = ["timers.target"];
-    };
-
     # 这些后台服务依赖 WSL 现有的本地配置或账号授权。
     services = {
       ccConnect.enable = false;
@@ -815,16 +737,11 @@ in {
     xdg.configFile."systemd/user/plasma-plasmashell.service.d/prime-offload.conf" = intelDesktop;
     # 共享选择器在核显上显示 KWin 的屏幕和窗口预览。
     xdg.configFile."systemd/user/plasma-xdg-desktop-portal-kde.service.d/prime-offload.conf" = intelDesktop;
-    # XDG autostart 生成的 Fcitx 单元默认 Restart=no。仅添加 drop-in，保留
-    # generator 提供的 ExecStart，避免崩溃后输入法长期消失，也避免启动第二个实例。
-    xdg.configFile."systemd/user/app-org.fcitx.Fcitx5@autostart.service.d/restart.conf".text = ''
-      [Service]
-      Restart=on-failure
-      RestartSec=2
-    '';
-    xdg.configFile."systemd/user/app-org.fcitx.Fcitx5@autostart.service.d/wayland.conf".text = ''
-      [Unit]
-      ConditionEnvironment=XDG_SESSION_TYPE=x11
+    # Plasma Wayland 由 KWin 通过 kwinrc 的 InputMethod 启动 Fcitx5。
+    # 隐藏通用 XDG autostart，避免它与 KWin 竞争同一个输入法实例。
+    xdg.configFile."autostart/org.fcitx.Fcitx5.desktop".text = ''
+      [Desktop Entry]
+      Hidden=true
     '';
     # 阻止 Magpie 生成绕过启动包装的用户级快捷方式。
     xdg.dataFile."applications/magpie.desktop".source = "${magpiePackage}/share/applications/magpie.desktop";
