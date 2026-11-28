@@ -10,6 +10,5 @@ in
   lib.mkIf (packages ? gemini-api-cli) {
     home.packages = [packages.gemini-api-cli];
 
-    # The requested singular .agents/skill directory is kept verbatim.
-    home.file.".agents/skill/gemini-api-cli".source = "${flake.inputs.geminiApiCliSkill}/skills/gemini-api-cli";
+    home.file.".agents/skills/gemini-api-cli".source = "${flake.inputs.geminiApiCliSkill}/skills/gemini-api-cli";
   }
