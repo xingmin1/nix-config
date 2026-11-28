@@ -28,6 +28,21 @@
       url = "github:AvengeMedia/DankMaterialShell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Google Gemini API CLI v0.5.0 官方 Release 资产。
+    geminiApiLinuxX64 = {
+      type = "file";
+      url = "https://github.com/google-gemini/gemini-api-cli/releases/download/v0.5.0/gemini-api_Linux_x86_64.tar.gz";
+      flake = false;
+    };
+    geminiApiLinuxArm64 = {
+      type = "file";
+      url = "https://github.com/google-gemini/gemini-api-cli/releases/download/v0.5.0/gemini-api_Linux_arm64.tar.gz";
+      flake = false;
+    };
+    geminiApiCliSkill = {
+      url = "github:nikships/gemini-api-cli-skill";
+      flake = false;
+    };
 
     # Software inputs
     wetypex = {

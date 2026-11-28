@@ -390,6 +390,46 @@
         "type": "github"
       }
     },
+    "geminiApiCliSkill": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793149031,
+        "narHash": "sha256-TvpSueKORQiaCqGABeM+FttJJv8M7QajCuF2gsYa/ts=",
+        "owner": "nikships",
+        "repo": "gemini-api-cli-skill",
+        "rev": "866ef14a9f5f2c7ccee366290ff6804bad9b4865",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nikships",
+        "repo": "gemini-api-cli-skill",
+        "type": "github"
+      }
+    },
+    "geminiApiLinuxArm64": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-ElcfTQfEifFey0lCt2QBGR4jzF1x94EPlrVjteoBXWE=",
+        "type": "file",
+        "url": "https://github.com/google-gemini/gemini-api-cli/releases/download/v0.5.0/gemini-api_Linux_arm64.tar.gz"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/google-gemini/gemini-api-cli/releases/download/v0.5.0/gemini-api_Linux_arm64.tar.gz"
+      }
+    },
+    "geminiApiLinuxX64": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-FGrpYbf93UWP++X0YY0cl3QIGuVfjLZ3lqESgVWeE0s=",
+        "type": "file",
+        "url": "https://github.com/google-gemini/gemini-api-cli/releases/download/v0.5.0/gemini-api_Linux_x86_64.tar.gz"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/google-gemini/gemini-api-cli/releases/download/v0.5.0/gemini-api_Linux_x86_64.tar.gz"
+      }
+    },
     "genofficeNpmLock": {
       "flake": false,
       "locked": {
@@ -948,6 +988,9 @@
         "dms": "dms",
         "favnyr": "favnyr",
         "flake-parts": "flake-parts_2",
+        "geminiApiCliSkill": "geminiApiCliSkill",
+        "geminiApiLinuxArm64": "geminiApiLinuxArm64",
+        "geminiApiLinuxX64": "geminiApiLinuxX64",
         "genofficeNpmLock": "genofficeNpmLock",
         "genofficeRelease": "genofficeRelease",
         "ghelper": "ghelper",
