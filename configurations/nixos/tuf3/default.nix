@@ -95,6 +95,7 @@ in {
     flake.inputs.self.nixosModules.default
     flake.inputs.self.nixosModules.nix-cache
     flake.inputs.ghelper.nixosModules.default
+    flake.inputs.niri.nixosModules.niri
     (modulesPath + "/installer/scan/not-detected.nix")
     ./hardware-configuration.nix
     ./micron-code-login.nix
@@ -276,6 +277,9 @@ in {
       alsa.enable = true;
     };
   };
+  # Keep the existing Plasma session as the default while exposing Niri as an
+  # additional SDDM session for deliberate selection at login.
+  programs.niri.enable = true;
   security.rtkit.enable = true;
 
   systemd.services.herdr-vps-tunnel = {
@@ -516,6 +520,19 @@ in {
       '';
     };
   in {
+    imports = [
+      flake.inputs.dms.homeModules.dank-material-shell
+      flake.inputs.dms.homeModules.niri
+    ];
+
+    # DMS is started by Niri's generated spawn-at-startup entry, so enabling
+    # it here does not add a shell service to the existing Plasma session.
+    programs.niri.settings.layout.border.enable = true;
+    programs.dank-material-shell = {
+      enable = true;
+      niri.enableSpawn = true;
+    };
+
     programs.vicinae = {
       enable = true;
       systemd.enable = true;

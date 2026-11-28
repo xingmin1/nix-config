@@ -17,6 +17,18 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixos-unified.url = "github:srid/nixos-unified";
 
+    # Niri compositor and its validated NixOS/Home Manager modules.
+    niri = {
+      url = "github:epireyn/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # DMS is currently developed in the Dux Modular Shell repository, while
+    # this compatibility URL retains the requested DankMaterialShell outputs.
+    dms = {
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Software inputs
     wetypex = {
       url = "github:panxuc/fcitx5-wetypex";
