@@ -1,5 +1,4 @@
 {
-  config,
   flake,
   lib,
   pkgs,
@@ -9,6 +8,4 @@
 in
   lib.mkIf (packages ? gemini-api-cli) {
     home.packages = [packages.gemini-api-cli];
-
-    home.file.".agents/skills/gemini-api-cli".source = "${flake.inputs.geminiApiCliSkill}/skills/gemini-api-cli";
   }

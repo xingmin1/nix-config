@@ -390,22 +390,6 @@
         "type": "github"
       }
     },
-    "geminiApiCliSkill": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1793149031,
-        "narHash": "sha256-TvpSueKORQiaCqGABeM+FttJJv8M7QajCuF2gsYa/ts=",
-        "owner": "nikships",
-        "repo": "gemini-api-cli-skill",
-        "rev": "866ef14a9f5f2c7ccee366290ff6804bad9b4865",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nikships",
-        "repo": "gemini-api-cli-skill",
-        "type": "github"
-      }
-    },
     "geminiApiLinuxArm64": {
       "flake": false,
       "locked": {
@@ -445,7 +429,7 @@
     "genofficeRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-ycWx9nVcp8skgGC1ssZnWxoZrq0/Y/zgbHaYEydPZ2A=",
+        "narHash": "sha256-2E+eB2c+Jk2gV0dJjBk4UeExT5EtFPmUrRvz7RbHSnA=",
         "type": "file",
         "url": "https://api.github.com/repos/genspark-ai/genoffice/releases/latest"
       },
@@ -511,7 +495,7 @@
     "justLspRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-hzvo4dC+1/2j+FsGWRzCrvFxGZ8P/KpQyBp1BQvTsts=",
+        "narHash": "sha256-UGeJ6iWPJVmTzE9fHid5gtTvCyLwVdnP3QmFie8x/WQ=",
         "type": "file",
         "url": "https://api.github.com/repos/terror/just-lsp/releases/latest"
       },
@@ -903,7 +887,7 @@
     "officecliRelease": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-LssNONKFhAGXwrrQNRIofA3EfxEkTxb7oPW6kWnWwfI=",
+        "narHash": "sha256-xrBgVVMB72bQ37qFPljcOu7K/x5dP2GylfAFjOjnerE=",
         "type": "file",
         "url": "https://api.github.com/repos/iOfficeAI/OfficeCLI/releases/latest"
       },
@@ -988,7 +972,6 @@
         "dms": "dms",
         "favnyr": "favnyr",
         "flake-parts": "flake-parts_2",
-        "geminiApiCliSkill": "geminiApiCliSkill",
         "geminiApiLinuxArm64": "geminiApiLinuxArm64",
         "geminiApiLinuxX64": "geminiApiLinuxX64",
         "genofficeNpmLock": "genofficeNpmLock",
